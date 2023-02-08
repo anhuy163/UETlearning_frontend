@@ -1,0 +1,31 @@
+.formWrapper {
+  padding: 64px;
+  @media screen and(max-width:767px) {
+    padding: 20px;
+  }
+  box-sizing: border-box;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  // background-color: white;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  :global {
+    .ant-btn {
+      background-color: #112b2e;
+      border: none;
+      border-radius: 3px;
+      width: 100%;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+        background-color: #112b2e;
+      }
+    }
+  }
+}
+
+.button {
+  width: 100%;
+}

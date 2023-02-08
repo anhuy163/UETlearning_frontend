@@ -1,0 +1,35 @@
+.layoutContainer {
+  :global {
+    .ant-layout-header {
+      background-color: white;
+      padding-inline: 0;
+    }
+    .anticon-bell,
+    .anticon-logout {
+      font-size: 30px;
+      color: #02457a;
+      transition: 0.5s all ease-in;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .ant-menu-item {
+      font-size: 1.2rem;
+      color: #02457a;
+      .anticon {
+        font-size: 1.2rem;
+      }
+      &:hover::after {
+        border-bottom: 1.5px solid #02457a !important;
+      }
+    }
+    .ant-menu-item-selected {
+      color: #02457a !important;
+      font-weight: 500;
+      &::after {
+        border-bottom: 2px solid #02457a !important;
+      }
+    }
+  }
+}

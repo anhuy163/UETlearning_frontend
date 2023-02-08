@@ -1,0 +1,22 @@
+.sider {
+  min-width: 300px !important;
+
+  .activeContainer {
+    padding: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+
+    :global {
+      .ant-switch {
+        .ant-switch-inner {
+          background-color: gray;
+        }
+      }
+      .ant-switch-checked {
+        .ant-switch-inner {
+          background-color: #1677ff;
+        }
+      }
+    }
+  }
+}
