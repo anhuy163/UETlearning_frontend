@@ -7,6 +7,8 @@ import styles from "./styles.module.less";
 import UserAvatar from "../UserAvatar";
 import { AVATAR_SIZE, PROFILE_PATH } from "@/src/app/constants";
 import { testAvatarSrc } from "@/src/app/constants";
+import ChatCard from "../ChatCard";
+import { dummnyData } from "@/src/app/constants";
 
 const { Sider } = Layout;
 
@@ -43,12 +45,26 @@ export function MySideBar() {
         </div>
       </div>
 
-      <Menu
+      {/* <Menu
         theme='dark'
         items={menuItems}
         defaultSelectedKeys={[router.pathname]}
         mode='inline'
-      />
+      /> */}
+      <div className='w-full p-2 mt-4'>
+        <div className='flex items-center text-white mb-3 text-xl pl-2'>
+          <UserOutlined />
+          <p className='ml-2'> Liên hệ gần đây</p>
+        </div>
+        {dummnyData?.map((item) => (
+          <ChatCard
+            key={item.id}
+            name={item?.name}
+            lastMessage={item?.lastMessage}
+            chatId={item?.id}
+          />
+        ))}
+      </div>
     </Sider>
   );
 }

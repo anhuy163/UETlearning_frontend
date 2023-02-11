@@ -1,17 +1,28 @@
-.text {
-  display: inline-block;
-  overflow: hidden;
-  width: 0px;
-  animation: typing 3s;
-  animation-fill-mode: forwards;
-  white-space: nowrap;
+.text1,
+.text2 {
+  overflow: hidden; /* hide the text */
+  white-space: nowrap; /* prevent text from breaking into multiple lines */
+  margin: 0 auto; /* center the text */
+  letter-spacing: 0.15em; /* increase the spacing between characters */
+  animation: typing 3s; /* add a typing animation */
 }
 
+/* animation keyframes */
 @keyframes typing {
   from {
-    width: 0px;
+    width: 0;
   }
   to {
     width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
   }
 }

@@ -1,0 +1,38 @@
+.container {
+  :global {
+    .ant-breadcrumb {
+      .ant-breadcrumb-separator {
+        font-size: 1.2rem;
+        font-weight: 600 !important;
+        color: #02457a;
+      }
+      & li {
+        .ant-breadcrumb-link {
+          font-size: 1.2rem;
+          color: #02457a;
+          opacity: 0.8;
+          transition: all 0.5s ease-in-out;
+          //   padding: 2px 2px;
+          &:hover {
+            opacity: 1;
+            background-color: transparent;
+          }
+        }
+        &:last-child {
+          .ant-breadcrumb-link {
+            opacity: 1;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #02457a;
+            cursor: auto;
+            //   padding: 2px 2px;
+            // &:hover {
+            //   color: red;
+            //   background-color: transparent;
+            // }
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ import {
   WechatOutlined,
   NotificationOutlined,
   BellOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Badge, Drawer, Tooltip } from "antd";
 import Head from "next/head";
@@ -44,6 +45,10 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
     });
   };
   const router = useRouter();
+
+  const handleOnDirect = (link = "") => {
+    router.push(link);
+  };
   const menuItems = [
     // getMenuItem(
     //   <Link href={PROFILE_PATH}>Account</Link>,
@@ -56,6 +61,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
       <WechatOutlined />
     ),
     getMenuItem(
+      // <Button icon={<BarChartOutlined />}>Thống kê</Button>,
       <Link href={STATISTICS_PATH}>Thống kê</Link>,
       "/statistics",
       <BarChartOutlined />
@@ -90,7 +96,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
     };
   }, []);
 
-  //   console.log(menuItems);
+  // console.log(router.pathname);
   return (
     <>
       <div className={styles.layoutContainer}>
@@ -107,10 +113,31 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                 <div className=' flex items-center justify-between pr-8 w-[30%]'>
                   <div className='w-[80%]'>
                     <Menu
-                      defaultSelectedKeys={[router.pathname]}
+                      defaultSelectedKeys={[
+                        `/${router.pathname.split("/")[1]}`,
+                      ]}
                       mode='horizontal'
-                      items={menuItems}
-                    />
+                      // items={menuItems}
+                    >
+                      <Menu.Item
+                        icon={<WechatOutlined />}
+                        key={MESSAGE_PATH}
+                        onClick={() => handleOnDirect(MESSAGE_PATH)}>
+                        Tin nhắn
+                      </Menu.Item>
+                      <Menu.Item
+                        icon={<PieChartOutlined />}
+                        key={STATISTICS_PATH}
+                        onClick={() => handleOnDirect(STATISTICS_PATH)}>
+                        Thống kê
+                      </Menu.Item>
+                      <Menu.Item
+                        icon={<QuestionCircleOutlined />}
+                        key={QANDA_PATH}
+                        onClick={() => handleOnDirect(QANDA_PATH)}>
+                        Hỏi & đáp
+                      </Menu.Item>
+                    </Menu>
                   </div>
                   <div className='text-2xl w-24 flex justify-between items-center'>
                     <div>
@@ -131,7 +158,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
             </Header>
             <Layout>
               <MySideBar />
-              <div className='h-[calc(100vh_-_64px)] overflow-auto overflow-x-hidden px-[20px] pt-2 bg-slate-200 w-full'>
+              <div className='h-[calc(100vh_-_64px)] overflow-auto overflow-x-hidden px-3 bg-slate-200 w-full'>
                 {children}
               </div>
             </Layout>
