@@ -9,6 +9,8 @@ import {
   NotificationOutlined,
   BellOutlined,
   PieChartOutlined,
+  UploadOutlined,
+  ArrowUpOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Badge, Drawer, Tooltip } from "antd";
 import Head from "next/head";
@@ -26,6 +28,7 @@ import {
   LOGIN_PATH,
 } from "@/src/app/constants";
 import NotificationPopupContainer from "../NotificationPopupContainer";
+import clsx from "clsx";
 
 type LayoutProps = {
   title: string;
@@ -36,6 +39,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 export default function LayoutContainer({ children, title }: LayoutProps) {
   const [togglePopupNoti, setTogglePopupNoti] = useState(false);
+  const [visibleButton, setVisibleButton] = useState(false);
 
   const ref = useRef(null);
 
@@ -49,52 +53,36 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
   const handleOnDirect = (link = "") => {
     router.push(link);
   };
-  const menuItems = [
-    // getMenuItem(
-    //   <Link href={PROFILE_PATH}>Account</Link>,
-    //   "/me",
-    //   <UserOutlined />
-    // ),
-    getMenuItem(
-      <Link href={"/message"}>Trò chuyện</Link>,
-      "/message",
-      <WechatOutlined />
-    ),
-    getMenuItem(
-      // <Button icon={<BarChartOutlined />}>Thống kê</Button>,
-      <Link href={STATISTICS_PATH}>Thống kê</Link>,
-      "/statistics",
-      <BarChartOutlined />
-    ),
-    getMenuItem(
-      <Link href={QANDA_PATH}>Hỏi đáp</Link>,
-      "/q-and-a",
-      <QuestionCircleOutlined />
-    ),
-    // getMenuItem(
-    //   <button onClick={onToggleNotiPopup}>Thông báo</button>,
-    //   null,
-    //   <Badge count={40} size='small' overflowCount={9}>
-    //     <BellOutlined />
-    //   </Badge>
-    // ),
-    // getMenuItem(
-    //   <button onClick={() => router.push(LOGIN_PATH)}>Log out</button>,
-    //   null,
-    //   <LogoutOutlined />
-    // ),
-  ];
 
   const handleClickOutsideNoti = () => {
     setTogglePopupNoti(false);
   };
 
   useEffect(() => {
+    const content = document.querySelector(".content") as HTMLElement;
+    const onScroll = () => {
+      setVisibleButton(content.scrollTop > 100);
+    };
+
     document.addEventListener("click", handleClickOutsideNoti, true);
+
+    // document.addEventListener("scroll", onScroll);
+    content.addEventListener("scroll", onScroll);
+
     return () => {
       document.removeEventListener("click", handleClickOutsideNoti, true);
+      document
+        .querySelector("content")
+        ?.removeEventListener("scroll", onScroll);
+      // window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  const scrollToTop = () => {
+    const content = document.querySelector(".content") as HTMLElement;
+
+    content.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // console.log(router.pathname);
   return (
@@ -158,9 +146,29 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
             </Header>
             <Layout>
               <MySideBar />
-              <div className='h-[calc(100vh_-_64px)] overflow-auto overflow-x-hidden px-3 bg-slate-200 w-full'>
+              {/* <Content> */}
+
+              <div
+                className={clsx(
+                  "content",
+                  "h-[calc(100vh_-_64px)] overflow-auto overflow-x-hidden px-3 bg-slate-200 w-full"
+                )}>
                 {children}
               </div>
+
+              {visibleButton && (
+                <div className='fixed bottom-5 right-3'>
+                  <Tooltip placement='left' title='Đầu trang'>
+                    <Button
+                      onClick={scrollToTop}
+                      className=' h-[40px]  bg-slate-800 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+                      <ArrowUpOutlined />
+                    </Button>
+                  </Tooltip>
+                </div>
+              )}
+
+              {/* </Content> */}
             </Layout>
           </Layout>
         </Layout>

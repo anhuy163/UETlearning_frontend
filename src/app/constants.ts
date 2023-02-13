@@ -24,10 +24,18 @@ export const BREADCRUMB_NAME_MAPPING: BreadcrumbMap = {
   [HOME_PATH]: "Trang chủ",
 };
 
+/* AVATAR  */
+
 export const AVATAR_SIZE = {
   LARGE: 128,
   AVERAGE: 64,
   SMALL: 50,
+};
+
+/* CHAT  */
+export const MESSAGE_FROM_TYPE = {
+  FRIEND: "friend",
+  ME: "me",
 };
 export const dummnyData = [
   {

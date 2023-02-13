@@ -1,0 +1,24 @@
+.container {
+  .comment {
+    :global {
+      .ant-btn {
+        &:hover {
+          color: white;
+          border: none;
+        }
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+  .commentContent {
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
