@@ -10,6 +10,14 @@ export default function ChatDetailPage() {
     <LayoutContainer title='Tin nhắn'>
       <div>
         <MyBreadcrumb path={MESSAGE_PATH} />
+        {/* <div className='w-full flex justify-between'>
+          <div className='min-h-[calc(100vh_-_128px)] bg-white rounded-md w-[75%]'>
+            <ChatDetailContainer />
+          </div>
+          <div className='min-h-[calc(100vh_-_128px)] bg-white rounded-md w-[24%] p-3'>
+            123
+          </div>
+        </div> */}
         <div className='w-full min-h-[calc(100vh_-_128px)] bg-white rounded-md'>
           <ChatDetailContainer />
         </div>

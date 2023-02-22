@@ -1,6 +1,10 @@
 import { Layout, Menu, Switch, Tooltip } from "antd";
 import { getMenuItem } from "@/src/app/helpers/createElement";
-import { UserOutlined, WechatOutlined } from "@ant-design/icons";
+import {
+  MessageOutlined,
+  UserOutlined,
+  WechatOutlined,
+} from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./styles.module.less";
@@ -51,19 +55,27 @@ export function MySideBar() {
         defaultSelectedKeys={[router.pathname]}
         mode='inline'
       /> */}
-      <div className='w-full p-2 mt-4'>
+      <div className='w-full p-2 mt-4 '>
         <div className='flex items-center text-white mb-3 text-xl pl-2'>
           <UserOutlined />
+          <p className='ml-2'>
+            <Link href={PROFILE_PATH}>Hồ sơ cá nhân</Link>
+          </p>
+        </div>
+        <div className='flex items-center text-white mb-3 text-xl pl-2'>
+          <MessageOutlined />
           <p className='ml-2'> Liên hệ gần đây</p>
         </div>
-        {dummnyData?.map((item) => (
-          <ChatCard
-            key={item.id}
-            name={item?.name}
-            lastMessage={item?.lastMessage}
-            chatId={item?.id}
-          />
-        ))}
+        <div className='overflow-y-hidden hover:overflow-y-scroll max-h-[calc(100vh_-_350px)] overflow-x-hidden bg-slate-900'>
+          {dummnyData?.map((item) => (
+            <ChatCard
+              key={item.id}
+              name={item?.name}
+              lastMessage={item?.lastMessage}
+              chatId={item?.id}
+            />
+          ))}
+        </div>
       </div>
     </Sider>
   );

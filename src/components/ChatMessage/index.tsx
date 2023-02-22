@@ -38,13 +38,13 @@ export default function ChatMessage({
     </div>
   ) : type === MESSAGE_FROM_TYPE.FRIEND ? (
     <div className='flex mb-1 w-full  '>
-      <div className='max-w-[800px] rounded-xl bg-slate-500 text-base text-white p-2'>
+      <div className='max-w-[800px] rounded-xl bg-slate-500 text-base text-white p-2 break-words'>
         {content}
       </div>
     </div>
   ) : (
     <div className='flex flex-row-reverse w-full mb-1'>
-      <div className='max-w-[800px] rounded-xl bg-cyan-500 text-base text-white p-2'>
+      <div className='max-w-[800px] rounded-xl bg-cyan-500 text-base text-white p-2 break-words'>
         {" "}
         {content}
       </div>

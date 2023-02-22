@@ -14,7 +14,9 @@ export default function NotificationPopup() {
         <NotiCard
           avatar={testAvatarSrc}
           name='Bakugo Katsuki'
-          title='Đã tạo 1 bài viết mới'
+          title='Đã tạo 1 bài viết mớiĐã tạo 1 bài viết mớiĐã tạo 1 bài viết mớiĐã tạo 1 bài viết mới'
+          createdAt='20230216'
+          page={false}
         />
       </div>
     </div>

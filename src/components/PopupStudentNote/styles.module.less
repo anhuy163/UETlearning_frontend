@@ -1,0 +1,40 @@
+.container {
+  :global {
+    .ant-form-item-label {
+      background-color: #cad5f3be;
+      margin-right: 10px;
+      padding: 0 10px;
+      text-align: center;
+      max-height: 32px;
+      min-width: 100px;
+      // color: cyan;
+    }
+    .ant-form-item-label
+      > label.ant-form-item-required:not(
+        .ant-form-item-required-mark-optional
+      ):before {
+      content: "";
+    }
+    .ant-form-item-label
+      > label.ant-form-item-required:not(
+        .ant-form-item-required-mark-optional
+      ):after {
+      display: inline-block;
+      margin-right: 1px;
+      color: #ff4d4f;
+      font-size: 14px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: "*";
+    }
+  }
+  .submitBtn {
+    :global {
+      .ant-btn {
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}

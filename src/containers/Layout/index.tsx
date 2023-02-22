@@ -26,6 +26,7 @@ import {
   PROFILE_PATH,
   STATISTICS_PATH,
   LOGIN_PATH,
+  NOTIFICATION_PATH,
 } from "@/src/app/constants";
 import NotificationPopupContainer from "../NotificationPopupContainer";
 import clsx from "clsx";
@@ -44,6 +45,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
   const ref = useRef(null);
 
   const onToggleNotiPopup = () => {
+    if (router.pathname === NOTIFICATION_PATH) return;
     setTogglePopupNoti((prevState) => {
       return !prevState;
     });

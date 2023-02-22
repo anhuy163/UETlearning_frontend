@@ -53,7 +53,7 @@ export default function UserAvatar({
       style={{
         color: "#f56a00",
         backgroundColor: "#fde3cf",
-        fontSize: size === AVATAR_SIZE.LARGE ? "100px" : "24px",
+        fontSize: size === AVATAR_SIZE.LARGE ? "80px" : "24px",
         border: "0.1px solid rgb(170, 164, 164)",
         // alignItems: "center",
       }}

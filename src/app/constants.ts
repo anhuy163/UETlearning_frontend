@@ -37,6 +37,11 @@ export const MESSAGE_FROM_TYPE = {
   FRIEND: "friend",
   ME: "me",
 };
+
+/*COLORS */
+export const COLORS = {
+  CYAN600: "#06b6d4",
+};
 export const dummnyData = [
   {
     id: "1",
@@ -50,6 +55,36 @@ export const dummnyData = [
   },
   {
     id: "3",
+    name: "An Huy",
+    lastMessage: "Hello",
+  },
+  {
+    id: "4",
+    name: "An Huy An Huy An HuyAn Huy",
+    lastMessage: "HelloHelloHelloHelloHelloHelloHelloHelloHello",
+  },
+  {
+    id: "5",
+    name: "An Huy",
+    lastMessage: "Hello",
+  },
+  {
+    id: "6",
+    name: "An Huy",
+    lastMessage: "Hello",
+  },
+  {
+    id: "7",
+    name: "An Huy An Huy An HuyAn Huy",
+    lastMessage: "HelloHelloHelloHelloHelloHelloHelloHelloHello",
+  },
+  {
+    id: "9",
+    name: "An Huy",
+    lastMessage: "Hello",
+  },
+  {
+    id: "10",
     name: "An Huy",
     lastMessage: "Hello",
   },
