@@ -9,8 +9,13 @@ import { useForm } from "antd/lib/form/Form";
 import FormWrapper from "@/src/containers/FormWrapper/FormWrapper";
 import styles from "./styles.module.less";
 import { useRouter } from "next/router";
+import { LoginBody } from "@/src/app/hooks/useAuth";
 
-export default function LoginForm() {
+type LoginFormProps = {
+  onFinish: (value: LoginBody) => void;
+};
+
+export default function LoginForm({ onFinish }: LoginFormProps) {
   const router = useRouter();
   const form = useForm();
   const rules = {
@@ -29,7 +34,7 @@ export default function LoginForm() {
       <h2 className='text-center font-mono text-2xl text-cyan-800 font-bold mb-3'>
         UET LEARNING
       </h2>
-      <Form>
+      <Form onFinish={onFinish}>
         <Form.Item
           colon={false}
           name='email'
@@ -47,7 +52,8 @@ export default function LoginForm() {
             className={styles.button}
             htmlType='submit'
             type='primary'
-            onClick={() => router.push("/")}>
+            // onClick={() => router.push("/")}
+          >
             Đăng nhập
           </Button>
         </div>

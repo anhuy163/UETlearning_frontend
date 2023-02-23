@@ -8,6 +8,8 @@ import Image from "next/image";
 import clsx from "clsx";
 import styles from "./styles.module.less";
 import { useDebounce } from "@/src/app/hooks/useDebounce";
+import SubComment from "../SubComment";
+import Comment from "../Comment";
 
 type PostProps = {
   id: string;
@@ -82,7 +84,23 @@ export default function Post(props: PostProps) {
           </Button>
         </div>
         <div className='px-3 pt-2 max-h-[300px] overflow-auto '>
-          <div className='flex items-center mb-2'>
+          <Comment
+            content='So beautiful, buddy So beautiful, buddySo beautiful, buddySo
+                beautiful, buddySo beautiful, buddySo beautiful, buddySo
+                beautiful, buddySo beautiful, buddySo beautiful, buddySo
+                beautiful, buddySo beautiful, buddySo beautiful, buddyv'
+            avatarSize={AVATAR_SIZE.SMALL}
+          />
+          <Comment
+            content='So beautiful, buddy'
+            avatarSize={AVATAR_SIZE.SMALL}
+          />
+          <Comment
+            content='So beautiful, buddy'
+            avatarSize={AVATAR_SIZE.SMALL}
+          />
+          <SubComment />
+          {/* <div className='flex items-center mb-2'>
             <div className='min-w-[50px]'>
               <UserAvatar name='An Huy' size={AVATAR_SIZE.SMALL} />
             </div>
@@ -109,7 +127,7 @@ export default function Post(props: PostProps) {
               <p className='text-base font-semibold text-slate-800'>An Huy</p>
               <p>So beautiful, buddy</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

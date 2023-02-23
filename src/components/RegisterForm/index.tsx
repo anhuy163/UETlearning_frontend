@@ -1,16 +1,28 @@
 import styles from "./styles.module.less";
-import { Button, Form, Input, message, Space, Typography } from "antd";
+import { Button, Form, Input, Space, DatePicker, Radio, Select } from "antd";
 import FormWrapper from "@/src/containers/FormWrapper/FormWrapper";
-import {
-  UserOutlined,
-  LockOutlined,
-  GooglePlusOutlined,
-} from "@ant-design/icons";
 import { useForm } from "rc-field-form";
 import Link from "next/link";
-import { LOGIN_PATH } from "@/src/app/constants";
+import { LOGIN_PATH, SUBJECTS } from "@/src/app/constants";
+import moment from "moment";
 
-export default function RegisterForm() {
+type RegisterFormProps = {
+  onFinish: (value: any) => void;
+  loading: boolean;
+};
+
+export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
+  function disabledDate(current: any) {
+    // console.log(current);
+
+    // Disable dates after today
+    return current && current > moment().endOf("day");
+  }
+  const handleOnSubmit = (e: any) => {
+    // e.preventDefault();
+    console.log(e);
+    console.log(typeof moment(e.dateOfBirth.d).format("YYYY-MM-DD"));
+  };
   const form = useForm();
   const rules = {
     username: [{ required: true, message: "Vui lòng điền tài khoản" }],
@@ -19,44 +31,69 @@ export default function RegisterForm() {
       { min: 8, message: "Mật khẩu ít nhất phải có 8 ký tự" },
     ],
     confirmPassword: [{ required: true, message: "Vui lòng không bỏ trống" }],
-    firstName: [
-      {
-        required: true,
-        message: "Vui lòng nhập họ của bạn",
-      },
-      { max: 20, message: "Vượt quá số lượng ký tự" },
-    ],
-    lastName: [
+    realName: [
       {
         required: true,
         message: "Vui lòng nhập tên của bạn",
       },
-      { max: 20, message: "Vượt quá số lượng ký tự" },
+      { max: 30, message: "Không vượt quá 30 ký tự" },
+    ],
+    dateOfBirth: [
+      {
+        required: true,
+        message: "Vui lòng chọn ngày sinh",
+      },
+    ],
+    gender: [
+      {
+        required: true,
+        message: "Vui lòng chọn giới tính",
+      },
+    ],
+    subject: [
+      {
+        required: true,
+        message: "Vui lòng chọn môn học đăng ký",
+      },
+    ],
+    phoneNumber: [
+      {
+        required: true,
+        message: "Vui lòng điền số điện thoại",
+      },
     ],
   };
   return (
-    <FormWrapper className={styles.formWrapper}>
+    <FormWrapper className={styles.formWrapper} loading={loading}>
       <h2 className='text-center font-mono text-2xl text-cyan-800 font-bold mb-3'>
         UET LEARNING
       </h2>
-      <Form className={styles.container}>
+
+      <Form className={styles.container} onFinish={onFinish}>
         <Form.Item
           label='Tài khoản'
           colon={false}
           name='username'
+          rules={rules.username}>
+          <Input allowClear />
+        </Form.Item>
+        <Form.Item
+          label='Email'
+          colon={false}
+          name='emailAccount'
           // rules={rules.username}
           rules={[
             { type: "email", message: "Email không hợp lệ" },
-            { required: true, message: "Vui lòng điền tài khoản" },
+            { required: true, message: "Vui lòng điền email" },
           ]}>
-          <Input addonBefore={<UserOutlined />} allowClear />
+          <Input allowClear />
         </Form.Item>
         <Form.Item
           label='Mật khẩu'
           colon={false}
           name='password'
           rules={rules.password}>
-          <Input.Password addonBefore={<LockOutlined />} allowClear />
+          <Input.Password allowClear />
         </Form.Item>
         <Form.Item
           label='Nhập lại mật khẩu'
@@ -64,27 +101,52 @@ export default function RegisterForm() {
           name='confirmPassword'
           rules={rules.confirmPassword}>
           <Input.Password
-            addonBefore={<LockOutlined />}
+            // addonBefore={<LockOutlined />}
             allowClear></Input.Password>
         </Form.Item>
-        <div className={styles.nameInputArea}>
-          <Form.Item
-            className={styles.firstName}
-            rules={rules.firstName}
-            colon={false}
-            label='Họ'
-            name='firstName'>
-            <Input placeholder='Họ'></Input>
-          </Form.Item>
-          <Form.Item
-            className={styles.lastName}
-            rules={rules.lastName}
-            name='lastName'
-            colon={false}
-            label='Tên'>
-            <Input placeholder='Tên'></Input>
-          </Form.Item>
-        </div>
+        <Form.Item
+          className={styles.lastName}
+          rules={rules.realName}
+          name='realName'
+          colon={false}
+          label='Tên đầy đủ'>
+          <Input placeholder='Tên' allowClear></Input>
+        </Form.Item>
+        <Form.Item
+          className={styles.lastName}
+          rules={rules.phoneNumber}
+          name='phoneNumber'
+          colon={false}
+          label='Số điện thoại'>
+          <Input allowClear></Input>
+        </Form.Item>
+        <Form.Item
+          className={styles.lastName}
+          rules={rules.gender}
+          name='gender'
+          colon={false}
+          label='Giới tính'>
+          <Radio.Group>
+            <Radio value={1}>Nam</Radio>
+            <Radio value={2}>Nữ</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          className={styles.lastName}
+          rules={rules.subject}
+          name='subjects'
+          colon={false}
+          label='Môn học'>
+          <Select options={SUBJECTS} />
+        </Form.Item>
+        <Form.Item
+          className={styles.lastName}
+          rules={rules.dateOfBirth}
+          name='dateOfBirth'
+          colon={false}
+          label='Ngày sinh'>
+          <DatePicker disabledDate={disabledDate} />
+        </Form.Item>
         <Space className={styles.registerBtn}>
           <Form.Item>
             <Button className={styles.button} htmlType='submit' type='primary'>

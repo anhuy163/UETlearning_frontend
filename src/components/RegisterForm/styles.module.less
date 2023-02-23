@@ -9,21 +9,15 @@
   }
   @media screen and(max-width:767px) {
     padding: 20px;
-  }
-
-  @media screen and(max-width: 575px) {
-    .nameInputArea {
-      display: block;
-      .lastName {
-        margin-left: 0;
-      }
+    .ant-input {
+      width: auto;
     }
   }
+
   box-sizing: border-box;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  // background-color: white;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -37,6 +31,9 @@
     font-weight: 600;
   }
   :global {
+    .ant-input {
+      width: 400px;
+    }
     .ant-form-item-label {
       background-color: #cad5f3be;
       margin-right: 10px;
@@ -92,25 +89,7 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    .loginWithGoogleBtn {
-      width: 100%;
-      margin-bottom: 5px;
-      :global {
-        .ant-space-item {
-          width: 100%;
-        }
-        .ant-btn {
-          border: none;
-          border-radius: 3px;
-          width: 100%;
-        }
-        .anticon-google-plus {
-          font-size: 20px;
-          position: relative;
-          top: 3px;
-        }
-      }
-    }
+
     .loginLink {
       margin-top: 10px;
       width: 100%;

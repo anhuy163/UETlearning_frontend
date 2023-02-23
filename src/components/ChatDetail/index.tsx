@@ -1,9 +1,10 @@
-import { Button, Input, Tooltip } from "antd";
+import { Button, Input, Tooltip, Upload } from "antd";
 import {
   SendOutlined,
   InfoCircleOutlined,
   SmileOutlined,
   PlusCircleOutlined,
+  FileImageOutlined,
 } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
@@ -26,6 +27,7 @@ type ChatDetailProps = {
   templateMsgs: ChatMessageType[];
   handleOnSendMsg: (msg: ChatMessageType) => void;
   handleOnAddMsgTemplate: (msg: string) => void;
+  handleOnSendImg: (upload: any) => void;
 };
 
 export default function ChatDetail({
@@ -33,7 +35,10 @@ export default function ChatDetail({
   handleOnSendMsg,
   templateMsgs,
   handleOnAddMsgTemplate,
+  handleOnSendImg,
 }: ChatDetailProps) {
+  console.log(messages);
+
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showPopupTemplate, setShowPopupTemplate] = useState(false);
@@ -78,6 +83,11 @@ export default function ChatDetail({
   };
   const chatBoxRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSendImageBtn = () => {
+    imageInputRef.current?.click();
+  };
   // useEffect(() => {
   //   // console.log(chatBoxRef.current?.scrollHeight);
 
@@ -126,7 +136,11 @@ export default function ChatDetail({
         {messages?.map((item, index: any) => {
           return (
             <div key={index} ref={scrollRef}>
-              <ChatMessage type={item.type} content={item.content} />
+              <ChatMessage
+                type={item.type}
+                content={item.content}
+                img={item?.img}
+              />
             </div>
           );
         })}
@@ -152,7 +166,7 @@ export default function ChatDetail({
               );
             })}
           </div>
-          <div className='pb-2'>
+          <div className='pb-3'>
             <Tooltip placement='top' title='Thêm mẫu tin nhắn'>
               <Button
                 onClick={onOpenPopupAddTemplate}
@@ -174,6 +188,31 @@ export default function ChatDetail({
               <SmileOutlined />
             </Button>
           </div>
+          <Button
+            onClick={handleSendImageBtn}
+            className='mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+            <FileImageOutlined />
+          </Button>
+
+          <input
+            ref={imageInputRef}
+            style={{ display: "none" }}
+            title=''
+            type='file'
+            onChange={handleOnSendImg}
+            accept='image/jpg, image/png, image/jpeg'
+          />
+
+          {/* <Upload
+            onChange={handleOnSendImg}
+            showUploadList={false}
+            accept='image/jpg, image/png, image/jpeg'>
+            <Button
+              // onClick={handleShowEmojiPicker}
+              className='mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+              <FileImageOutlined />
+            </Button>
+          </Upload> */}
           <Input.TextArea
             value={msg}
             onChange={onInputChange}

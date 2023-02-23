@@ -8,6 +8,8 @@ export const MESSAGE_PATH = "/message";
 export const STATISTICS_PATH = "/statistics";
 export const QANDA_PATH = "/q-and-a";
 export const NOTIFICATION_PATH = "/notifications";
+export const SERVER_URL =
+  "http://learning-application.online/ums/session/teacher/";
 
 /* BREADCRUMB  */
 
@@ -30,6 +32,7 @@ export const AVATAR_SIZE = {
   LARGE: 128,
   AVERAGE: 64,
   SMALL: 50,
+  TINY: 30,
 };
 
 /* CHAT  */
@@ -38,10 +41,23 @@ export const MESSAGE_FROM_TYPE = {
   ME: "me",
 };
 
-/*COLORS */
+/* COLORS */
 export const COLORS = {
   CYAN600: "#06b6d4",
 };
+
+/* SUBJECTS */
+export const SUBJECTS = [
+  { value: "Toán học", label: "Toán học" },
+  { value: "Ngữ văn", label: "Ngữ văn" },
+  { value: "Ngoại ngữ", label: "Ngoại ngữ" },
+  { value: "Vật lí", label: "Vật lí" },
+  { value: "Hóa học", label: "Hóa học" },
+  { value: "Sinh học", label: "Sinh học" },
+  { value: "Địa lí", label: "Địa lí" },
+  { value: "Lịch sử", label: "Lịch sử" },
+  { value: "GDCD", label: "GDCD" },
+];
 export const dummnyData = [
   {
     id: "1",

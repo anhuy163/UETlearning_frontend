@@ -29,6 +29,7 @@ import {
   NOTIFICATION_PATH,
 } from "@/src/app/constants";
 import NotificationPopupContainer from "../NotificationPopupContainer";
+import useAuth from "@/src/app/hooks/useAuth";
 import clsx from "clsx";
 
 type LayoutProps = {
@@ -39,6 +40,7 @@ type LayoutProps = {
 const { Header, Content, Footer, Sider } = Layout;
 
 export default function LayoutContainer({ children, title }: LayoutProps) {
+  const { logout } = useAuth();
   const [togglePopupNoti, setTogglePopupNoti] = useState(false);
   const [visibleButton, setVisibleButton] = useState(false);
 
@@ -138,7 +140,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                       </Badge>
                     </div>
                     <Tooltip title='Đăng xuất' placement='bottom'>
-                      <button onClick={() => router.push(LOGIN_PATH)}>
+                      <button onClick={logout}>
                         <LogoutOutlined />
                       </button>
                     </Tooltip>

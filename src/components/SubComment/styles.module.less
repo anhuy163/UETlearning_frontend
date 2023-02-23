@@ -1,0 +1,40 @@
+.container {
+  :global {
+    .ant-tree-list-holder-inner {
+      padding: 0 !important;
+    }
+    .ant-tree-treenode {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ant-tree-switcher {
+      position: absolute;
+      left: 8px;
+      width: 200px;
+      top: 58px;
+      //   display: none;
+    }
+    .ant-tree-node-content-wrapper {
+      padding: 0;
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+    .ant-tree-title {
+      &:hover {
+        background-color: white !important;
+      }
+    }
+    // .ant-tree-treenode {
+    //   margin-left: 0;
+    //   &.ant-tree-treenode-switcher-close {
+    //     margin-left: 40px;
+    //   }
+    // }
+    // .ant-tree-switcher::after {
+    //   content: "xem them";
+    // }
+  }
+}
