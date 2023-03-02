@@ -9,7 +9,8 @@ export const STATISTICS_PATH = "/statistics";
 export const QANDA_PATH = "/q-and-a";
 export const NOTIFICATION_PATH = "/notifications";
 export const SERVER_URL =
-  "http://learning-application.online/ums/session/teacher/";
+  "http://learning-application.online/ums/session/teacher";
+export const SERVER_BASE_URL = "http://learning-application.online";
 
 /* BREADCRUMB  */
 
@@ -58,6 +59,25 @@ export const SUBJECTS = [
   { value: "Lịch sử", label: "Lịch sử" },
   { value: "GDCD", label: "GDCD" },
 ];
+
+/* ERROR MESSAGES */
+
+export const ERROR_MESSAGE = {
+  CONFRIM_PASSWORD: "Mật khẩu nhập lại không khớp",
+  LOGIN: "Tài khoản hoặc mật khẩu không đúng",
+  INVALID_EMAIL: "Email không hợp lệ",
+};
+
+/* SUCCESSFUL MESSAGES */
+
+export const SUCCESSFUL_MESSAGE = {
+  REGISTER: "Đăng ký thành công",
+  LOGIN: "Đăng nhập thành công",
+};
+
+/* TOKEN EXPIRATION CHECK PERIOD */
+export const TOKEN_EXPIRATION_CHECK_PERIOD_MS = 300000;
+
 export const dummnyData = [
   {
     id: "1",

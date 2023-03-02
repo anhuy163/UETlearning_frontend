@@ -1,7 +1,10 @@
+import { contactsSlice } from "./slice/contactsSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    contacts: contactsSlice as any,
+  },
 });
 
 export type AppState = ReturnType<typeof store.getState>;

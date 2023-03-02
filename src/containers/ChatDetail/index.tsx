@@ -2,7 +2,10 @@ import { MESSAGE_FROM_TYPE } from "@/src/app/constants";
 import ChatDetail from "@/src/components/ChatDetail";
 import { RcFile } from "antd/es/upload";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import socket from "@/src/app/socket";
+import useQueryGetConversation from "@/src/app/hooks/useQueryGetConversation";
+import useMutationSendMessage from "@/src/app/hooks/useMutationSendMessage";
 
 export type ChatMessageType = {
   type: string;
@@ -11,6 +14,18 @@ export type ChatMessageType = {
 };
 
 export default function ChatDetailContainer() {
+  const router = useRouter();
+  const { data, loading, error } = useQueryGetConversation(
+    router.query.id as string
+  );
+  const {
+    doMutation,
+    loading: loadingSendMsg,
+    error: errorSendMsg,
+  } = useMutationSendMessage();
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [arrivalMsgs, setArrivalMsgs] = useState<ChatMessageType | null>(null);
+
   const [dummyChat, setDummyChat] = useState<ChatMessageType[]>([
     {
       type: MESSAGE_FROM_TYPE.FRIEND,
@@ -49,16 +64,70 @@ export default function ChatDetailContainer() {
       content: "Chúc em học tốt",
     },
   ]);
-  const router = useRouter();
 
-  const [fileSelected, setFileSelected] = useState(false);
+  // console.log(data);
+  // console.log(messages);
+  useEffect(() => {
+    socket.emit("add-user", "63fb30a5674a2e63cc6939ff");
+
+    socket.on("msg-receive", (data) => {
+      console.log(data);
+
+      setArrivalMsgs({ content: data.msg, type: MESSAGE_FROM_TYPE.FRIEND });
+    });
+
+    return () => {
+      socket.off("msg-receive");
+    };
+  }, []);
+  console.log(arrivalMsgs);
+
+  useEffect(() => {
+    arrivalMsgs &&
+      setMessages((msgs) => {
+        return [
+          ...msgs,
+          { content: arrivalMsgs.content, type: MESSAGE_FROM_TYPE.FRIEND },
+        ];
+      });
+  }, [arrivalMsgs]);
+
+  useEffect(() => {
+    data?.map((item: any) => {
+      setMessages((prevMsgs) => {
+        return [
+          ...prevMsgs,
+          {
+            content: item.message,
+            type:
+              item.fromId === router.query.id
+                ? MESSAGE_FROM_TYPE.FRIEND
+                : MESSAGE_FROM_TYPE.ME,
+          },
+        ];
+      });
+    });
+  }, [data]);
 
   const handleOnSendMessage = (message: ChatMessageType) => {
+    socket.emit("send-msg", {
+      senderId: "63fb30a5674a2e63cc6939ff",
+      senderName: JSON.parse(localStorage.getItem("currentUser")!)?.realName,
+      to: router.query.id,
+      msg: message.content,
+      imgUrl: "",
+      senderAvatar: "",
+    });
     const msgs = [
-      ...dummyChat,
+      ...messages,
       { content: message.content, type: message.type },
     ];
-    setDummyChat(msgs);
+    setMessages(msgs);
+    doMutation({
+      toId: router.query.id,
+      message: message.content,
+      filePath: "",
+    });
   };
 
   const getBase64Url = (img: RcFile, callback: (url: string) => void) => {
@@ -72,14 +141,19 @@ export default function ChatDetailContainer() {
     // console.log(upload.file.originFileObj);
     const file: File = event.target.files?.[0] as File;
     if (file && file.type.startsWith("image/")) {
+      // socket.emit("send-msg", {
+      //   from: "63fb30a5674a2e63cc6939ff",
+      //   to: "63f9ac55fa37d37801026d66",
+      //   msg: "123",
+      // });
       const reader = new FileReader();
       reader.onload = function (e: ProgressEvent<FileReader>) {
         const base64Url = e.target?.result as string;
         const msgs = [
-          ...dummyChat,
+          ...messages,
           { content: "", type: MESSAGE_FROM_TYPE.ME, img: base64Url },
         ];
-        setDummyChat(msgs);
+        setMessages(msgs);
       };
       reader.readAsDataURL(file);
     }
@@ -95,7 +169,7 @@ export default function ChatDetailContainer() {
 
   return (
     <ChatDetail
-      messages={dummyChat}
+      messages={messages}
       handleOnSendMsg={handleOnSendMessage}
       templateMsgs={dummyTemplate}
       handleOnAddMsgTemplate={handleOnAddMsgTemplate}

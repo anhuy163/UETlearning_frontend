@@ -10,6 +10,7 @@ import FormWrapper from "@/src/containers/FormWrapper/FormWrapper";
 import styles from "./styles.module.less";
 import { useRouter } from "next/router";
 import { LoginBody } from "@/src/app/hooks/useAuth";
+import { useEffect } from "react";
 
 type LoginFormProps = {
   onFinish: (value: LoginBody) => void;

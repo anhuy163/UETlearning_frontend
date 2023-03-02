@@ -13,18 +13,49 @@ import { AVATAR_SIZE, PROFILE_PATH } from "@/src/app/constants";
 import { testAvatarSrc } from "@/src/app/constants";
 import ChatCard from "../ChatCard";
 import { dummnyData } from "@/src/app/constants";
+import useQueryGetContacts from "@/src/app/hooks/useQueryGetContacts";
+import socket from "@/src/app/socket";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "@/src/app/hooks/useRedux";
+import { setContacts } from "@/src/app/redux/slice/contactsSlice";
 
 const { Sider } = Layout;
 
 export function MySideBar() {
-  const router = useRouter();
-  const menuItems = [
-    getMenuItem("Gần đây", "sub1", <UserOutlined />, [
-      getMenuItem("Tom", "3"),
-      getMenuItem("Bill", "4"),
-      getMenuItem("Alex", "5"),
-    ]),
-  ];
+  const { data, loading, error } = useQueryGetContacts();
+  const dispatch = useAppDispatch();
+  const [contacts, setContacts] = useState(data);
+  useEffect(() => {
+    if (data) setContacts(data);
+  }, [data]);
+  useEffect(() => {
+    socket.on("typingMessageGet", (data) => {
+      // console.log(data.senderId);
+      // console.log(typeof data.senderId);
+      // console.log(contacts);
+
+      const updatedContacts: any = [...contacts];
+      // console.log(updatedContacts);
+
+      const updatedContactIndex = updatedContacts.findIndex(
+        (item: any) => item.student.id === data.senderId
+      );
+      console.log(updatedContactIndex);
+      if (updatedContactIndex !== -1) {
+        updatedContacts[updatedContactIndex] = {
+          ...(updatedContacts[updatedContactIndex] as any),
+          lastMessage: data.msg,
+        };
+
+        setContacts(updatedContacts);
+      }
+    });
+
+    return () => {
+      socket.off("typingMessageGet");
+    };
+  }, [contacts]);
+
   return (
     <Sider className={styles.sider}>
       <div className='flex items-center justify-cener pt-4 pl-6'>
@@ -67,14 +98,17 @@ export function MySideBar() {
           <p className='ml-2'> Liên hệ gần đây</p>
         </div>
         <div className='overflow-y-hidden hover:overflow-y-scroll max-h-[calc(100vh_-_350px)] overflow-x-hidden bg-slate-900'>
-          {dummnyData?.map((item) => (
-            <ChatCard
-              key={item.id}
-              name={item?.name}
-              lastMessage={item?.lastMessage}
-              chatId={item?.id}
-            />
-          ))}
+          {!loading &&
+            contacts?.map((item: any) => {
+              return (
+                <ChatCard
+                  key={item.id}
+                  name={item.student.realName}
+                  chatId={item.student.id}
+                  lastMessage={item.lastMessage}
+                />
+              );
+            })}
         </div>
       </div>
     </Sider>

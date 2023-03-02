@@ -37,11 +37,15 @@ export default function ChatDetail({
   handleOnAddMsgTemplate,
   handleOnSendImg,
 }: ChatDetailProps) {
-  console.log(messages);
+  // console.log(messages);
 
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showPopupTemplate, setShowPopupTemplate] = useState(false);
+
+  useEffect(() => {
+    // console.log(123);
+  }, []);
 
   const onOpenPopupAddTemplate = () => {
     setShowPopupTemplate(true);
@@ -56,6 +60,7 @@ export default function ChatDetail({
   };
   const onSendMessage = () => {
     handleOnSendMsg({ content: msg, type: MESSAGE_FROM_TYPE.ME });
+
     setShowEmojiPicker(false);
     setMsg("");
   };
@@ -170,7 +175,7 @@ export default function ChatDetail({
             <Tooltip placement='top' title='Thêm mẫu tin nhắn'>
               <Button
                 onClick={onOpenPopupAddTemplate}
-                className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+                className='ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
                 <PlusCircleOutlined />
               </Button>
             </Tooltip>
@@ -184,13 +189,13 @@ export default function ChatDetail({
           <div className={clsx(styles.emoji)}>
             <Button
               onClick={handleShowEmojiPicker}
-              className='mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+              className='mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
               <SmileOutlined />
             </Button>
           </div>
           <Button
             onClick={handleSendImageBtn}
-            className='mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+            className='mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
             <FileImageOutlined />
           </Button>
 
@@ -222,7 +227,7 @@ export default function ChatDetail({
 
           <Button
             onClick={onSendMessage}
-            className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+            className='ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
             <SendOutlined />
           </Button>
         </div>

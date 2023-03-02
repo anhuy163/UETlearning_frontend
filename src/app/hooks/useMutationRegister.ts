@@ -15,7 +15,7 @@ export type RegisterBody = {
   status: number;
   point: number;
   course: number;
-  subject: string;
+  subjects: string[];
 };
 
 const useMutationRegister = () => {
@@ -30,8 +30,8 @@ const useMutationRegister = () => {
   const register = (body: RegisterBody) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await mutateAsync(body);
-        resolve(result);
+        const result = await mutateAsync(body as never);
+        resolve(result as never);
       } catch (error) {
         reject(error);
       }
