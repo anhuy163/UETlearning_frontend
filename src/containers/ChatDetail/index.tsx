@@ -1,4 +1,4 @@
-import { MESSAGE_FROM_TYPE } from "@/src/app/constants";
+import { MESSAGE_FROM_TYPE, SERVER_BASE_URL } from "@/src/app/constants";
 import ChatDetail from "@/src/components/ChatDetail";
 import { RcFile } from "antd/es/upload";
 import { useRouter } from "next/router";
@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import socket from "@/src/app/socket";
 import useQueryGetConversation from "@/src/app/hooks/useQueryGetConversation";
 import useMutationSendMessage from "@/src/app/hooks/useMutationSendMessage";
+import axios from "axios";
+import { updateContactsByMsg } from "@/src/app/redux/slice/contactsSlice";
+import { useAppDispatch } from "@/src/app/hooks/useRedux";
 
 export type ChatMessageType = {
   type: string;
@@ -15,16 +18,26 @@ export type ChatMessageType = {
 
 export default function ChatDetailContainer() {
   const router = useRouter();
-  const { data, loading, error } = useQueryGetConversation(
-    router.query.id as string
-  );
+  const [params, setParams] = useState(0);
+  // const { data, loading, error } = useQueryGetConversation(
+  //   router.query.id as string,
+  //   params
+  // );
+  const dispatch = useAppDispatch();
+
+  const handleOnScrollChat = () => {
+    setParams((prev) => {
+      return prev + 1;
+    });
+  };
+
   const {
     doMutation,
     loading: loadingSendMsg,
     error: errorSendMsg,
   } = useMutationSendMessage();
-  const [messages, setMessages] = useState<ChatMessageType[]>([]);
-  const [arrivalMsgs, setArrivalMsgs] = useState<ChatMessageType | null>(null);
+  const [messages, setMessages] = useState<any>([]);
+  const [arrivalMsgs, setArrivalMsgs] = useState<any>(null);
 
   const [dummyChat, setDummyChat] = useState<ChatMessageType[]>([
     {
@@ -65,49 +78,53 @@ export default function ChatDetailContainer() {
     },
   ]);
 
-  // console.log(data);
-  // console.log(messages);
   useEffect(() => {
     socket.emit("add-user", "63fb30a5674a2e63cc6939ff");
 
     socket.on("msg-receive", (data) => {
       console.log(data);
 
-      setArrivalMsgs({ content: data.msg, type: MESSAGE_FROM_TYPE.FRIEND });
+      setArrivalMsgs({
+        filePath: "",
+        fromId: data.senderId,
+        message: data.msg,
+      });
     });
 
     return () => {
       socket.off("msg-receive");
     };
   }, []);
-  console.log(arrivalMsgs);
 
   useEffect(() => {
     arrivalMsgs &&
-      setMessages((msgs) => {
-        return [
-          ...msgs,
-          { content: arrivalMsgs.content, type: MESSAGE_FROM_TYPE.FRIEND },
-        ];
+      setMessages((msgs: any) => {
+        return [...msgs, arrivalMsgs];
       });
   }, [arrivalMsgs]);
 
   useEffect(() => {
-    data?.map((item: any) => {
-      setMessages((prevMsgs) => {
-        return [
-          ...prevMsgs,
-          {
-            content: item.message,
-            type:
-              item.fromId === router.query.id
-                ? MESSAGE_FROM_TYPE.FRIEND
-                : MESSAGE_FROM_TYPE.ME,
-          },
-        ];
-      });
-    });
-  }, [data]);
+    const getData = async () => {
+      try {
+        const res = await axios.get(
+          `${SERVER_BASE_URL}/chat/getMessage?studentId=${
+            router.query.id
+          }&teacherId=${
+            JSON.parse(localStorage.getItem("currentUser")!).id
+          }&page=${params}&size=20`,
+          { headers: { Authorization: localStorage.getItem("token") } }
+        );
+
+        setMessages((prevMsgs: any) => {
+          return [...res.data.object, ...prevMsgs];
+        });
+        return res.data.object;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, [params]);
 
   const handleOnSendMessage = (message: ChatMessageType) => {
     socket.emit("send-msg", {
@@ -120,9 +137,16 @@ export default function ChatDetailContainer() {
     });
     const msgs = [
       ...messages,
-      { content: message.content, type: message.type },
+      {
+        filePath: "",
+        fromId: "63fb30a5674a2e63cc6939ff",
+        message: message.content,
+      },
     ];
     setMessages(msgs);
+    dispatch(
+      updateContactsByMsg({ studentId: router.query.id, msg: message.content })
+    );
     doMutation({
       toId: router.query.id,
       message: message.content,
@@ -130,12 +154,12 @@ export default function ChatDetailContainer() {
     });
   };
 
-  const getBase64Url = (img: RcFile, callback: (url: string) => void) => {
-    const reader = new FileReader();
+  // const getBase64Url = (img: RcFile, callback: (url: string) => void) => {
+  //   const reader = new FileReader();
 
-    reader.addEventListener("load", () => callback(reader.result as string));
-    reader.readAsDataURL(img);
-  };
+  //   reader.addEventListener("load", () => callback(reader.result as string));
+  //   reader.readAsDataURL(img);
+  // };
 
   const handleOnSendImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(upload.file.originFileObj);
@@ -174,6 +198,7 @@ export default function ChatDetailContainer() {
       templateMsgs={dummyTemplate}
       handleOnAddMsgTemplate={handleOnAddMsgTemplate}
       handleOnSendImg={handleOnSendImg}
+      handleOnScrollChat={handleOnScrollChat}
     />
   );
 }

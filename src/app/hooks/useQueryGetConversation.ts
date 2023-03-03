@@ -2,14 +2,14 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../constants";
 
-const useQueryGetConversation = (studentId: string) => {
+const useQueryGetConversation = (studentId: string, page: number) => {
   //   console.log(localStorage.getItem("currentUser"));
 
-  const queryFn = (studentId: string) => {
+  const queryFn = () => {
     return axios.get(
       `${SERVER_BASE_URL}/chat/getMessage?studentId=${studentId}&teacherId=${
         JSON.parse(localStorage.getItem("currentUser")!).id
-      }&page=0&size=20`,
+      }&page=${page}&size=20`,
       { headers: { Authorization: localStorage.getItem("token") } }
     );
   };
@@ -20,7 +20,7 @@ const useQueryGetConversation = (studentId: string) => {
     error,
   } = useQuery({
     queryKey: "useQueryGetConversation",
-    queryFn: () => queryFn(studentId),
+    queryFn: () => queryFn(),
   });
 
   return { data: (result as any)?.data?.object || [], loading, error };

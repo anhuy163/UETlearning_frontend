@@ -1,11 +1,13 @@
 import LayoutContainer from "@/src/containers/Layout";
 import PostContainer from "@/src/containers/Post";
+import TeachingScheduleContainer from "@/src/containers/TeachingSchedule";
 
 export default function Home() {
   return (
     <LayoutContainer title='Trang chủ'>
       <div className='w-full rounded-md overflow-auto pt-3 '>
-        <PostContainer
+        <TeachingScheduleContainer />
+        {/* <PostContainer
           id='1'
           name='Bakugo Katsuki'
           content='alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'
@@ -14,7 +16,7 @@ export default function Home() {
           id='2'
           name='Bakugo Katsuki'
           content='alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'
-        />
+        /> */}
       </div>
     </LayoutContainer>
   );

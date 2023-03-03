@@ -27,7 +27,7 @@ export default function ChatCard({ name, lastMessage, chatId }: ChatCardProps) {
           styles.container
         )}>
         <div className='min-w-[50px]'>
-          <UserAvatar size={AVATAR_SIZE.SMALL} name='An Huy' />
+          <UserAvatar size={AVATAR_SIZE.SMALL} name={name} />
         </div>
         <div className='ml-3 min-w-[calc(100%_-_50px)]'>
           <p

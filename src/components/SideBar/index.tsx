@@ -9,52 +9,67 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./styles.module.less";
 import UserAvatar from "../UserAvatar";
-import { AVATAR_SIZE, PROFILE_PATH } from "@/src/app/constants";
+import {
+  AVATAR_SIZE,
+  PROFILE_PATH,
+  SERVER_BASE_URL,
+} from "@/src/app/constants";
 import { testAvatarSrc } from "@/src/app/constants";
 import ChatCard from "../ChatCard";
 import { dummnyData } from "@/src/app/constants";
 import useQueryGetContacts from "@/src/app/hooks/useQueryGetContacts";
 import socket from "@/src/app/socket";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/src/app/hooks/useRedux";
-import { setContacts } from "@/src/app/redux/slice/contactsSlice";
+import { useAppDispatch, useAppSelector } from "@/src/app/hooks/useRedux";
+import {
+  setContacts,
+  updateContactsByMsg,
+} from "@/src/app/redux/slice/contactsSlice";
+import axios from "axios";
 
 const { Sider } = Layout;
 
 export function MySideBar() {
   const { data, loading, error } = useQueryGetContacts();
   const dispatch = useAppDispatch();
-  const [contacts, setContacts] = useState(data);
+  const contacts = useAppSelector((state) => state.contacts);
+
+  const getContactsData = async () => {
+    try {
+      const res = await axios.get(`${SERVER_BASE_URL}/chat/teacher`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+      dispatch(setContacts(res.data.object));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(contacts);
+
   useEffect(() => {
-    if (data) setContacts(data);
-  }, [data]);
+    getContactsData();
+    // if (data.length) {
+    //   // setContactsState(data);
+    //   dispatch(setContacts(data));
+    // }
+  }, []);
   useEffect(() => {
     socket.on("typingMessageGet", (data) => {
-      // console.log(data.senderId);
-      // console.log(typeof data.senderId);
-      // console.log(contacts);
-
-      const updatedContacts: any = [...contacts];
-      // console.log(updatedContacts);
-
-      const updatedContactIndex = updatedContacts.findIndex(
-        (item: any) => item.student.id === data.senderId
+      dispatch(
+        updateContactsByMsg({
+          studentId: data.senderId,
+          msg: data.msg,
+          senderName: data.senderName,
+          senderAvatar: data.senderAvatar,
+        })
       );
-      console.log(updatedContactIndex);
-      if (updatedContactIndex !== -1) {
-        updatedContacts[updatedContactIndex] = {
-          ...(updatedContacts[updatedContactIndex] as any),
-          lastMessage: data.msg,
-        };
-
-        setContacts(updatedContacts);
-      }
     });
 
     return () => {
       socket.off("typingMessageGet");
     };
-  }, [contacts]);
+  }, []);
 
   return (
     <Sider className={styles.sider}>

@@ -21,13 +21,15 @@ import PopupStudentNoteContainer from "@/src/containers/PopupStudentNote";
 import { ChatMessageType } from "@/src/containers/ChatDetail";
 import EmojiPicker from "emoji-picker-react";
 import PopupAddMsgTemplateContainer from "@/src/containers/PopupAddMsgTemplate";
+import { useRouter } from "next/router";
 
 type ChatDetailProps = {
-  messages: ChatMessageType[];
+  messages: [];
   templateMsgs: ChatMessageType[];
   handleOnSendMsg: (msg: ChatMessageType) => void;
   handleOnAddMsgTemplate: (msg: string) => void;
   handleOnSendImg: (upload: any) => void;
+  handleOnScrollChat: () => void;
 };
 
 export default function ChatDetail({
@@ -36,16 +38,33 @@ export default function ChatDetail({
   templateMsgs,
   handleOnAddMsgTemplate,
   handleOnSendImg,
+  handleOnScrollChat,
 }: ChatDetailProps) {
   // console.log(messages);
+
+  const router = useRouter();
 
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showPopupTemplate, setShowPopupTemplate] = useState(false);
+  const [toggleScrollToBottom, setToggleScrollToBottom] = useState(true);
 
-  useEffect(() => {
-    // console.log(123);
-  }, []);
+  // useEffect(() => {
+  //   messages.map((item: any) => {
+  //     setMsgs((prevMsgs) => {
+  //       return [
+  //         ...prevMsgs,
+  //         {
+  //           content: item.message,
+  //           type:
+  //             item.fromId === router.query.id
+  //               ? MESSAGE_FROM_TYPE.FRIEND
+  //               : MESSAGE_FROM_TYPE.ME,
+  //         },
+  //       ];
+  //     });
+  //   });
+  // }, [messages]);
 
   const onOpenPopupAddTemplate = () => {
     setShowPopupTemplate(true);
@@ -59,12 +78,14 @@ export default function ChatDetail({
     setShowEmojiPicker(!showEmojiPicker);
   };
   const onSendMessage = () => {
+    setToggleScrollToBottom(true);
     handleOnSendMsg({ content: msg, type: MESSAGE_FROM_TYPE.ME });
 
     setShowEmojiPicker(false);
     setMsg("");
   };
   const onSendTemplateMessage = (item: ChatMessageType) => {
+    setToggleScrollToBottom(true);
     handleOnSendMsg({ content: item.content, type: item.type });
   };
   const handleEmojiClick = (emojiObject: any, event: any) => {
@@ -86,21 +107,50 @@ export default function ChatDetail({
   const onClosePopupNote = () => {
     setTogglePopupNote(false);
   };
-  const chatBoxRef = useRef<HTMLElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const prevHeightRef = useRef<number | null | undefined>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const handleSendImageBtn = () => {
     imageInputRef.current?.click();
   };
-  // useEffect(() => {
-  //   // console.log(chatBoxRef.current?.scrollHeight);
-
-  //   chatBoxRef.current?.scrollTo(0, chatBoxRef.current?.scrollHeight);
-  // }, [chatBoxRef]);
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = chatBoxRef.current;
+    const newHeight = container?.scrollHeight;
+    if (prevHeightRef.current && newHeight) {
+      const heightDiff = newHeight - prevHeightRef.current;
+      container.scrollTop += heightDiff;
+    }
+    prevHeightRef.current = newHeight;
   }, [messages]);
+
+  useEffect(() => {
+    if (toggleScrollToBottom && messages.length) {
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      setToggleScrollToBottom(false);
+    }
+  }, [messages, toggleScrollToBottom]);
+
+  useEffect(() => {
+    const handleOnScrollChatToTop = () => {
+      if (chatBoxRef.current?.scrollTop === 0) {
+        handleOnScrollChat();
+      }
+    };
+
+    chatBoxRef.current &&
+      chatBoxRef.current?.addEventListener("scroll", handleOnScrollChatToTop);
+
+    return () => {
+      chatBoxRef.current &&
+        chatBoxRef.current?.removeEventListener(
+          "scroll",
+          handleOnScrollChatToTop
+        );
+    };
+  }, [handleOnScrollChat]);
+
   return (
     <div
       className={clsx(
@@ -133,17 +183,21 @@ export default function ChatDetail({
         </p>
       </div>
       <div
-        ref={chatBoxRef as React.RefObject<HTMLDivElement>}
+        ref={chatBoxRef}
         className={clsx(
           styles.chatDetailContent,
           "p-2 min-w-full min-h-[calc(100vh_-_500px)] flex-1 overflow-x-hidden"
         )}>
-        {messages?.map((item, index: any) => {
+        {messages?.map((item: any, index: any) => {
           return (
             <div key={index} ref={scrollRef}>
               <ChatMessage
-                type={item.type}
-                content={item.content}
+                type={
+                  item.fromId === router.query.id
+                    ? MESSAGE_FROM_TYPE.FRIEND
+                    : MESSAGE_FROM_TYPE.ME
+                }
+                content={item.message}
                 img={item?.img}
               />
             </div>
