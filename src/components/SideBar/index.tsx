@@ -40,6 +40,8 @@ export function MySideBar() {
       const res = await axios.get(`${SERVER_BASE_URL}/chat/teacher`, {
         headers: { Authorization: localStorage.getItem("token") },
       });
+      // console.log(res.data.object);
+
       dispatch(setContacts(res.data.object));
     } catch (error) {
       console.log(error);
@@ -55,24 +57,25 @@ export function MySideBar() {
     //   dispatch(setContacts(data));
     // }
   }, []);
-  useEffect(() => {
-    socket.on("typingMessageGet", (data) => {
-      console.log(data);
+  // useEffect(() => {
+  //   socket.on("typingMessageGet", (data) => {
+  //     console.log(data);
 
-      dispatch(
-        updateContactsByMsg({
-          studentId: data.senderId,
-          msg: data.msg,
-          senderName: data.senderName,
-          senderAvatar: data.senderAvatar,
-        })
-      );
-    });
+  //     dispatch(
+  //       updateContactsByMsg({
+  //         studentId: data.senderId,
+  //         msg: data.msg,
+  //         senderName: data.senderName,
+  //         senderAvatar: data.senderAvatar,
+  //         filePath: data.imgSrc,
+  //       })
+  //     );
+  //   });
 
-    return () => {
-      socket.off("typingMessageGet");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("typingMessageGet");
+  //   };
+  // }, []);
 
   return (
     <Sider className={styles.sider}>
@@ -87,23 +90,15 @@ export function MySideBar() {
           <div className='font-mono text-white text-xl '>Bakugo Katsuki </div>
           <div className='font-mono text-slate-300 text-xs'>1234 Points</div>
           <div className={styles.activeContainer}>
-            {/* <Tooltip title='Trạng thái của bạn' placement='right'> */}
             <Switch
               loading={false}
               checkedChildren='Online'
               unCheckedChildren='Offline'
             />
-            {/* </Tooltip> */}
           </div>
         </div>
       </div>
 
-      {/* <Menu
-        theme='dark'
-        items={menuItems}
-        defaultSelectedKeys={[router.pathname]}
-        mode='inline'
-      /> */}
       <div className='w-full p-2 mt-4 '>
         <div className='flex items-center text-white mb-3 text-xl pl-2'>
           <UserOutlined />
@@ -123,7 +118,8 @@ export function MySideBar() {
                   key={item.id}
                   name={item.student.realName}
                   chatId={item.student.id}
-                  lastMessage={item.lastMessage}
+                  lastMessage={item.lastMessage ? item.lastMessage : "Hình ảnh"}
+                  read={item.readTeacherSize}
                 />
               );
             })}

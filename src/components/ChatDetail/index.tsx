@@ -40,31 +40,12 @@ export default function ChatDetail({
   handleOnSendImg,
   handleOnScrollChat,
 }: ChatDetailProps) {
-  // console.log(messages);
-
   const router = useRouter();
 
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showPopupTemplate, setShowPopupTemplate] = useState(false);
   const [toggleScrollToBottom, setToggleScrollToBottom] = useState(true);
-
-  // useEffect(() => {
-  //   messages.map((item: any) => {
-  //     setMsgs((prevMsgs) => {
-  //       return [
-  //         ...prevMsgs,
-  //         {
-  //           content: item.message,
-  //           type:
-  //             item.fromId === router.query.id
-  //               ? MESSAGE_FROM_TYPE.FRIEND
-  //               : MESSAGE_FROM_TYPE.ME,
-  //         },
-  //       ];
-  //     });
-  //   });
-  // }, [messages]);
 
   const onOpenPopupAddTemplate = () => {
     setShowPopupTemplate(true);
@@ -198,7 +179,7 @@ export default function ChatDetail({
                     : MESSAGE_FROM_TYPE.ME
                 }
                 content={item.message}
-                img={item?.img}
+                img={item?.filePath}
               />
             </div>
           );

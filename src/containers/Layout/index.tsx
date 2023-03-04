@@ -31,6 +31,8 @@ import {
 import NotificationPopupContainer from "../NotificationPopupContainer";
 import useAuth from "@/src/app/hooks/useAuth";
 import clsx from "clsx";
+import logo_src from "../../app/assets/app_logo.png";
+import Image from "next/image";
 
 type LayoutProps = {
   title: string;
@@ -99,8 +101,15 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
           <Layout>
             <Header>
               <div className='flex items-center justify-between min-w-full'>
-                <div className='flex items-center justify-center text-2xl font-bold text-slate-900 w-48'>
-                  <Link href={"/"}>UET learning</Link>
+                <div className='flex items-center justify-center text-2xl font-bold text-slate-900 w-48 ml-10'>
+                  <Image
+                    onClick={() => {
+                      router.pathname !== HOME_PATH && router.push(HOME_PATH);
+                    }}
+                    className='h-[50px] object-contain hover:cursor-pointer'
+                    src={logo_src}
+                    alt='logo'
+                  />
                 </div>
                 <div className=' flex items-center justify-between pr-8 w-[30%]'>
                   <div className='w-[80%]'>

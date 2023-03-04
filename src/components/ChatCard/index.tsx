@@ -12,8 +12,14 @@ type ChatCardProps = {
   name: string;
   lastMessage: string;
   chatId: string;
+  read: boolean;
 };
-export default function ChatCard({ name, lastMessage, chatId }: ChatCardProps) {
+export default function ChatCard({
+  name,
+  lastMessage,
+  chatId,
+  read,
+}: ChatCardProps) {
   const router = useRouter();
   const { id } = router.query;
   return (
@@ -22,7 +28,9 @@ export default function ChatCard({ name, lastMessage, chatId }: ChatCardProps) {
         className={clsx(
           id === chatId
             ? "bg-gray-500"
-            : "hover:bg-slate-800 transition-all ease-in duration-100",
+            : read
+            ? "hover:bg-slate-800 transition-all ease-in duration-100"
+            : "bg-slate-800",
           "flex items-center rounded-md w-[100%] p-2 mb-2 ",
           styles.container
         )}>
@@ -33,7 +41,7 @@ export default function ChatCard({ name, lastMessage, chatId }: ChatCardProps) {
           <p
             className={clsx(
               id === chatId
-                ? "text-xl text-gray-50 font-mono font-bold max-w-[206px]"
+                ? "text-xl text-white font-mono font-bold max-w-[206px]"
                 : "text-xl text-gray-400 font-mono max-w-[206px]",
               styles.chatName
             )}>
@@ -43,10 +51,12 @@ export default function ChatCard({ name, lastMessage, chatId }: ChatCardProps) {
             className={clsx(
               id === chatId
                 ? "font-light text-gray-50 max-w-[100%]"
-                : " text-gray-500 max-w-[206px]",
+                : read
+                ? " text-gray-500 max-w-[206px]"
+                : "text-white font-semibold",
               styles.chatContent
             )}>
-            {lastMessage}
+            {!read && id !== chatId ? "Tin nhắn mới" : lastMessage}
           </p>
         </div>
       </div>

@@ -5,7 +5,7 @@ import TeachingScheduleContainer from "@/src/containers/TeachingSchedule";
 export default function Home() {
   return (
     <LayoutContainer title='Trang chủ'>
-      <div className='w-full rounded-md overflow-auto pt-3 '>
+      <div className='w-full  h-[calc(100vh_-_80px)]  py-12 mt-2 bg-white rounded-md flex items-center justify-center text-center'>
         <TeachingScheduleContainer />
         {/* <PostContainer
           id='1'

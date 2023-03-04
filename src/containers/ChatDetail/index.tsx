@@ -9,6 +9,7 @@ import useMutationSendMessage from "@/src/app/hooks/useMutationSendMessage";
 import axios from "axios";
 import { updateContactsByMsg } from "@/src/app/redux/slice/contactsSlice";
 import { useAppDispatch } from "@/src/app/hooks/useRedux";
+import useUploadImage from "@/src/app/hooks/useUploadImage";
 
 export type ChatMessageType = {
   type: string;
@@ -17,6 +18,7 @@ export type ChatMessageType = {
 };
 
 export default function ChatDetailContainer() {
+  const { uploadImage } = useUploadImage();
   const router = useRouter();
   const [params, setParams] = useState(0);
   // const { data, loading, error } = useQueryGetConversation(
@@ -87,8 +89,18 @@ export default function ChatDetailContainer() {
     socket.on("msg-receive", (data) => {
       console.log(data);
 
+      dispatch(
+        updateContactsByMsg({
+          studentId: data.senderId,
+          msg: data.imgUrl ? "Hình ảnh" : data.msg,
+          senderName: data.senderName,
+          senderAvatar: data.senderAvatar,
+          filePath: data.imgSrc,
+        })
+      );
+
       setArrivalMsgs({
-        filePath: "",
+        filePath: data.imgUrl,
         fromId: data.senderId,
         message: data.msg,
       });
@@ -128,33 +140,43 @@ export default function ChatDetailContainer() {
     };
     getData();
   }, [params]);
+  // console.log(messages);
 
   const handleOnSendMessage = (message: ChatMessageType) => {
-    socket.emit("send-msg", {
-      senderId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
-      senderName: JSON.parse(localStorage.getItem("currentUser")!)?.realName,
-      to: router.query.id,
-      msg: message.content,
-      imgUrl: "",
-      senderAvatar: "",
-    });
-    const msgs = [
-      ...messages,
-      {
-        filePath: "",
-        fromId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
+    if (message.content) {
+      console.log(message);
+
+      socket.emit("send-msg", {
+        senderId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
+        senderName: JSON.parse(localStorage.getItem("currentUser")!)?.realName,
+        to: router.query.id,
+        msg: message.content,
+        imgUrl: "",
+        senderAvatar: "",
+      });
+
+      const msgs = [
+        ...messages,
+        {
+          filePath: "",
+          fromId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
+          message: message.content,
+        },
+      ];
+      setMessages(msgs);
+      dispatch(
+        updateContactsByMsg({
+          studentId: router.query.id,
+          msg: message.content,
+        })
+      );
+      doMutation({
+        toId: router.query.id,
         message: message.content,
-      },
-    ];
-    setMessages(msgs);
-    dispatch(
-      updateContactsByMsg({ studentId: router.query.id, msg: message.content })
-    );
-    doMutation({
-      toId: router.query.id,
-      message: message.content,
-      filePath: "",
-    });
+        filePath: "",
+      });
+    }
+    return;
   };
 
   // const getBase64Url = (img: RcFile, callback: (url: string) => void) => {
@@ -165,26 +187,44 @@ export default function ChatDetailContainer() {
   // };
 
   const handleOnSendImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(upload.file.originFileObj);
     const file: File = event.target.files?.[0] as File;
     if (file && file.type.startsWith("image/")) {
-      // socket.emit("send-msg", {
-      //   from: "63fb30a5674a2e63cc6939ff",
-      //   to: "63f9ac55fa37d37801026d66",
-      //   msg: "123",
-      // });
+      dispatch(
+        updateContactsByMsg({
+          studentId: router.query.id,
+          msg: "Hình ảnh",
+        })
+      );
+      uploadImage(file).then((res) => {
+        doMutation({
+          toId: router.query.id,
+          message: "",
+          filePath: (res as any).location,
+        });
+        socket.emit("send-msg", {
+          senderId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
+          senderName: JSON.parse(localStorage.getItem("currentUser")!)
+            ?.realName,
+          to: router.query.id,
+          msg: "",
+          imgUrl: (res as any).location,
+          senderAvatar: "",
+        });
+      });
+
       const reader = new FileReader();
       reader.onload = function (e: ProgressEvent<FileReader>) {
         const base64Url = e.target?.result as string;
         const msgs = [
           ...messages,
-          { content: "", type: MESSAGE_FROM_TYPE.ME, img: base64Url },
+          { message: "", type: MESSAGE_FROM_TYPE.ME, filePath: base64Url },
         ];
         setMessages(msgs);
       };
       reader.readAsDataURL(file);
     }
   };
+  // console.log(messages);
 
   const handleOnAddMsgTemplate = (msg: string) => {
     const templates = [
