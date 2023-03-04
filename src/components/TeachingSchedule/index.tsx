@@ -6,18 +6,18 @@ import moment from "moment";
 const localizer = momentLocalizer(moment);
 export default function TeachingSchedule() {
   const formats = {
-    eventTimeRangeFormat: ({ start, end }) => {
+    eventTimeRangeFormat: ({ start, end }: any) => {
       const formattedStart = moment(start).format("h:mm a");
       const formattedEnd = moment(end).format("h:mm a");
       return `${formattedStart} - ${formattedEnd}`;
     },
-    dayHeaderFormat: (date) => {
+    dayHeaderFormat: (date: Date) => {
       return moment(date).format("ddd, MMM D");
     },
-    eventDateFormat: (date) => {
+    eventDateFormat: (date: Date) => {
       return moment(date).format("ddd, MMM D");
     },
-    agendaDateFormat: (date) => {
+    agendaDateFormat: (date: Date) => {
       return moment(date).format("ddd, MMM D");
     },
   };

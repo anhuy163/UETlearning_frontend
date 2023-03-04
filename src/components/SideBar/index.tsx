@@ -33,6 +33,7 @@ export function MySideBar() {
   const { data, loading, error } = useQueryGetContacts();
   const dispatch = useAppDispatch();
   const contacts = useAppSelector((state) => state.contacts);
+  // console.log(contacts);
 
   const getContactsData = async () => {
     try {
@@ -45,7 +46,7 @@ export function MySideBar() {
     }
   };
 
-  console.log(contacts);
+  // console.log(contacts);
 
   useEffect(() => {
     getContactsData();
@@ -56,6 +57,8 @@ export function MySideBar() {
   }, []);
   useEffect(() => {
     socket.on("typingMessageGet", (data) => {
+      console.log(data);
+
       dispatch(
         updateContactsByMsg({
           studentId: data.senderId,

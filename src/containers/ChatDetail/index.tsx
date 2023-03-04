@@ -79,7 +79,10 @@ export default function ChatDetailContainer() {
   ]);
 
   useEffect(() => {
-    socket.emit("add-user", "63fb30a5674a2e63cc6939ff");
+    socket.emit(
+      "add-user",
+      JSON.parse(localStorage.getItem("currentUser")!)?.id
+    );
 
     socket.on("msg-receive", (data) => {
       console.log(data);
@@ -128,7 +131,7 @@ export default function ChatDetailContainer() {
 
   const handleOnSendMessage = (message: ChatMessageType) => {
     socket.emit("send-msg", {
-      senderId: "63fb30a5674a2e63cc6939ff",
+      senderId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
       senderName: JSON.parse(localStorage.getItem("currentUser")!)?.realName,
       to: router.query.id,
       msg: message.content,
@@ -139,7 +142,7 @@ export default function ChatDetailContainer() {
       ...messages,
       {
         filePath: "",
-        fromId: "63fb30a5674a2e63cc6939ff",
+        fromId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
         message: message.content,
       },
     ];
