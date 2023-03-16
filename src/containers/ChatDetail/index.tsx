@@ -8,8 +8,9 @@ import useQueryGetConversation from "@/src/app/hooks/useQueryGetConversation";
 import useMutationSendMessage from "@/src/app/hooks/useMutationSendMessage";
 import axios from "axios";
 import { updateContactsByMsg } from "@/src/app/redux/slice/contactsSlice";
-import { useAppDispatch } from "@/src/app/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@/src/app/hooks/useRedux";
 import useUploadImage from "@/src/app/hooks/useUploadImage";
+import useMutationReadChat from "@/src/app/hooks/useMutationReadChat";
 
 export type ChatMessageType = {
   type: string;
@@ -21,10 +22,8 @@ export default function ChatDetailContainer() {
   const { uploadImage } = useUploadImage();
   const router = useRouter();
   const [params, setParams] = useState(0);
-  // const { data, loading, error } = useQueryGetConversation(
-  //   router.query.id as string,
-  //   params
-  // );
+
+  const contacts = useAppSelector((state) => state.contacts);
   const dispatch = useAppDispatch();
 
   const handleOnScrollChat = () => {
@@ -38,8 +37,12 @@ export default function ChatDetailContainer() {
     loading: loadingSendMsg,
     error: errorSendMsg,
   } = useMutationSendMessage();
+  const { doMutation: readChatHandler, error: readingChatError } =
+    useMutationReadChat();
   const [messages, setMessages] = useState<any>([]);
   const [arrivalMsgs, setArrivalMsgs] = useState<any>(null);
+  const [studentName, setStudentName] = useState("");
+  const [studentAva, setStudentAva] = useState("");
 
   const [dummyChat, setDummyChat] = useState<ChatMessageType[]>([
     {
@@ -79,6 +82,17 @@ export default function ChatDetailContainer() {
       content: "Chúc em học tốt",
     },
   ]);
+
+  // console.log(contacts);
+
+  useEffect(() => {
+    const selectedContact = contacts.find(
+      (item: any) => item.student.id === router.query.id
+    );
+    console.log(selectedContact);
+
+    readChatHandler(selectedContact?.id as string);
+  }, [router.query.id, contacts]);
 
   useEffect(() => {
     socket.emit(
@@ -122,17 +136,18 @@ export default function ChatDetailContainer() {
     const getData = async () => {
       try {
         const res = await axios.get(
-          `${SERVER_BASE_URL}/chat/getMessage?studentId=${
-            router.query.id
-          }&teacherId=${
-            JSON.parse(localStorage.getItem("currentUser")!).id
-          }&page=${params}&size=20`,
+          // "http://learning-application.online/chat/teacher/getMessages?studentId=63f98bf0cd73033310d460c8&page=0&size=20",
+          `${SERVER_BASE_URL}/chat/teacher/getMessages?studentId=${router.query.id}&page=${params}&size=20`,
           { headers: { Authorization: localStorage.getItem("token") } }
         );
 
         setMessages((prevMsgs: any) => {
-          return [...res.data.object, ...prevMsgs];
+          return [...res.data.object.messageResponses, ...prevMsgs];
         });
+        // console.log(res.data.object);
+        setStudentName((res as any)?.data?.object?.studentDTO?.realName);
+        setStudentAva((res as any).data.object.studentDTO.avaPath);
+
         return res.data.object;
       } catch (error) {
         console.log(error);
@@ -242,6 +257,8 @@ export default function ChatDetailContainer() {
       handleOnAddMsgTemplate={handleOnAddMsgTemplate}
       handleOnSendImg={handleOnSendImg}
       handleOnScrollChat={handleOnScrollChat}
+      studentName={studentName}
+      studentAva={studentAva}
     />
   );
 }

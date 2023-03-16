@@ -9,7 +9,7 @@ export default function LoginFormContainer() {
   const handleOnLogin = (value: LoginBody) => {
     console.log(value);
 
-    login(value)
+    login({ ...value, tokenDevice: localStorage.getItem("deviceToken") })
       .then((res: any) => {
         if ((res as any).data.code !== 0)
           return showErrorMessage(ERROR_MESSAGE.LOGIN);

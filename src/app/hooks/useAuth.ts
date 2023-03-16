@@ -8,6 +8,7 @@ import axios from "axios";
 export type LoginBody = {
   email: string;
   password: string;
+  tokenDevice: any;
 };
 
 const useAuth = () => {
@@ -15,7 +16,6 @@ const useAuth = () => {
     return new Promise(async (resolve, reject) => {
       try {
         console.log("refreshing token");
-        console.log(typeof localStorage.getItem("token"));
 
         const result = await axios.post(`${SERVER_URL}/refresh_token`, null, {
           headers: {

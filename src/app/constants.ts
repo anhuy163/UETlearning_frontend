@@ -66,6 +66,7 @@ export const ERROR_MESSAGE = {
   CONFRIM_PASSWORD: "Mật khẩu nhập lại không khớp",
   LOGIN: "Tài khoản hoặc mật khẩu không đúng",
   INVALID_EMAIL: "Email không hợp lệ",
+  DELETE_EVENT: "Xóa sự kiện thất bại",
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -73,11 +74,25 @@ export const ERROR_MESSAGE = {
 export const SUCCESSFUL_MESSAGE = {
   REGISTER: "Đăng ký thành công",
   LOGIN: "Đăng nhập thành công",
+  DELETE_EVENT: "Xóa sự kiện thành công",
+  EVENT_CREATE: "Tạo sự kiện thành công",
 };
 
 /* TOKEN EXPIRATION CHECK PERIOD */
 export const TOKEN_EXPIRATION_CHECK_PERIOD_MS = 300000;
 
+/* TEXT */
+export const TEXT = {
+  BEST_ANSWER: "Câu trả lời hay nhất",
+  DIRECT_TO_POST: "Xem chi tiết",
+  DELETE_EVENT_WARNING: "Bạn có muốn xóa sự kiện này không?",
+  CANCEL: "Hủy bỏ",
+  OK: "Đồng ý",
+  ADD_EVENT_TITLE: "Thêm sự kiện",
+  EDIT_EVENT_TITLE: "Chỉnh sửa sự kiện",
+};
+
+export const HIDDEN_PASSWORD = "*******";
 export const dummnyData = [
   {
     id: "1",

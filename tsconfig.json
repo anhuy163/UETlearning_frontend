@@ -19,6 +19,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "externals.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "externals.d.ts",
+    "src/firebase-messaging-sw.js"
+  ],
   "exclude": ["node_modules"]
 }

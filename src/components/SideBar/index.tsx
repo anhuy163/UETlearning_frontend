@@ -26,6 +26,7 @@ import {
   updateContactsByMsg,
 } from "@/src/app/redux/slice/contactsSlice";
 import axios from "axios";
+import useMutationUpdateTeacherStatus from "@/src/app/hooks/useMutationUpdateTeacherStatus";
 
 const { Sider } = Layout;
 
@@ -33,7 +34,17 @@ export function MySideBar() {
   const { data, loading, error } = useQueryGetContacts();
   const dispatch = useAppDispatch();
   const contacts = useAppSelector((state) => state.contacts);
+  const user = useAppSelector((state) => state.user);
+  const { doMutation: onChangeStatus, loading: statusChanging } =
+    useMutationUpdateTeacherStatus();
   // console.log(contacts);
+
+  const handleOnStatusChange = (value: any) => {
+    if (user.status === 2) {
+      return onChangeStatus({ teacherStatus: 0 });
+    }
+    onChangeStatus({ teacherStatus: 2 });
+  };
 
   const getContactsData = async () => {
     try {
@@ -76,6 +87,7 @@ export function MySideBar() {
   //     socket.off("typingMessageGet");
   //   };
   // }, []);
+  // console.log(user.status);
 
   return (
     <Sider className={styles.sider}>
@@ -83,14 +95,18 @@ export function MySideBar() {
         <UserAvatar
           link={PROFILE_PATH}
           size={AVATAR_SIZE.AVERAGE}
-          imgSrc={testAvatarSrc}
-          name='ấ'
+          imgSrc={user.avaPath}
+          name={user.realName}
         />
         <div className='pl-3'>
-          <div className='font-mono text-white text-xl '>Bakugo Katsuki </div>
-          <div className='font-mono text-slate-300 text-xs'>1234 Points</div>
+          <div className='font-mono text-white text-xl '>{user.realName} </div>
+          <div className='font-mono text-slate-300 text-xs'>
+            {user.point} Points
+          </div>
           <div className={styles.activeContainer}>
             <Switch
+              onChange={handleOnStatusChange}
+              checked={user.status === 2 ? true : false}
               loading={false}
               checkedChildren='Online'
               unCheckedChildren='Offline'

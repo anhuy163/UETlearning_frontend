@@ -42,9 +42,14 @@ export const contactsSlice = createSlice({
         ];
       }
     },
+    getContactById: (state, { payload }) => {
+      let contact = state.filter((item: any) => item.student.id === payload);
+      return contact;
+    },
   },
 });
 
-export const { setContacts, updateContactsByMsg } = contactsSlice.actions;
+export const { setContacts, updateContactsByMsg, getContactById } =
+  contactsSlice.actions;
 // export const contacts = (state: AppState) => state.contacts;
 export default contactsSlice.reducer;

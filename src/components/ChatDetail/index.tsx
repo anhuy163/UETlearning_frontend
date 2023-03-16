@@ -30,6 +30,8 @@ type ChatDetailProps = {
   handleOnAddMsgTemplate: (msg: string) => void;
   handleOnSendImg: (upload: any) => void;
   handleOnScrollChat: () => void;
+  studentName: string;
+  studentAva: string;
 };
 
 export default function ChatDetail({
@@ -39,6 +41,8 @@ export default function ChatDetail({
   handleOnAddMsgTemplate,
   handleOnSendImg,
   handleOnScrollChat,
+  studentAva,
+  studentName,
 }: ChatDetailProps) {
   const router = useRouter();
 
@@ -132,6 +136,8 @@ export default function ChatDetail({
     };
   }, [handleOnScrollChat]);
 
+  // console.log(studentName);
+
   return (
     <div
       className={clsx(
@@ -145,12 +151,12 @@ export default function ChatDetail({
         )}>
         <div className='flex items-center'>
           <UserAvatar
-            name='An Huy'
+            name={studentName}
             size={AVATAR_SIZE.AVERAGE}
-            imgSrc={testAvatarSrc}
+            imgSrc={studentAva}
           />
           <p className='font-mono text-2xl font-bold ml-3 text-cyan-600'>
-            An Huy
+            {studentName}
           </p>
         </div>
         <p className='text-white text-2xl flex items-center'>

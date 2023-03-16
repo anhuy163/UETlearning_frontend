@@ -10,8 +10,9 @@ import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import PopupAddEventContainer from "@/src/containers/PopupAddEvent";
+import CustomEvent from "../CustomEvent/CustomEvent";
 
 // const localizer = momentLocalizer(moment);
 const locales = {
@@ -36,59 +37,43 @@ const messages = {
   time: "Time",
   event: "Event",
 };
-export default function TeachingSchedule() {
+
+type CalendarProps = {
+  onAddEvent: (event: any) => void;
+  events: EventType[];
+};
+
+export type EventType = {
+  id: string;
+  title: string;
+  description: string;
+  start: Date;
+  end: Date;
+};
+const TeachingSchedule = React.memo(function TeachingSchedule({
+  onAddEvent,
+  events,
+}: CalendarProps) {
   const [togglePopupAddEvent, setTogglePopupAddEvent] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(undefined);
+
   const onOpenTogglePopupAddEvent = () => {
     setTogglePopupAddEvent(true);
   };
   const onCloseTogglePopupAddEvent = () => {
     setTogglePopupAddEvent(false);
   };
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Big Meeting",
-      allDay: true,
-      start: new Date(2023, 2, 5),
-      end: new Date(2023, 2, 7),
-    },
-    {
-      id: 2,
-      title: "Vacation",
-      start: new Date(2023, 2, 7),
-      end: new Date(2023, 2, 8),
-    },
-    {
-      id: 3,
-      title: "Conference",
-      start: new Date(2023, 2, 8),
-      end: new Date(2023, 2, 10),
-    },
-  ]);
-
-  const handleDeleteEvent = (event: any) => {
-    console.log(event);
-
-    // Filter out the event with the matching ID
-    const updatedEvents = events.filter((e) => e.id !== event.id);
-
-    // Update the state with the new array of events
-    setEvents(updatedEvents);
+  const handleOnSelectEvent = (event: any) => {
+    setSelectedEvent(event.id);
+    setTogglePopupAddEvent(true);
   };
 
   const handleOnAddEvent = () => {
+    setSelectedEvent(undefined);
     onOpenTogglePopupAddEvent();
   };
   const handleOnSubmitEvent = (e: any) => {
-    const addedEvent = {
-      id: 4,
-      title: e.title,
-      start: new Date(e.duration[0]),
-      end: new Date(e.duration[1]),
-    };
-    setEvents((prevEvents) => {
-      return [...prevEvents, addedEvent];
-    });
+    onAddEvent(e);
     onCloseTogglePopupAddEvent();
   };
 
@@ -109,7 +94,8 @@ export default function TeachingSchedule() {
           onEventResize={(event: any) => console.log(event)}
           resizable
           tooltipAccessor={(event: any) => eventTooltip(event)}
-          onSelectEvent={handleDeleteEvent}
+          onSelectEvent={handleOnSelectEvent}
+          components={{ event: CustomEvent }}
         />
       </div>
       <Button
@@ -120,14 +106,17 @@ export default function TeachingSchedule() {
       <div className='absolute bottom-0 right-4 w-[full]'>
         <span className='text-xl text-red-500'>* </span>{" "}
         <span className='text-base font-semibold'>
-          Click vào sự kiện để xóa
+          Click vào sự kiện để chỉnh sửa
         </span>
       </div>
       <PopupAddEventContainer
         open={togglePopupAddEvent}
         onCancel={onCloseTogglePopupAddEvent}
         onFinish={handleOnSubmitEvent}
+        eventId={selectedEvent}
       />
     </div>
   );
-}
+});
+
+export default TeachingSchedule;

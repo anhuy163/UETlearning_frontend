@@ -4,11 +4,8 @@ import { SendOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
 import { AVATAR_SIZE, testAvatarSrc } from "@/src/app/constants";
 import moment from "moment";
-import Image from "next/image";
 import clsx from "clsx";
 import styles from "./styles.module.less";
-import { useDebounce } from "@/src/app/hooks/useDebounce";
-import SubComment from "../SubComment";
 import Comment from "../Comment";
 
 type PostProps = {
@@ -99,35 +96,6 @@ export default function Post(props: PostProps) {
             content='So beautiful, buddy'
             avatarSize={AVATAR_SIZE.SMALL}
           />
-          <SubComment />
-          {/* <div className='flex items-center mb-2'>
-            <div className='min-w-[50px]'>
-              <UserAvatar name='An Huy' size={AVATAR_SIZE.SMALL} />
-            </div>
-            <div className='ml-3'>
-              <p className='text-base font-semibold text-slate-800'>An Huy</p>
-              <div className={clsx(styles.commentContent, "max-w-full")}>
-                So beautiful, buddy So beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddyv
-              </div>
-            </div>
-          </div>
-          <div className='flex items-center mb-2'>
-            <UserAvatar name='An Huy' size={AVATAR_SIZE.SMALL} />
-            <div className='ml-3'>
-              <p className='text-base font-semibold text-slate-800'>An Huy</p>
-              <p>So beautiful, buddy</p>
-            </div>
-          </div>
-          <div className='flex items-center mb-2'>
-            <UserAvatar name='An Huy' size={AVATAR_SIZE.SMALL} />
-            <div className='ml-3'>
-              <p className='text-base font-semibold text-slate-800'>An Huy</p>
-              <p>So beautiful, buddy</p>
-            </div>
-          </div> */}
         </div>
       </div>
     </>
