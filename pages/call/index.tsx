@@ -5,13 +5,13 @@ import dynamic from 'next/dynamic';
 // const Videos = dynamic(() => import('../../src/components/VideoTrack'), { ssr: false })
 // const Controls = dynamic(() => import('../../src/components/ControlCall'), { ssr: false })
 const AudioCall = dynamic(() => import('../../src/containers/AudioCall'), { ssr: false });
-
+const VideoCall = dynamic(() => import('../../src/containers/VideoCall'), { ssr: false });
 
 
   
 
 export default function CallPage() {
-    const channelName = "63f9ea1afa37d37801026d6763f9a9d0a3b40178cdc9d002";
+    const channelName = "test1";
 
     const [hasCam, setHasCam] = useState(false);
 
@@ -28,8 +28,7 @@ export default function CallPage() {
     
     return(
     <LayoutContainer title="call">
-            {/* {hasCam ? (<VideoCall channelName={channelName} />) : <AudioCall channelName={channelName} />} */}
-            <AudioCall channelName={channelName} />
+            {hasCam ? (<VideoCall channelName={channelName} />) : <AudioCall channelName={channelName} />}
     </LayoutContainer>)
 }
 

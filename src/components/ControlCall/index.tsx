@@ -1,17 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from 'react'
 import styles from './styles.module.less'
-import { createScreenVideoTrack } from "agora-rtc-react";
+import dynamic from 'next/dynamic';
 
-const useScreenVideoTrack = createScreenVideoTrack({
-      encoderConfig: "720p_3",
-    });
+const ShareScreen = dynamic(() => import('../ShareScreen'), { ssr: false })
 
 export default function Controls ({ tracks, hasCam, client}: any) {
   const [trackState, setTrackState] = useState({ video: true, audio: true });
   const [shareScreen, setShareScreen] = useState(false);
 
-  const screenTracks = useScreenVideoTrack().tracks;
 
   const mute = async (type: any) => {
     if (type === "audio") {
@@ -26,25 +23,6 @@ export default function Controls ({ tracks, hasCam, client}: any) {
       });
     }
   }; 
-
-  const startShareScreen = async () => {
-    setShareScreen(true);
-    if (hasCam) {
-      await client.publish(screenTracks).catch(err => console.log(err));
-    } else {
-      await client.publish(screenTracks).catch(err => console.log(err));
-    }
-  }
-
-  const stopShareScreen = async () => {
-    if (hasCam) {
-      await client.unpublish(screenTracks).catch(err => console.log(err));
-    } else {
-      await client.unpublish(screenTracks).catch(err => console.log(err));
-    }
-    screenTracks.stop();
-    setShareScreen(false);
-  }
 
 
   const leaveChannel = async () => {
@@ -63,7 +41,7 @@ export default function Controls ({ tracks, hasCam, client}: any) {
       {hasCam ? <p className={trackState.video ? styles.on : styles.off} onClick={() => mute("video")}>
         {trackState.video ? "Tắt camera" : "Bật camera"}
       </p> : <></>}
-      {shareScreen ? <p className={styles.off} onClick={() => stopShareScreen()}>Dừng chia sẻ màn hình</p> : <p className={styles.on} onClick={() => startShareScreen()}>Chia sẻ màn hình</p>}
+      {!shareScreen ? <div onClick={() => setShareScreen(true)}>share</div> : <ShareScreen client={client} setShareScreen={setShareScreen} />}
       <p className={styles.on} onClick={() => leaveChannel()}>Leave</p>
     </div>
   );

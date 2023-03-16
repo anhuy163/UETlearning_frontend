@@ -15,7 +15,7 @@ const config = {
 
 const appId = "84e6846fa5ca43c68fe534ebd95b4730";
 const token =
-    "00684e6846fa5ca43c68fe534ebd95b4730IABN4ygJXy1shGK4I7wTnhzPjmyTP0AlBhE7wqCTC1M/+YsGlqEh39v0IgAryl/TvxQQZAQAAQAbyQ5kAgAbyQ5kAwAbyQ5kBAAbyQ5k";
+    "007eJxTYFCzqCtNXGF0vf5VN++d6XsXpbzqlujrsuZJ/SG82kRAQl6BwcIk1czCxCwt0TQ50cQ42cwiLdXU2CQ1KcXSNMnE3NiA/YpgSkMgI8OTi6LMjAwQCOKzMpSkFpcYMjAAAPm0Hek=";
 
 const useClient = createClient(config as any);
 const useMicroPhoneAudioTrack = createMicrophoneAudioTrack();
