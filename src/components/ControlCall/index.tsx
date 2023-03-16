@@ -41,7 +41,7 @@ export default function Controls ({ tracks, hasCam, client}: any) {
       {hasCam ? <p className={trackState.video ? styles.on : styles.off} onClick={() => mute("video")}>
         {trackState.video ? "Tắt camera" : "Bật camera"}
       </p> : <></>}
-      {!shareScreen ? <div onClick={() => setShareScreen(true)}>share</div> : <ShareScreen client={client} setShareScreen={setShareScreen} />}
+      {!shareScreen ? <div onClick={() => setShareScreen(true)}>share</div> : <ShareScreen client={client} setShareScreen={setShareScreen} hasCam={hasCam} tracks={tracks} />}
       <p className={styles.on} onClick={() => leaveChannel()}>Leave</p>
     </div>
   );
