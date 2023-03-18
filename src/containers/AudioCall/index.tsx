@@ -35,8 +35,8 @@ export default function AudioCall({ channelName }: any) {
         await client.subscribe(user, mediaType);
         console.log("subscribe success");
         if (mediaType === "video") {
-          setUsers((prevUsers) => {
-            return [...prevUsers, user];
+          setUsers((prevUsers: never[]) => {
+            return [...prevUsers, user as never];
           });
         }
         if (mediaType === "audio") {
@@ -51,7 +51,7 @@ export default function AudioCall({ channelName }: any) {
         }
         if (type === "video") {
           setUsers((prevUsers) => {
-            return prevUsers.filter((User) => User.uid !== user.uid);
+            return prevUsers.filter((User: any) => User.uid !== user.uid);
           });
         }
       });
@@ -59,7 +59,7 @@ export default function AudioCall({ channelName }: any) {
       client.on("user-left", (user) => {
         console.log("leaving", user);
         setUsers((prevUsers) => {
-          return prevUsers.filter((User) => User.uid !== user.uid);
+          return prevUsers.filter((User: any) => User.uid !== user.uid);
         });
       });
 
