@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import dynamic from 'next/dynamic'
-import {
-    createClient,
-    createMicrophoneAndCameraTracks
-} from "agora-rtc-react";
+import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { createClient, createMicrophoneAndCameraTracks } from "agora-rtc-react";
 
-const Videos = dynamic(() => import('../../components/VideoTrack'), { ssr: false })
-const Controls = dynamic(() => import('../../components/ControlCall'), { ssr: false })
+const Videos = dynamic(() => import("../../components/VideoTrack"), {
+  ssr: false,
+});
+const Controls = dynamic(() => import("../../components/ControlCall"), {
+  ssr: false,
+});
 
 const config = {
   mode: "rtc",
@@ -15,27 +16,27 @@ const config = {
 
 const appId = "84e6846fa5ca43c68fe534ebd95b4730";
 const token =
-    "007eJxTYBBcc6fK+0ag6hzer2Fh/tbm/M+kVpjn2bQ5vEjrkG1bzKzAYGGSamZhYpaWaJqcaGKcbGaRlmpqbJKalGJpmmRibmzAaySQ0hDIyHDq8ysWRgYIBPFZGUpSi0sMGRgAouMdQg==";
+  "007eJxTYBBcc6fK+0ag6hzer2Fh/tbm/M+kVpjn2bQ5vEjrkG1bzKzAYGGSamZhYpaWaJqcaGKcbGaRlmpqbJKalGJpmmRibmzAaySQ0hDIyHDq8ysWRgYIBPFZGUpSi0sMGRgAouMdQg==";
 
 const useClient = createClient(config as any);
 const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 
-export default function VideoCall({ channelName }:any) {
-    const [users, setUsers] = useState([]);
+export default function VideoCall({ channelName }: any) {
+  const [users, setUsers] = useState([]);
 
-    const client = useClient();
-    const { ready, tracks } = useMicrophoneAndCameraTracks();
+  const client = useClient();
+  const { ready, tracks } = useMicrophoneAndCameraTracks();
 
-      useEffect(() => {
+  useEffect(() => {
     // function to initialise the SDK
     let init = async () => {
-      tracks[0].setVolume(1000);
+      (tracks as any)[0].setVolume(1000);
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
         console.log("subscribe success");
         if (mediaType === "video") {
           setUsers((prevUsers) => {
-            return [...prevUsers, user];
+            return [...prevUsers, user as never];
           });
         }
         if (mediaType === "audio") {
@@ -50,7 +51,7 @@ export default function VideoCall({ channelName }:any) {
         }
         if (type === "video") {
           setUsers((prevUsers) => {
-            return prevUsers.filter((User) => User.uid !== user.uid);
+            return prevUsers.filter((User: any) => User.uid !== user.uid);
           });
         }
       });
@@ -58,7 +59,7 @@ export default function VideoCall({ channelName }:any) {
       client.on("user-left", (user) => {
         console.log("leaving", user);
         setUsers((prevUsers) => {
-          return prevUsers.filter((User) => User.uid !== user.uid);
+          return prevUsers.filter((User: any) => User.uid !== user.uid);
         });
       });
 
@@ -72,10 +73,12 @@ export default function VideoCall({ channelName }:any) {
     }
   }, [client, ready, tracks]);
 
-    return (
-        <div>
-            {ready && tracks && ( <Controls tracks={tracks} hasCam={true} client={client}/>)}
-            {tracks && <Videos users={users} tracks={tracks} hasCam={true} />}
-
-        </div>);
+  return (
+    <div>
+      {ready && tracks && (
+        <Controls tracks={tracks} hasCam={true} client={client} />
+      )}
+      {tracks && <Videos users={users} tracks={tracks} hasCam={true} />}
+    </div>
+  );
 }
