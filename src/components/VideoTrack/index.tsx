@@ -1,8 +1,8 @@
-import React from 'react'
-import { AgoraVideoPlayer } from 'agora-rtc-react';
-import styles from './styles.module.less'
+import React from "react";
+import { AgoraVideoPlayer } from "agora-rtc-react";
+import styles from "./styles.module.less";
 
-export default function  Videos ({ users, tracks, hasCam }: any) {
+export default function Videos({ users, tracks, hasCam }: any) {
   return (
     <div>
       <div className={styles.videos}>
@@ -18,7 +18,7 @@ export default function  Videos ({ users, tracks, hasCam }: any) {
           <></>
         )}
         {users.length > 0 &&
-          users.map((user) => {
+          users.map((user: any) => {
             if (user.videoTrack) {
               return (
                 <AgoraVideoPlayer
@@ -33,4 +33,4 @@ export default function  Videos ({ users, tracks, hasCam }: any) {
       </div>
     </div>
   );
-};
+}
