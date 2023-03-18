@@ -16,11 +16,13 @@ type PopupEventComponentProps = {
   defaultValues: any;
   event: string | undefined;
   loading: boolean;
+  onDeleteEvent: (id: any) => void;
 };
 
 export default function PopupAddEvent({
   defaultValues = undefined,
   loading,
+  onDeleteEvent,
   ...props
 }: PopupEventComponentProps) {
   const locale = {
@@ -30,6 +32,8 @@ export default function PopupAddEvent({
       // clear: TEXT.CANCEL,
     },
   };
+
+  console.log(defaultValues);
 
   const rules = {
     title: [
@@ -59,7 +63,7 @@ export default function PopupAddEvent({
           onFinish={props.onFinish}
           initialValues={{
             title: defaultValues?.title,
-            desciprtion: defaultValues?.data,
+            description: defaultValues?.data,
             duration: [
               moment(defaultValues?.scheduleTime),
               moment(defaultValues?.endTime),
@@ -90,7 +94,7 @@ export default function PopupAddEvent({
               <Popconfirm
                 title={"Xóa sự kiện"}
                 description={`${TEXT.DELETE_EVENT_WARNING}`}
-                // onConfirm={() => handleOnDeleteEvent(event)}
+                onConfirm={onDeleteEvent}
                 okButtonProps={{ type: "default" }}
                 cancelButtonProps={{
                   type: "dashed",

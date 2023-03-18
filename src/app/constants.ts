@@ -74,7 +74,7 @@ export const ERROR_MESSAGE = {
 export const SUCCESSFUL_MESSAGE = {
   REGISTER: "Đăng ký thành công",
   LOGIN: "Đăng nhập thành công",
-  DELETE_EVENT: "Xóa sự kiện thành công",
+  EVENT_DELETE: "Xóa sự kiện thành công",
   EVENT_CREATE: "Tạo sự kiện thành công",
 };
 

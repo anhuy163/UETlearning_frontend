@@ -2,6 +2,7 @@ import PopupAddEvent from "@/src/components/PopupAddEvent";
 import moment from "moment";
 import { useEffect } from "react";
 import useQueryGetEventById from "@/src/app/hooks/useQueryGetEventById";
+import useMutationDeleteEventById from "@/src/app/hooks/useMutationDeleteEventById";
 
 export type PopupAddEventProps = {
   open: boolean;
@@ -17,7 +18,13 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
     loading: gettingEvent,
     error,
   } = useQueryGetEventById(eventId);
+  const { doMutation: deleteEvent, loading: deletingEvent } =
+    useMutationDeleteEventById();
   // console.log(event);
+
+  const handleOnDeleteEvent = () => {
+    if (eventId) return deleteEvent(eventId).then(() => props.onCancel());
+  };
 
   // console.log(eventId);
   const defaultValues = {
@@ -29,9 +36,10 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
   return (
     <PopupAddEvent
       event={eventId}
-      loading={gettingEvent}
+      loading={gettingEvent || deletingEvent}
       {...props}
       defaultValues={eventId ? event : undefined}
+      onDeleteEvent={handleOnDeleteEvent}
     />
   );
 }

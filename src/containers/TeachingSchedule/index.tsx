@@ -34,34 +34,11 @@ export default function TeachingScheduleContainer() {
   }, [gettingEvents, data]);
   // console.log(events);
 
-  const dummyEvents: EventType[] = [
-    {
-      id: "1",
-      title: "Big Meeting",
-      description: "1",
-      start: new Date(2023, 2, 5),
-      end: new Date(2023, 2, 7),
-    },
-    {
-      id: "2",
-      title: "Vacation",
-      description: "2",
-      start: new Date(2023, 2, 7),
-      end: new Date(2023, 2, 8),
-    },
-    {
-      id: "3",
-      title: "Conference",
-      description: "3",
-      start: new Date(2023, 2, 8),
-      end: new Date(2023, 2, 10),
-    },
-  ];
   const handleOnAddEvent = (event: any) => {
     // console.log(event);
     console.log({
       title: event.title,
-      data: event.desription,
+      data: event.description,
       time: [
         moment(event.duration[0].$d).format(),
         moment(event.duration[1].$d).format(),
@@ -70,7 +47,7 @@ export default function TeachingScheduleContainer() {
 
     onAddEvent({
       title: event.title,
-      data: event.desription || "",
+      data: event.description || "",
       time: [
         moment(event.duration[0].$d).format("hh-mm-DD-MM-YYYY"),
         moment(event.duration[1].$d).format("hh-mm-DD-MM-YYYY"),

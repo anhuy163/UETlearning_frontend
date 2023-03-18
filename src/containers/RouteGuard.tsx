@@ -15,13 +15,17 @@ import { useAppDispatch, useAppSelector } from "../app/hooks/useRedux";
 import { onMessaging } from "../firebase";
 import messaging from "../firebase";
 import { onMessage } from "firebase/messaging";
-// import { messaging } from "../../public/firebase-messaging-sw";
+import usePageVisibility from "../app/hooks/usePageVisibility";
+import useMutationUpdateTeacherStatus from "../app/hooks/useMutationUpdateTeacherStatus";
 type RouteGuardProps = {
   children: ReactNode;
 };
 
 export default function RouteGuard({ children }: RouteGuardProps) {
+  const isVisible = usePageVisibility();
   const { checkTokenIsExpired, logout } = useAuth();
+  const { doMutation: updateStatus, loading: updatingStatus } =
+    useMutationUpdateTeacherStatus();
   const router = useRouter();
   const [directing, setDirecting] = useState(true);
   const [getTokenLoading, setGetTokenLoading] = useState(true);
@@ -37,6 +41,12 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   };
 
   const dispatch = useAppDispatch();
+
+  // const handleOnReceiveBackgroundMessage = (payload: any) => {
+  //   if (payload.type === "2") {
+  //     setToggleOpenCallingPopup(true);
+  //   }
+  // };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -93,17 +103,16 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     const onMessaging = () => {
       return onMessage(messaging, (payload) => {
-        setToggleOpenCallingPopup(true);
-        console.log("Message received", payload);
-        // localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
-        // localStorage.setItem(
-        //   "channelName",
-        //   `${currentTeacher.id}${payload.data?.Id}`
-        // );
-        setCallingStudent(payload.data?.Id);
-        setTimeout(() => {
-          setToggleOpenCallingPopup(false);
-        }, 90000);
+        if (payload.data?.type === "2") {
+          setToggleOpenCallingPopup(true);
+          console.log("Message received", payload);
+          localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
+          localStorage.setItem("channelName", payload?.data?.Chanel_Name!);
+          setCallingStudent(payload.data?.Id);
+          setTimeout(() => {
+            setToggleOpenCallingPopup(false);
+          }, 90000);
+        }
       });
     };
     onMessaging();
@@ -117,7 +126,17 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     };
   }, []);
 
-  console.log(toggleOpenCallingPopup);
+  // useEffect(() => {
+  //   if (currentTeacher.status === 2) {
+  //     updateStatus({ teacherStatus: 0 });
+  //   } else if (currentTeacher.status === 0) {
+  //     updateStatus({
+  //       teacherStatus: 2,
+  //     });
+  //   }
+  // }, [isVisible]);
+
+  // console.log(toggleOpenCallingPopup);
 
   useEffect(() => {
     const directTingTimeout = setTimeout(onDirecting, 200);
@@ -135,7 +154,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   }, [router.pathname, router.asPath, router.query, router.events]);
   return (
     <>
-      {directing || getTokenLoading || getContactLoading ? (
+      {directing || getTokenLoading || getContactLoading || updatingStatus ? (
         <LoadingScreen />
       ) : (
         <div>
