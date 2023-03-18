@@ -7,6 +7,7 @@ import { PopupAddEventProps } from "@/src/containers/PopupAddEvent";
 import dayjs from "dayjs";
 import { RangePickerProps } from "antd/es/date-picker";
 import { TEXT } from "@/src/app/constants";
+import moment from "moment";
 
 type PopupEventComponentProps = {
   open: boolean;
@@ -14,10 +15,12 @@ type PopupEventComponentProps = {
   onFinish: (e: any) => void;
   defaultValues: any;
   event: string | undefined;
+  loading: boolean;
 };
 
 export default function PopupAddEvent({
   defaultValues = undefined,
+  loading,
   ...props
 }: PopupEventComponentProps) {
   const locale = {
@@ -43,8 +46,8 @@ export default function PopupAddEvent({
     return current && current < dayjs();
   };
   return (
-    <FormWrapper>
-      <Modal {...props} closable={false} footer={null} destroyOnClose={true}>
+    <Modal {...props} closable={false} footer={null} destroyOnClose={true}>
+      <FormWrapper loading={loading}>
         <p className='flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2'>
           <FormOutlined />
           <span className='ml-2'>
@@ -54,7 +57,14 @@ export default function PopupAddEvent({
         <Form
           className={styles.container}
           onFinish={props.onFinish}
-          initialValues={defaultValues}>
+          initialValues={{
+            title: defaultValues?.title,
+            desciprtion: defaultValues?.data,
+            duration: [
+              moment(defaultValues?.scheduleTime),
+              moment(defaultValues?.endTime),
+            ],
+          }}>
           <Form.Item label='Tên' name={"title"} rules={rules.title}>
             <Input />
           </Form.Item>
@@ -107,7 +117,7 @@ export default function PopupAddEvent({
             <Button onClick={props.onCancel}>Hủy</Button>
           </div>
         </Form>
-      </Modal>
-    </FormWrapper>
+      </FormWrapper>
+    </Modal>
   );
 }

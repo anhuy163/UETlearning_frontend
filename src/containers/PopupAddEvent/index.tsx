@@ -1,6 +1,7 @@
 import PopupAddEvent from "@/src/components/PopupAddEvent";
 import moment from "moment";
 import { useEffect } from "react";
+import useQueryGetEventById from "@/src/app/hooks/useQueryGetEventById";
 
 export type PopupAddEventProps = {
   open: boolean;
@@ -11,6 +12,13 @@ export type PopupAddEventProps = {
 
 export default function PopupAddEventContainer(props: PopupAddEventProps) {
   const { eventId } = props;
+  const {
+    data: event,
+    loading: gettingEvent,
+    error,
+  } = useQueryGetEventById(eventId);
+  // console.log(event);
+
   // console.log(eventId);
   const defaultValues = {
     title: "An com",
@@ -21,8 +29,9 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
   return (
     <PopupAddEvent
       event={eventId}
+      loading={gettingEvent}
       {...props}
-      defaultValues={eventId ? defaultValues : undefined}
+      defaultValues={eventId ? event : undefined}
     />
   );
 }

@@ -3,16 +3,33 @@ import React, { useState } from "react";
 import styles from "./styles.module.less";
 import clsx from "clsx";
 import { PhoneOutlined } from "@ant-design/icons";
+import useHandleCall from "@/src/app/hooks/useHandleCall";
+import { useRouter } from "next/router";
 
 type PopupCallingAcceptProps = {
   open: boolean;
   onCancel: () => void;
+  studentId: string | undefined;
 };
 
 export default function PopupCallingAccept({
   open,
   onCancel,
+  studentId,
 }: PopupCallingAcceptProps) {
+  const router = useRouter();
+  const { handleOnCallingAccept } = useHandleCall();
+  const onAcceptCall = () => {
+    handleOnCallingAccept(
+      studentId,
+      localStorage.getItem("channelToken")!
+    ).then((res) => {
+      // localStorage.setItem("callRes", JSON.stringify(res));
+      router.push("/call");
+      onCancel();
+    });
+  };
+
   return (
     <div>
       <Modal
@@ -31,7 +48,9 @@ export default function PopupCallingAccept({
             className='mr-2 bg-red-500 border-none opacity-90 hover:opacity-100'>
             Tu choi
           </Button>
-          <Button className='bg-green-500  border-none opacity-90 hover:opacity-100'>
+          <Button
+            onClick={onAcceptCall}
+            className='bg-green-500  border-none opacity-90 hover:opacity-100'>
             Chap nhan
           </Button>
         </div>

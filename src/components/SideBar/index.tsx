@@ -106,7 +106,7 @@ export function MySideBar() {
           <div className={styles.activeContainer}>
             <Switch
               onChange={handleOnStatusChange}
-              checked={user.status === 2 ? true : false}
+              checked={user.status === 2 ? false : true}
               loading={false}
               checkedChildren='Online'
               unCheckedChildren='Offline'

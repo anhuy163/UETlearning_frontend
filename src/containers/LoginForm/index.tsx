@@ -18,6 +18,7 @@ export default function LoginFormContainer() {
         localStorage.setItem("currentUser", JSON.stringify(res?.data.object));
         localStorage.setItem("token", res.data.object.token);
         localStorage.setItem("loginTime", new Date().getTime().toString());
+        localStorage.setItem("teacherId", res?.data.object.id);
         window.location.replace(HOME_PATH);
       })
       .catch((err) => console.log(err));

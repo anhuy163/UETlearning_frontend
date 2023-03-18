@@ -11,7 +11,7 @@ import useAuth from "../app/hooks/useAuth";
 import useQueryGetContacts from "../app/hooks/useQueryGetContacts";
 import PopupCallingAccept from "../components/PopupCallingAccept";
 import { setUser } from "../app/redux/slice/userSlice";
-import { useAppDispatch } from "../app/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../app/hooks/useRedux";
 import { onMessaging } from "../firebase";
 import messaging from "../firebase";
 import { onMessage } from "firebase/messaging";
@@ -26,7 +26,9 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   const [directing, setDirecting] = useState(true);
   const [getTokenLoading, setGetTokenLoading] = useState(true);
   const [toggleOpenCallingPopup, setToggleOpenCallingPopup] = useState(false);
+  const currentTeacher = useAppSelector((state) => state.user);
   const { loading: getContactLoading } = useQueryGetContacts();
+  const [callingStudent, setCallingStudent] = useState<any>();
   const onDirecting = () => {
     setDirecting(false);
   };
@@ -93,9 +95,15 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       return onMessage(messaging, (payload) => {
         setToggleOpenCallingPopup(true);
         console.log("Message received", payload);
+        // localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
+        // localStorage.setItem(
+        //   "channelName",
+        //   `${currentTeacher.id}${payload.data?.Id}`
+        // );
+        setCallingStudent(payload.data?.Id);
         setTimeout(() => {
           setToggleOpenCallingPopup(false);
-        }, 2000);
+        }, 90000);
       });
     };
     onMessaging();
@@ -104,12 +112,12 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       clearTimeout(
         setTimeout(() => {
           setToggleOpenCallingPopup(false);
-        }, 2000)
+        }, 90000)
       );
     };
   }, []);
 
-  // console.log(toggleOpenCallingPopup);
+  console.log(toggleOpenCallingPopup);
 
   useEffect(() => {
     const directTingTimeout = setTimeout(onDirecting, 200);
@@ -135,6 +143,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
           <div>
             {toggleOpenCallingPopup && (
               <PopupCallingAccept
+                studentId={callingStudent}
                 open={toggleOpenCallingPopup}
                 onCancel={handleOnCancelPopup}
               />
