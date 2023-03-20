@@ -13,8 +13,11 @@ export const userSlice = createSlice({
       //   console.log(action.payload);
       return action.payload;
     },
+    updateUserPoints: (state, { payload }) => {
+      state.point -= payload;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, updateUserPoints } = userSlice.actions;
 export default userSlice.reducer;

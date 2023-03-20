@@ -5,8 +5,6 @@ import { EventType } from "@/src/components/TeachingSchedule";
 import moment from "moment";
 import { useEffect, useState } from "react";
 export default function TeachingScheduleContainer() {
-  const { doMutation: onAddEvent, loading: addingEvent } =
-    useMutationAddEvent();
   const { data, loading: gettingEvents, error } = useQueryGetEvents();
   const [events, setEvents] = useState<EventType[]>([]);
   // console.log(data);
@@ -34,25 +32,5 @@ export default function TeachingScheduleContainer() {
   }, [gettingEvents, data]);
   // console.log(events);
 
-  const handleOnAddEvent = (event: any) => {
-    // console.log(event);
-    console.log({
-      title: event.title,
-      data: event.description,
-      time: [
-        moment(event.duration[0].$d).format(),
-        moment(event.duration[1].$d).format(),
-      ],
-    });
-
-    onAddEvent({
-      title: event.title,
-      data: event.description || "",
-      time: [
-        moment(event.duration[0].$d).format("hh-mm-DD-MM-YYYY"),
-        moment(event.duration[1].$d).format("hh-mm-DD-MM-YYYY"),
-      ],
-    });
-  };
-  return <TeachingSchedule onAddEvent={handleOnAddEvent} events={events} />;
+  return <TeachingSchedule events={events} />;
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, use, useEffect, useState } from "react";
 import LoadingScreen from "../components/LoadingScreen";
 import { useRouter } from "next/router";
 import {
@@ -17,6 +17,10 @@ import messaging from "../firebase";
 import { onMessage } from "firebase/messaging";
 import usePageVisibility from "../app/hooks/usePageVisibility";
 import useMutationUpdateTeacherStatus from "../app/hooks/useMutationUpdateTeacherStatus";
+import { updateContactsByMsg } from "../app/redux/slice/contactsSlice";
+import {} from "firebase/app";
+// import { handleBackgroundMessage } from "../../public/firebase-messaging-sw";
+import socket from "../app/socket";
 type RouteGuardProps = {
   children: ReactNode;
 };
@@ -33,11 +37,15 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   const currentTeacher = useAppSelector((state) => state.user);
   const { loading: getContactLoading } = useQueryGetContacts();
   const [callingStudent, setCallingStudent] = useState<any>();
+  const [callingStudentName, setCallingStudentName] = useState<any>();
   const onDirecting = () => {
     setDirecting(false);
   };
   const handleOnCancelPopup = () => {
+    localStorage.removeItem("channelToken");
+    localStorage.removeItem("channelName");
     setToggleOpenCallingPopup(false);
+    setCallingStudent(undefined);
   };
 
   const dispatch = useAppDispatch();
@@ -104,20 +112,30 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     const onMessaging = () => {
       return onMessage(messaging, (payload) => {
         if (payload.data?.type === "2") {
-          setToggleOpenCallingPopup(true);
           console.log("Message received", payload);
           localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
           localStorage.setItem("channelName", payload?.data?.Chanel_Name!);
           setCallingStudent(payload.data?.Id);
-          setTimeout(() => {
-            setToggleOpenCallingPopup(false);
-          }, 90000);
         }
       });
     };
     onMessaging();
+  }, []);
+
+  useEffect(() => {
+    socket.on("seenMessageGet", (data) => {
+      if (data.type === "2") {
+        setToggleOpenCallingPopup(true);
+        setCallingStudentName(data.senderName);
+      }
+
+      setTimeout(() => {
+        setToggleOpenCallingPopup(false);
+      }, 90000);
+    });
 
     return () => {
+      socket.off("seenMessageGet");
       clearTimeout(
         setTimeout(() => {
           setToggleOpenCallingPopup(false);
@@ -152,6 +170,27 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       // router.events.off("routeChangeComplete", handleComplete);
     };
   }, [router.pathname, router.asPath, router.query, router.events]);
+
+  useEffect(() => {
+    socket.on("typingMessageGet", (data) => {
+      // console.log(data);
+
+      dispatch(
+        updateContactsByMsg({
+          studentId: data.senderId,
+          msg: data.imgUrl ? "Hình ảnh" : data.msg,
+          senderName: data.senderName,
+          senderAvatar: data.senderAvatar,
+          filePath: data.imgSrc,
+          readTeacherSize: false,
+        })
+      );
+    });
+
+    return () => {
+      socket.off("typingMessageGet");
+    };
+  }, []);
   return (
     <>
       {directing || getTokenLoading || getContactLoading || updatingStatus ? (
@@ -163,6 +202,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
             {toggleOpenCallingPopup && (
               <PopupCallingAccept
                 studentId={callingStudent}
+                studentName={callingStudentName}
                 open={toggleOpenCallingPopup}
                 onCancel={handleOnCancelPopup}
               />

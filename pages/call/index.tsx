@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LayoutContainer from "@/src/containers/Layout";
 import dynamic from "next/dynamic";
+import Error from "next/error";
 
 // const Videos = dynamic(() => import('../../src/components/VideoTrack'), { ssr: false })
 // const Controls = dynamic(() => import('../../src/components/ControlCall'), { ssr: false })
@@ -28,12 +29,23 @@ export default function CallPage() {
   }, [hasCam]);
 
   return (
-    <LayoutContainer title='call'>
+    <div className='w-full h-[100vh]'>
       {hasCam ? (
         <VideoCall channelName={channelName} />
       ) : (
         <AudioCall channelName={localStorage.getItem("channelName")} />
       )}
-    </LayoutContainer>
+    </div>
+  );
+  localStorage.getItem("channelName") ? (
+    <div className='w-full h-[100vh]'>
+      {hasCam ? (
+        <VideoCall channelName={channelName} />
+      ) : (
+        <AudioCall channelName={localStorage.getItem("channelName")} />
+      )}
+    </div>
+  ) : (
+    <Error statusCode={404} />
   );
 }

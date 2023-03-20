@@ -8,15 +8,17 @@ import dayjs from "dayjs";
 import { RangePickerProps } from "antd/es/date-picker";
 import { TEXT } from "@/src/app/constants";
 import moment from "moment";
+import { useForm } from "antd/lib/form/Form";
+import { useEffect } from "react";
 
 type PopupEventComponentProps = {
   open: boolean;
   onCancel: () => void;
-  onFinish: (e: any) => void;
   defaultValues: any;
   event: string | undefined;
   loading: boolean;
   onDeleteEvent: (id: any) => void;
+  onFinish: (e: any) => void;
 };
 
 export default function PopupAddEvent({
@@ -33,7 +35,29 @@ export default function PopupAddEvent({
     },
   };
 
-  console.log(defaultValues);
+  // console.log(defaultValues);
+  // const [form] = useForm();
+  // useEffect(() => {
+  //   form.setFieldsValue({
+  //     title: defaultValues?.title,
+  //     description: defaultValues?.data,
+  //     duration: [
+  //       defaultValues ? moment(defaultValues?.scheduleTime) : null,
+  //       defaultValues ? moment(defaultValues?.endTime) : null,
+  //     ],
+  //   });
+  // }, [defaultValues]);
+  // const handleOnCloseModal = () => {
+  //   form.resetFields();
+  //   props.onCancel();
+  // };
+
+  // const handleOnSubmit = (e: any) => {
+  //   props.onFinish(e);
+  //   form.resetFields();
+  // };
+
+  // console.log(form.getFieldValue("duration"));
 
   const rules = {
     title: [
@@ -49,6 +73,7 @@ export default function PopupAddEvent({
     // Can not select days before today and today
     return current && current < dayjs();
   };
+
   return (
     <Modal {...props} closable={false} footer={null} destroyOnClose={true}>
       <FormWrapper loading={loading}>
@@ -59,16 +84,20 @@ export default function PopupAddEvent({
           </span>
         </p>
         <Form
-          className={styles.container}
-          onFinish={props.onFinish}
           initialValues={{
             title: defaultValues?.title,
             description: defaultValues?.data,
             duration: [
-              moment(defaultValues?.scheduleTime),
-              moment(defaultValues?.endTime),
+              defaultValues ? moment(defaultValues?.scheduleTime!) : null,
+              defaultValues ? moment(defaultValues?.endTime!) : null,
             ],
-          }}>
+          }}
+          // form={form}
+          className={styles.container}
+          onFinish={props.onFinish}>
+          <Form.Item initialValue={props.event} name={"scheduleId"} hidden>
+            <Input />
+          </Form.Item>
           <Form.Item label='Tên' name={"title"} rules={rules.title}>
             <Input />
           </Form.Item>
@@ -80,7 +109,6 @@ export default function PopupAddEvent({
           </Form.Item>
           <Form.Item label='Thời gian' name={"duration"} rules={rules.duration}>
             <DatePicker.RangePicker
-              // defaultPickerValue={defaultValues?.duration}
               locale={locale as any}
               //   disabledTime={disabledTime}
               disabledDate={disabledDate}

@@ -9,6 +9,7 @@ export default function UserInfoContainer() {
     useMutationUpdateTeacherProfile();
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const { uploadAvatar } = useUploadAvatar();
+  // console.log(data);
 
   const [img, setImg] = useState();
   const onChange = (img: any) => {
@@ -33,6 +34,19 @@ export default function UserInfoContainer() {
       console.log(avatar);
     }
     // console.log(value);
+    console.log({
+      avaPath: avatar ? avatar : data.avaPath,
+      realName: value?.realname,
+      phoneNumber: value?.phone,
+      username: data.username,
+      dateOfBirth: data.dateOfBirth,
+      gender: value?.gender,
+      subjects: data.subjects,
+      course: value?.grade,
+      priceChat: value?.priceChat,
+      priceCall: value?.priceCall,
+      message: value?.intro,
+    });
 
     updateProfile({
       avaPath: avatar ? avatar : data.avaPath,
@@ -40,8 +54,12 @@ export default function UserInfoContainer() {
       phoneNumber: value?.phone,
       username: data.username,
       dateOfBirth: data.dateOfBirth,
-      gender: data.gender,
+      gender: value?.gender,
       subjects: data.subjects,
+      course: value?.grade,
+      priceChat: value?.priceChat,
+      priceCall: value?.priceCall,
+      message: value?.intro,
     });
   };
 

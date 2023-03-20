@@ -4,7 +4,6 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/9.17.2/firebase-messaging-compat.js"
 );
-
 firebase.initializeApp({
   apiKey: "AIzaSyAgMcMz8k9Dea7bDXAa1UlxBUnktz2Y1h4",
   authDomain: "modified-fabric-350609.firebaseapp.com",
@@ -16,17 +15,17 @@ firebase.initializeApp({
 
 messaging = firebase.messaging();
 
-// messaging.onBackgroundMessage((payload) => {
-//   console.log(
-//     "[firebase-messaging-sw.js] Received background message ",
-//     payload
-//   );
-//   // Customize notification here
-//   const notificationTitle = "Background Message Title";
-//   const notificationOptions = {
-//     body: "Background Message body.",
-//     icon: "/logo.png",
-//   };
+messaging.onBackgroundMessage((payload) => {
+  // console.log(
+  //   "[firebase-messaging-sw.js] Received background message ",
+  //   payload
+  // );
+  // Customize notification here
+  const notificationTitle = "Background Message Title";
+  const notificationOptions = {
+    body: "Background Message body.",
+    icon: "/logo.png",
+  };
 
-//   self.registration.showNotification(notificationTitle, notificationOptions);
-// });
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});

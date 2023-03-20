@@ -4,10 +4,10 @@ import { SERVER_BASE_URL, SUCCESSFUL_MESSAGE } from "../constants";
 import axios from "axios";
 import { showSuccessfulMessage } from "../helpers/messageHelper";
 
-const useMutationAddEvent = () => {
+const useMutationUpdateEvent = () => {
   const queryClient = useQueryClient();
   const mutationFn = (body: any) => {
-    return axios.post(`${SERVER_BASE_URL}/ums/schedule/teacherCreate`, body, {
+    return axios.put(`${SERVER_BASE_URL}/ums/schedule/update`, body, {
       headers: { Authorization: localStorage.getItem("token") },
     });
   };
@@ -15,8 +15,7 @@ const useMutationAddEvent = () => {
     mutationFn: (body: any) => mutationFn(body),
     onSuccess: () => {
       queryClient.invalidateQueries("useQuerygetEvents"),
-        queryClient.invalidateQueries(`useQueryGetEventById`),
-        showSuccessfulMessage(SUCCESSFUL_MESSAGE.EVENT_CREATE);
+        showSuccessfulMessage(SUCCESSFUL_MESSAGE.EVENT_UPDATE);
     },
   });
 
@@ -34,4 +33,4 @@ const useMutationAddEvent = () => {
   return { loading, doMutation };
 };
 
-export default useMutationAddEvent;
+export default useMutationUpdateEvent;

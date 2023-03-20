@@ -60,6 +60,28 @@ export const SUBJECTS = [
   { value: "GDCD", label: "GDCD" },
 ];
 
+/* GRADE */
+
+export const GRADE = [
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
+  { value: 10, label: "10" },
+  { value: 11, label: "11" },
+  { value: 12, label: "12" },
+];
+
+/* GENDER */
+export const GENDER = [
+  { value: 1, label: "Nam" },
+  { value: 2, label: "Nữ" },
+];
 /* ERROR MESSAGES */
 
 export const ERROR_MESSAGE = {
@@ -67,6 +89,8 @@ export const ERROR_MESSAGE = {
   LOGIN: "Tài khoản hoặc mật khẩu không đúng",
   INVALID_EMAIL: "Email không hợp lệ",
   DELETE_EVENT: "Xóa sự kiện thất bại",
+  CHANGE_PASSWORD_CF: "Mật khẩu mới nhập lại không khớp",
+  CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -75,7 +99,9 @@ export const SUCCESSFUL_MESSAGE = {
   REGISTER: "Đăng ký thành công",
   LOGIN: "Đăng nhập thành công",
   EVENT_DELETE: "Xóa sự kiện thành công",
-  EVENT_CREATE: "Tạo sự kiện thành công",
+  EVENT_CREATE: "Cập nhật sự kiện thành công",
+  EVENT_UPDATE: "Cập nhật sự kiện thành công",
+  CHANGE_PASSWORD: "Cập nhật mật khẩu thành công",
 };
 
 /* TOKEN EXPIRATION CHECK PERIOD */

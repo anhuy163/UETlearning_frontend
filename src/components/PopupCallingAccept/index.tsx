@@ -10,12 +10,14 @@ type PopupCallingAcceptProps = {
   open: boolean;
   onCancel: () => void;
   studentId: string | undefined;
+  studentName: string | undefined;
 };
 
 export default function PopupCallingAccept({
   open,
   onCancel,
   studentId,
+  studentName,
 }: PopupCallingAcceptProps) {
   const router = useRouter();
   const { handleOnCallingAccept } = useHandleCall();
@@ -40,7 +42,7 @@ export default function PopupCallingAccept({
         closable={false}>
         <div className='text-xl mb-3 font-semibold flex items-center '>
           <PhoneOutlined className='mr-3' />
-          Ai do dang goi cho ban !!!
+          {studentName} đang gọi cho bạn !!!
         </div>
         <div className='w-full flex items-center justify-center'>
           <Button

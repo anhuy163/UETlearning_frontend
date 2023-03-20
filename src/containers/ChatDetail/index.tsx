@@ -11,6 +11,7 @@ import { updateContactsByMsg } from "@/src/app/redux/slice/contactsSlice";
 import { useAppDispatch, useAppSelector } from "@/src/app/hooks/useRedux";
 import useUploadImage from "@/src/app/hooks/useUploadImage";
 import useMutationReadChat from "@/src/app/hooks/useMutationReadChat";
+import { updateUserPoints } from "@/src/app/redux/slice/userSlice";
 
 export type ChatMessageType = {
   type: string;
@@ -44,28 +45,6 @@ export default function ChatDetailContainer() {
   const [studentName, setStudentName] = useState("");
   const [studentAva, setStudentAva] = useState("");
 
-  const [dummyChat, setDummyChat] = useState<ChatMessageType[]>([
-    {
-      type: MESSAGE_FROM_TYPE.FRIEND,
-      content: "Em chào thầy ạ",
-      img: "",
-    },
-    {
-      type: MESSAGE_FROM_TYPE.ME,
-      content: "Chào em, có việc gì không nhỉ?",
-      img: "",
-    },
-    {
-      type: MESSAGE_FROM_TYPE.FRIEND,
-      content: "Cho em hỏi là ngày mai lớp mình học bình thường chứ ạ?",
-      img: "",
-    },
-    { type: MESSAGE_FROM_TYPE.ME, content: "Bình thường em nhé", img: "" },
-    {
-      type: MESSAGE_FROM_TYPE.FRIEND,
-      content: "Em cảm ơn thầy ạ",
-    },
-  ]);
   const [dummyTemplate, setDummyTemplate] = useState<ChatMessageType[]>([
     {
       type: MESSAGE_FROM_TYPE.ME,
@@ -89,7 +68,7 @@ export default function ChatDetailContainer() {
     const selectedContact = contacts.find(
       (item: any) => item.student.id === router.query.id
     );
-    console.log(selectedContact);
+    // console.log(selectedContact);
 
     readChatHandler(selectedContact?.id as string);
   }, [router.query.id, contacts]);
@@ -101,23 +80,16 @@ export default function ChatDetailContainer() {
     );
 
     socket.on("msg-receive", (data) => {
-      console.log(data);
+      // console.log(data);
 
-      dispatch(
-        updateContactsByMsg({
-          studentId: data.senderId,
-          msg: data.imgUrl ? "Hình ảnh" : data.msg,
-          senderName: data.senderName,
-          senderAvatar: data.senderAvatar,
-          filePath: data.imgSrc,
-        })
-      );
+      if (data.senderId === router.query.id)
+        setArrivalMsgs({
+          filePath: data.imgUrl,
+          fromId: data.senderId,
+          message: data.msg,
+        });
 
-      setArrivalMsgs({
-        filePath: data.imgUrl,
-        fromId: data.senderId,
-        message: data.msg,
-      });
+      if (data?.senderId === router.query.id) readChatHandler(data?.senderId);
     });
 
     return () => {
@@ -155,11 +127,11 @@ export default function ChatDetailContainer() {
     };
     getData();
   }, [params]);
-  // console.log(messages);
 
   const handleOnSendMessage = (message: ChatMessageType) => {
     if (message.content) {
-      console.log(message);
+      // console.log(message);
+      // dispatch(updateUserPoints(5));
 
       socket.emit("send-msg", {
         senderId: JSON.parse(localStorage.getItem("currentUser")!)?.id,
@@ -193,13 +165,6 @@ export default function ChatDetailContainer() {
     }
     return;
   };
-
-  // const getBase64Url = (img: RcFile, callback: (url: string) => void) => {
-  //   const reader = new FileReader();
-
-  //   reader.addEventListener("load", () => callback(reader.result as string));
-  //   reader.readAsDataURL(img);
-  // };
 
   const handleOnSendImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file: File = event.target.files?.[0] as File;
@@ -239,7 +204,6 @@ export default function ChatDetailContainer() {
       reader.readAsDataURL(file);
     }
   };
-  // console.log(messages);
 
   const handleOnAddMsgTemplate = (msg: string) => {
     const templates = [

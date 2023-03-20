@@ -22,6 +22,7 @@ export const contactsSlice = createSlice({
           state[updatedContactIndex] = {
             ...state[updatedContactIndex],
             lastMessage: payload.msg,
+            readTeacherSize: payload.readTeacherSize,
           };
         } else {
           let updatedElement = state[updatedContactIndex];

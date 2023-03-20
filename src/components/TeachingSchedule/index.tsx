@@ -26,9 +26,9 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 const messages = {
-  today: "Hôm nay", // update the "today" title here
-  previous: "Hôm qua",
-  next: "Ngày mai",
+  today: "Hiện tại", // update the "today" title here
+  previous: "Trước",
+  next: "Tiếp",
   month: "Tháng",
   week: "Tuần",
   day: "Ngày",
@@ -39,7 +39,6 @@ const messages = {
 };
 
 type CalendarProps = {
-  onAddEvent: (event: any) => void;
   events: EventType[];
 };
 
@@ -51,7 +50,6 @@ export type EventType = {
   end: Date;
 };
 const TeachingSchedule = React.memo(function TeachingSchedule({
-  onAddEvent,
   events,
 }: CalendarProps) {
   const [togglePopupAddEvent, setTogglePopupAddEvent] = useState(false);
@@ -62,6 +60,7 @@ const TeachingSchedule = React.memo(function TeachingSchedule({
   };
   const onCloseTogglePopupAddEvent = () => {
     setTogglePopupAddEvent(false);
+    setSelectedEvent(undefined);
   };
   const handleOnSelectEvent = (event: any) => {
     setSelectedEvent(event.id);
@@ -71,10 +70,6 @@ const TeachingSchedule = React.memo(function TeachingSchedule({
   const handleOnAddEvent = () => {
     setSelectedEvent(undefined);
     onOpenTogglePopupAddEvent();
-  };
-  const handleOnSubmitEvent = (e: any) => {
-    onAddEvent(e);
-    onCloseTogglePopupAddEvent();
   };
 
   const eventTooltip = (event: any) => {
@@ -112,7 +107,6 @@ const TeachingSchedule = React.memo(function TeachingSchedule({
       <PopupAddEventContainer
         open={togglePopupAddEvent}
         onCancel={onCloseTogglePopupAddEvent}
-        onFinish={handleOnSubmitEvent}
         eventId={selectedEvent}
       />
     </div>
