@@ -42,10 +42,17 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     setDirecting(false);
   };
   const handleOnCancelPopup = () => {
-    localStorage.removeItem("channelToken");
-    localStorage.removeItem("channelName");
+    // localStorage.removeItem("channelToken");
+    // localStorage.removeItem("channelName");
+    socket.emit("cancelCall", {
+      to: callingStudent,
+    });
     setToggleOpenCallingPopup(false);
     setCallingStudent(undefined);
+  };
+
+  const onCancel = () => {
+    setToggleOpenCallingPopup(false);
   };
 
   const dispatch = useAppDispatch();
@@ -111,10 +118,11 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     const onMessaging = () => {
       return onMessage(messaging, (payload) => {
-        if (payload.data?.type === "2") {
+        if (payload?.data?.type === "2") {
           console.log("Message received", payload);
           localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
           localStorage.setItem("channelName", payload?.data?.Chanel_Name!);
+          localStorage.setItem("currentStudentCall", payload.data?.Id!);
           setCallingStudent(payload.data?.Id);
         }
       });
@@ -123,7 +131,13 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   }, []);
 
   useEffect(() => {
+    socket.emit(
+      "add-user",
+      JSON.parse(localStorage.getItem("currentUser")!)?.id
+    );
     socket.on("seenMessageGet", (data) => {
+      console.log(data);
+
       if (data.type === "2") {
         setToggleOpenCallingPopup(true);
         setCallingStudentName(data.senderName);
@@ -189,8 +203,26 @@ export default function RouteGuard({ children }: RouteGuardProps) {
 
     return () => {
       socket.off("typingMessageGet");
+      // socket.off("cancelCall");
     };
   }, []);
+  useEffect(() => {
+    socket.on("receiveEndCall", () => {
+      console.log("end call");
+      router.push(HOME_PATH);
+    });
+
+    socket.on("receiveCancelCall", () => {
+      console.log("reject call");
+      setToggleOpenCallingPopup(false);
+    });
+
+    return () => {
+      socket.off("receiveCancelCall");
+      socket.off("receiveEndCall");
+    };
+  }, []);
+
   return (
     <>
       {directing || getTokenLoading || getContactLoading || updatingStatus ? (
@@ -204,7 +236,8 @@ export default function RouteGuard({ children }: RouteGuardProps) {
                 studentId={callingStudent}
                 studentName={callingStudentName}
                 open={toggleOpenCallingPopup}
-                onCancel={handleOnCancelPopup}
+                handleOnCancel={handleOnCancelPopup}
+                onCancel={onCancel}
               />
             )}{" "}
           </div>

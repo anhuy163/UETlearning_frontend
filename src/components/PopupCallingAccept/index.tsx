@@ -11,6 +11,7 @@ type PopupCallingAcceptProps = {
   onCancel: () => void;
   studentId: string | undefined;
   studentName: string | undefined;
+  handleOnCancel: () => void;
 };
 
 export default function PopupCallingAccept({
@@ -18,6 +19,7 @@ export default function PopupCallingAccept({
   onCancel,
   studentId,
   studentName,
+  handleOnCancel,
 }: PopupCallingAcceptProps) {
   const router = useRouter();
   const { handleOnCallingAccept } = useHandleCall();
@@ -46,7 +48,7 @@ export default function PopupCallingAccept({
         </div>
         <div className='w-full flex items-center justify-center'>
           <Button
-            onClick={onCancel}
+            onClick={handleOnCancel}
             className='mr-2 bg-red-500 border-none opacity-90 hover:opacity-100'>
             Tu choi
           </Button>

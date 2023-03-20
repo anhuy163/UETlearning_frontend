@@ -59,7 +59,7 @@ export default function UserInfoContainer() {
       course: value?.grade,
       priceChat: value?.priceChat,
       priceCall: value?.priceCall,
-      message: value?.intro,
+      introduceMyself: value?.intro,
     });
   };
 
