@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Image, Input, Skeleton } from "antd";
+import { Button, Image, Input, Skeleton, Upload } from "antd";
 import { FileImageOutlined, SendOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
 import { AVATAR_SIZE, testAvatarSrc } from "@/src/app/constants";
@@ -7,7 +7,7 @@ import moment from "moment";
 import clsx from "clsx";
 import styles from "./styles.module.less";
 import Comment from "../Comment";
-import Upload from "antd/es/upload/Upload";
+// import Upload from "antd/es/upload/Upload";
 
 type PostProps = {
   id: string;
