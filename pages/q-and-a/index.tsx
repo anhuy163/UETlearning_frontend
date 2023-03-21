@@ -3,12 +3,49 @@ import PostContainer from "@/src/containers/Post";
 import MyBreadcrumb from "@/src/components/MyBreadcrumb";
 import { QANDA_PATH } from "@/src/app/constants";
 import QuestionPostContainer from "@/src/containers/QuestionPost";
+import { Select, Radio } from "antd";
+import { POST_OPTIONS } from "@/src/app/constants";
+import { useState } from "react";
 
 export default function Home() {
+  const [option, setOption] = useState(1);
+  const onOptionChange = (event: any) => {
+    // console.log(event.target.value);
+
+    setOption(event.target.value);
+  };
   return (
     <LayoutContainer title='Trang chủ'>
       <div className='w-full overflow-auto  '>
         <MyBreadcrumb path={QANDA_PATH} />
+        <div className='w-[60%] m-auto mb-2'>
+          <Radio.Group
+            defaultValue={1}
+            buttonStyle='solid'
+            value={option}
+            onChange={onOptionChange}>
+            <Radio value={1}>
+              <span
+                className={
+                  option === 1
+                    ? "text-lg text-blue-600 font-semibold"
+                    : "text-lg text-slate-600 font-semibold"
+                }>
+                Tất cả
+              </span>
+            </Radio>
+            <Radio value={2}>
+              <span
+                className={
+                  option === 2
+                    ? "text-lg text-blue-600 font-semibold"
+                    : "text-lg text-slate-600 font-semibold"
+                }>
+                Khối giảng dạy của bạn
+              </span>
+            </Radio>
+          </Radio.Group>
+        </div>
         <QuestionPostContainer
           id='1'
           name='Bakugo Katsuki'

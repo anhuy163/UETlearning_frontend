@@ -15,7 +15,10 @@ const useMutationUpdateEvent = () => {
     mutationFn: (body: any) => mutationFn(body),
     onSuccess: () => {
       queryClient.invalidateQueries("useQuerygetEvents"),
-        showSuccessfulMessage(SUCCESSFUL_MESSAGE.EVENT_UPDATE);
+        queryClient.invalidateQueries(
+          `useQueryGetEventById=64186ce2c397c11336e41026`
+        );
+      showSuccessfulMessage(SUCCESSFUL_MESSAGE.EVENT_UPDATE);
     },
   });
 

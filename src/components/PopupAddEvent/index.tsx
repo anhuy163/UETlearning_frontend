@@ -9,7 +9,7 @@ import { RangePickerProps } from "antd/es/date-picker";
 import { TEXT } from "@/src/app/constants";
 import moment from "moment";
 import { useForm } from "antd/lib/form/Form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type PopupEventComponentProps = {
   open: boolean;
@@ -35,18 +35,30 @@ export default function PopupAddEvent({
     },
   };
 
-  // console.log(defaultValues);
-  // const [form] = useForm();
-  // useEffect(() => {
-  //   form.setFieldsValue({
-  //     title: defaultValues?.title,
-  //     description: defaultValues?.data,
-  //     duration: [
-  //       defaultValues ? moment(defaultValues?.scheduleTime) : null,
-  //       defaultValues ? moment(defaultValues?.endTime) : null,
-  //     ],
-  //   });
-  // }, [defaultValues]);
+  const [disableButton, setDisableButton] = useState(true);
+
+  const handleFieldsChange = (changedFields: any, allFields: any) => {
+    // console.log("Changed fields:", changedFields);
+    // console.log("All fields:", allFields);
+    setDisableButton(false);
+  };
+  const handleOnCancelPopup = () => {
+    setDisableButton(true);
+    props.onCancel();
+  };
+  const [form] = useForm();
+  useEffect(() => {
+    form.setFieldsValue({
+      title: defaultValues?.title,
+      description: defaultValues?.data,
+      duration: [
+        defaultValues ? moment(defaultValues?.scheduleTime) : null,
+        defaultValues ? moment(defaultValues?.endTime) : null,
+      ],
+    });
+  }, [defaultValues]);
+
+  useEffect(() => {}, []);
   // const handleOnCloseModal = () => {
   //   form.resetFields();
   //   props.onCancel();
@@ -75,7 +87,12 @@ export default function PopupAddEvent({
   };
 
   return (
-    <Modal {...props} closable={false} footer={null} destroyOnClose={true}>
+    <Modal
+      {...props}
+      closable={false}
+      footer={null}
+      destroyOnClose={true}
+      onCancel={props.onCancel}>
       <FormWrapper loading={loading}>
         <p className='flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2'>
           <FormOutlined />
@@ -84,15 +101,8 @@ export default function PopupAddEvent({
           </span>
         </p>
         <Form
-          initialValues={{
-            title: defaultValues?.title,
-            description: defaultValues?.data,
-            duration: [
-              defaultValues ? moment(defaultValues?.scheduleTime!) : null,
-              defaultValues ? moment(defaultValues?.endTime!) : null,
-            ],
-          }}
-          // form={form}
+          onFieldsChange={handleFieldsChange}
+          form={form}
           className={styles.container}
           onFinish={props.onFinish}>
           <Form.Item initialValue={props.event} name={"scheduleId"} hidden>
@@ -143,10 +153,11 @@ export default function PopupAddEvent({
                 styles.submitBtn,
                 "mr-2 bg-cyan-900 text-white border-none opacity-80 hover:opacity-100 "
               )}
-              htmlType='submit'>
+              htmlType='submit'
+              disabled={disableButton}>
               Xác nhận
             </Button>
-            <Button onClick={props.onCancel}>Hủy</Button>
+            <Button onClick={handleOnCancelPopup}>Hủy</Button>
           </div>
         </Form>
       </FormWrapper>

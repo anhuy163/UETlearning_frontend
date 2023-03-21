@@ -21,6 +21,7 @@ import { updateContactsByMsg } from "../app/redux/slice/contactsSlice";
 import {} from "firebase/app";
 // import { handleBackgroundMessage } from "../../public/firebase-messaging-sw";
 import socket from "../app/socket";
+import VerifyPage from "../components/VerifyPage";
 type RouteGuardProps = {
   children: ReactNode;
 };
@@ -207,21 +208,26 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     };
   }, []);
   useEffect(() => {
-    socket.on("receiveEndCall", () => {
-      console.log("end call");
-      router.push(HOME_PATH);
-    });
-
     socket.on("receiveCancelCall", () => {
-      console.log("reject call");
+      // console.log("reject call");
+      localStorage.removeItem("channelName");
+      localStorage.removeItem("channelToken");
+      localStorage.removeItem("currentStudentCall");
       setToggleOpenCallingPopup(false);
     });
 
     return () => {
       socket.off("receiveCancelCall");
-      socket.off("receiveEndCall");
     };
   }, []);
+
+  // if (
+  //   !(directing || getTokenLoading || getContactLoading || updatingStatus) &&
+  //   currentTeacher &&
+  //   currentTeacher.verify === null
+  // ) {
+  //   return <VerifyPage />;
+  // }
 
   return (
     <>

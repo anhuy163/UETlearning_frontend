@@ -82,6 +82,11 @@ export const GENDER = [
   { value: 1, label: "Nam" },
   { value: 2, label: "Nữ" },
 ];
+/* POST */
+export const POST_OPTIONS = [
+  { value: "1", label: "Tất cả" },
+  { value: "2", label: "Khối giảng dạy của bạn" },
+];
 /* ERROR MESSAGES */
 
 export const ERROR_MESSAGE = {
@@ -116,6 +121,8 @@ export const TEXT = {
   OK: "Đồng ý",
   ADD_EVENT_TITLE: "Thêm sự kiện",
   EDIT_EVENT_TITLE: "Chỉnh sửa sự kiện",
+  VERIFY_MESSAGE:
+    "Tài khoản của bạn đang được xác thực, vui lòng chờ thông báo đến hòm thư điện tử của bạn",
 };
 
 export const HIDDEN_PASSWORD = "*******";

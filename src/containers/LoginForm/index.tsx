@@ -13,8 +13,8 @@ export default function LoginFormContainer() {
       .then((res: any) => {
         if ((res as any).data.code !== 0)
           return showErrorMessage(ERROR_MESSAGE.LOGIN);
-        // console.log(res);
 
+        localStorage.setItem("userVerifyStatus", res?.data?.object?.verify);
         localStorage.setItem("currentUser", JSON.stringify(res?.data.object));
         localStorage.setItem("token", res.data.object.token);
         localStorage.setItem("loginTime", new Date().getTime().toString());

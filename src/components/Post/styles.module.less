@@ -12,6 +12,24 @@
       width: 0;
     }
   }
+  .imagesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    grid-gap: 5px;
+    .image {
+      width: 100%;
+      // height: auto;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+  }
+
+  .commentImage {
+    width: 15rem;
+    height: auto;
+    border-radius: 8px;
+  }
+
   .commentContent {
     word-wrap: break-word;
     white-space: normal;

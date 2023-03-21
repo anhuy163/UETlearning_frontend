@@ -101,7 +101,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
           <Layout>
             <Header>
               <div className='flex items-center justify-between min-w-full'>
-                <div className='flex items-center justify-center text-2xl font-bold text-slate-900 w-48 ml-10'>
+                <div className='flex items-center justify-center text-2xl font-bold text-slate-900 w-48 '>
                   <Image
                     onClick={() => {
                       router.pathname !== HOME_PATH && router.push(HOME_PATH);

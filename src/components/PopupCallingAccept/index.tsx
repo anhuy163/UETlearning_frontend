@@ -50,12 +50,12 @@ export default function PopupCallingAccept({
           <Button
             onClick={handleOnCancel}
             className='mr-2 bg-red-500 border-none opacity-90 hover:opacity-100'>
-            Tu choi
+            Từ chối
           </Button>
           <Button
             onClick={onAcceptCall}
             className='bg-green-500  border-none opacity-90 hover:opacity-100'>
-            Chap nhan
+            Chấp nhận
           </Button>
         </div>
       </Modal>

@@ -27,6 +27,31 @@ export default function Controls({ tracks, hasCam, client }: any) {
     }
   };
 
+  const handleOnReceiveEndCall = async () => {
+    await client.leave();
+    client.removeAllListeners();
+    tracks[0]?.close();
+    if (tracks.length === 2) {
+      tracks[1]?.close();
+    }
+    router.push(HOME_PATH).then(() => {
+      localStorage.removeItem("currentStudentCall");
+    });
+  };
+
+  useEffect(() => {
+    socket.on("receiveEndCall", () => {
+      handleOnReceiveEndCall();
+      localStorage.removeItem("channelName");
+      localStorage.removeItem("channelToken");
+      // localStorage.removeItem("currentStudentCall");
+      router.push(HOME_PATH);
+    });
+    return () => {
+      socket.off("receiveEndCall");
+    };
+  }, []);
+
   const leaveChannel = async () => {
     // console.log(typeof localStorage.getItem("currentStudentCall"));
 
