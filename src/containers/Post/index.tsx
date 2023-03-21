@@ -1,8 +1,8 @@
 import Post from "@/src/components/Post";
 import { RcFile } from "antd/es/upload";
 import { useEffect, useState } from "react";
-import useMutationComment from "@/src/app/hooks/useMutationComment";
-import useUploadCommentImage from "@/src/app/hooks/useUploadCommentImage";
+// import useMutationComment from "@/src/app/hooks/useMutationComment";
+// import useUploadCommentImage from "@/src/app/hooks/useUploadCommentImage";
 type PostContainerProps = {
   id: string;
   name: string;
@@ -15,8 +15,8 @@ export default function PostContainer({
   name,
   content,
 }: PostContainerProps) {
-  const { doMutation: submitComment, loading } = useMutationComment(id);
-  const { uploadImage } = useUploadCommentImage();
+  // const { doMutation: submitComment, loading } = useMutationComment(id);
+  // const { uploadImage } = useUploadCommentImage();
   const [img, setImg] = useState();
   const [base64Url, setBase64Url] = useState("");
   const [commentInput, setCommentInput] = useState("");
