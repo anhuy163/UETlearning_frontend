@@ -2,7 +2,7 @@ import S3 from "react-aws-s3-typescript";
 
 const config = {
   bucketName: "bookstoreimages",
-  dirName: "chat_images",
+  dirName: "answers",
   region: "us-east-1",
   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
   secretAccessKey: process.env.NEXT_PUBLIC_SECRET_KEY,

@@ -20,6 +20,10 @@ type PostProps = {
   onSubmit: () => void;
   disableButton: boolean;
   commentInput: string | undefined;
+  postImgs: any[];
+  createdTime: any;
+  comments: any[];
+  authorAva: string;
   img?: string;
 };
 
@@ -36,64 +40,32 @@ export default function Post(props: PostProps) {
         )}>
         <div className='px-3 py-2 rounded-t-md flex items-center border-slate-200 border-b-2'>
           <UserAvatar
-            name='Bakugo Katsuki'
+            name={props.name}
             size={AVATAR_SIZE.AVERAGE}
-            imgSrc={testAvatarSrc}
+            imgSrc={props.authorAva}
           />
           <div className='ml-3'>
             <p className='font-mono text-2xl font-semibold text-slate-800 '>
               {props.name}
             </p>
             <div className='text-slate-600'>
-              {moment("20230211", "YYYYMMDD").fromNow()}
+              {moment(new Date(props.createdTime), "YYYYMMDD").fromNow()}
             </div>
           </div>
         </div>
         <div className='px-3 py-2 flex-1 overflow-auto w-[100%] whitespace-normal break-all '>
           <p className='font-medium text-base text-cyan-900'>{props.content}</p>
           <div className={clsx(styles.imagesContainer, "w-[100]% py-3")}>
-            <Image
-              className={styles.image}
-              src={
-                "https://ss-ava.saostar.vn/w1200/pc/1597225374504/vegeta-dragon-ball-super_3840x2160_xtrafondos_com(1).jpg"
-              }
-              alt='content'
-            />
-            <Image
-              className={styles.image}
-              src={
-                "https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg"
-              }
-              alt='content'
-            />
-            <Image
-              className={styles.image}
-              src={
-                "https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg"
-              }
-              alt='content'
-            />
-            <Image
-              className={styles.image}
-              src={
-                "https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg"
-              }
-              alt='content'
-            />
-            <Image
-              className={styles.image}
-              src={
-                "https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg"
-              }
-              alt='content'
-            />
-            <Image
-              className={styles.image}
-              src={
-                "https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg"
-              }
-              alt='content'
-            />
+            {props.postImgs?.map((img: string) => {
+              return (
+                <Image
+                  key={img}
+                  className={styles.image}
+                  src={img}
+                  alt='content'
+                />
+              );
+            })}
           </div>
         </div>
         <div
@@ -140,21 +112,18 @@ export default function Post(props: PostProps) {
           </div>
         )}
         <div className='px-3 pt-2 max-h-[300px] overflow-auto '>
-          <Comment
-            content='So beautiful, buddy So beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddySo
-                beautiful, buddySo beautiful, buddySo beautiful, buddyv'
-            avatarSize={AVATAR_SIZE.SMALL}
-          />
-          <Comment
-            content='So beautiful, buddy'
-            avatarSize={AVATAR_SIZE.SMALL}
-          />
-          <Comment
-            content='So beautiful, buddy'
-            avatarSize={AVATAR_SIZE.SMALL}
-          />
+          {props.comments?.map((comment) => {
+            return (
+              <Comment
+                key={comment?.id}
+                content={comment?.content}
+                avatarSize={AVATAR_SIZE.SMALL}
+                commentAuthor={comment?.teacherDTO?.realName}
+                commentAuthorAva={comment?.teacherDTO?.avaPath}
+                imgs={comment?.imgUrls}
+              />
+            );
+          })}
         </div>
       </div>
     </>

@@ -8,11 +8,7 @@ export default function Home() {
     <LayoutContainer title='Trang chủ'>
       <div className='w-full overflow-auto  '>
         <MyBreadcrumb path={QANDA_PATH} />
-        <PostContainer
-          id='1'
-          name='Bakugo Katsuki'
-          content='alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123alo123vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv'
-        />
+        <PostContainer />
       </div>
     </LayoutContainer>
   );

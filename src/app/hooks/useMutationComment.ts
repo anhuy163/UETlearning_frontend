@@ -6,7 +6,7 @@ import { SERVER_BASE_URL } from "../constants";
 const useMutationComment = (id: string) => {
   const queryClient = useQueryClient();
   const mutationFn = (body: any) => {
-    return axios.post(`${SERVER_BASE_URL}`, body, {
+    return axios.post(`${SERVER_BASE_URL}/post/teacherAnswer`, body, {
       headers: { Authorization: localStorage.getItem("token") },
     });
   };
@@ -14,7 +14,7 @@ const useMutationComment = (id: string) => {
   const { isLoading: loading, mutateAsync } = useMutation({
     mutationFn: (body: any) => mutationFn(body),
     onSuccess: () => {
-      queryClient.invalidateQueries("");
+      queryClient.invalidateQueries(`useQueryGetPostById=${id}`);
     },
   });
 

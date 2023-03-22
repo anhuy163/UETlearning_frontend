@@ -245,7 +245,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
                 handleOnCancel={handleOnCancelPopup}
                 onCancel={onCancel}
               />
-            )}{" "}
+            )}
           </div>
         </div>
       )}

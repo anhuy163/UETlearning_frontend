@@ -115,7 +115,7 @@ export const TOKEN_EXPIRATION_CHECK_PERIOD_MS = 300000;
 /* TEXT */
 export const TEXT = {
   BEST_ANSWER: "Câu trả lời hay nhất",
-  DIRECT_TO_POST: "Xem chi tiết",
+  DIRECT_TO_POST: "Xem chi tiết bài viết",
   DELETE_EVENT_WARNING: "Bạn có muốn xóa sự kiện này không?",
   CANCEL: "Hủy bỏ",
   OK: "Đồng ý",
