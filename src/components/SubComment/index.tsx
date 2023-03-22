@@ -7,27 +7,27 @@ import styles from "./styles.module.less";
 import clsx from "clsx";
 import { useState } from "react";
 
-const { TreeNode } = Tree;
-const treeData: DataNode[] = [
-  {
-    title: <Comment content='123' avatarSize={AVATAR_SIZE.SMALL} />,
-    key: "0-0",
-    children: [
-      {
-        title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
-        key: "0-0-0",
-      },
-      {
-        title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
-        key: "0-0-1",
-      },
-      {
-        title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
-        key: "0-0-2",
-      },
-    ],
-  },
-];
+// const { TreeNode } = Tree;
+// const treeData: DataNode[] = [
+//   {
+//     title: <Comment content='123' avatarSize={AVATAR_SIZE.SMALL} />,
+//     key: "0-0",
+//     children: [
+//       {
+//         title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
+//         key: "0-0-0",
+//       },
+//       {
+//         title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
+//         key: "0-0-1",
+//       },
+//       {
+//         title: <Comment content='123' avatarSize={AVATAR_SIZE.TINY} />,
+//         key: "0-0-2",
+//       },
+//     ],
+//   },
+// ];
 
 export default function SubComment() {
   const [showSubCommentBtn, setShowSubCommentBtn] = useState(false);
@@ -37,7 +37,8 @@ export default function SubComment() {
   };
   return (
     <div className={clsx(styles.container)}>
-      {/* <Tree treeData={treeData} /> */}
+      123
+      {/* <Tree treeData={treeData} />
       <Tree>
         {treeData?.map((item) => {
           return (
@@ -62,7 +63,7 @@ export default function SubComment() {
             </TreeNode>
           );
         })}
-      </Tree>
+      </Tree> */}
     </div>
   );
 }
