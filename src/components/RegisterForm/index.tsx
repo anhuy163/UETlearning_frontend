@@ -1,10 +1,21 @@
 import styles from "./styles.module.less";
-import { Button, Form, Input, Space, DatePicker, Radio, Select } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Space,
+  DatePicker,
+  Radio,
+  Select,
+  Upload,
+} from "antd";
 import FormWrapper from "@/src/containers/FormWrapper/FormWrapper";
-import { useForm } from "rc-field-form";
+import { useForm } from "antd/lib/form/Form";
 import Link from "next/link";
-import { LOGIN_PATH, SUBJECTS } from "@/src/app/constants";
+import { LOGIN_PATH, SUBJECTS, GRADE } from "@/src/app/constants";
 import moment from "moment";
+import clsx from "clsx";
+import { useState } from "react";
 
 type RegisterFormProps = {
   onFinish: (value: any) => void;
@@ -23,7 +34,13 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
     console.log(e);
     console.log(typeof moment(e.dateOfBirth.d).format("YYYY-MM-DD"));
   };
-  const form = useForm();
+  // const onRemove = () => {
+  //   console.log(123);
+
+  //   form.setFieldValue("frontIdFile", null);
+  //   console.log(form.getFieldValue("frontIdFile"));
+  // };
+  // const [form] = useForm();
   const rules = {
     username: [{ required: true, message: "Vui lòng điền tài khoản" }],
     password: [
@@ -56,13 +73,32 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
         message: "Vui lòng chọn môn học đăng ký",
       },
     ],
+    grade: [
+      {
+        required: true,
+        message: "Vui lòng chọn khối giảng dạy",
+      },
+    ],
     phoneNumber: [
       {
         required: true,
         message: "Vui lòng điền số điện thoại",
       },
     ],
+    frontIdFile: [
+      {
+        required: true,
+        message: "Vui lòng tải ảnh mặt trước CCCD",
+      },
+    ],
+    backIdFile: [
+      {
+        required: true,
+        message: "Vui lòng tải ảnh mặt sau CCCD",
+      },
+    ],
   };
+
   return (
     <FormWrapper className={styles.formWrapper} loading={loading}>
       <h2 className='text-center font-mono text-2xl text-cyan-800 font-bold mb-3'>
@@ -120,33 +156,67 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
           label='Số điện thoại'>
           <Input allowClear></Input>
         </Form.Item>
+        <div className='flex items-center justify-between'>
+          <Form.Item
+            className={styles.lastName}
+            rules={rules.gender}
+            name='gender'
+            colon={false}
+            label='Giới tính'>
+            <Radio.Group>
+              <Radio value={1}>Nam</Radio>
+              <Radio value={2}>Nữ</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item
+            className={styles.lastName}
+            rules={rules.dateOfBirth}
+            name='dateOfBirth'
+            colon={false}
+            label='Ngày sinh'>
+            <DatePicker disabledDate={disabledDate} />
+          </Form.Item>
+        </div>
+        <div className='flex justify-between'>
+          <Form.Item
+            className={clsx(styles.lastName, "w-[50%]")}
+            rules={rules.subject}
+            name='subjects'
+            colon={false}
+            label='Môn học'>
+            <Select options={SUBJECTS} />
+          </Form.Item>
+          <Form.Item
+            className={clsx(styles.lastName, "w-[50%] ml-[20px]")}
+            rules={rules.grade}
+            name='grade'
+            colon={false}
+            label='Khối giảng dạy'>
+            <Select options={GRADE} />
+          </Form.Item>
+        </div>
+
         <Form.Item
-          className={styles.lastName}
-          rules={rules.gender}
-          name='gender'
+          name='frontIdFile'
+          label='Mặt trước CCCD'
           colon={false}
-          label='Giới tính'>
-          <Radio.Group>
-            <Radio value={1}>Nam</Radio>
-            <Radio value={2}>Nữ</Radio>
-          </Radio.Group>
+          rules={rules.frontIdFile}>
+          <Upload accept='.jpg, .jpeg, .png' maxCount={1}>
+            <Button className='sm:w-[480px]'>Tải ảnh lên</Button>
+          </Upload>
+          {/* <input type='file'></input> */}
         </Form.Item>
         <Form.Item
-          className={styles.lastName}
-          rules={rules.subject}
-          name='subjects'
+          name='backIdFile'
+          label='Mặt sau CCCD'
           colon={false}
-          label='Môn học'>
-          <Select options={SUBJECTS} />
+          rules={rules.backIdFile}>
+          <Upload accept='.jpg, .jpeg, .png' maxCount={1}>
+            <Button className='sm:w-[480px]'>Tải ảnh lên</Button>
+          </Upload>
+          {/* <input type='file'></input> */}
         </Form.Item>
-        <Form.Item
-          className={styles.lastName}
-          rules={rules.dateOfBirth}
-          name='dateOfBirth'
-          colon={false}
-          label='Ngày sinh'>
-          <DatePicker disabledDate={disabledDate} />
-        </Form.Item>
+
         <Space className={styles.registerBtn}>
           <Form.Item>
             <Button className={styles.button} htmlType='submit' type='primary'>

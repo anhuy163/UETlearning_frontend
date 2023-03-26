@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../constants";
@@ -17,10 +18,15 @@ const useQueryGetEventById = (id: string | undefined) => {
     data: result,
     isLoading: loading,
     error,
+    refetch,
   } = useQuery({
-    queryKey: `useQueryGetEventById=${id}`,
+    // queryKey: `useQueryGetEventById=${id}`,
     queryFn: () => queryFn(),
   });
+
+  useEffect(() => {
+    refetch();
+  }, [id]);
 
   return {
     data: (result as any)?.data.object,

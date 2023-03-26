@@ -92,7 +92,7 @@ export const POST_OPTIONS = [
 export const ERROR_MESSAGE = {
   CONFRIM_PASSWORD: "Mật khẩu nhập lại không khớp",
   LOGIN: "Tài khoản hoặc mật khẩu không đúng",
-  INVALID_EMAIL: "Email không hợp lệ",
+  INVALID_EMAIL: "Email đăng ký đã tồn tại",
   DELETE_EVENT: "Xóa sự kiện thất bại",
   CHANGE_PASSWORD_CF: "Mật khẩu mới nhập lại không khớp",
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",

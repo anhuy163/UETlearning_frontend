@@ -22,6 +22,7 @@ import {} from "firebase/app";
 // import { handleBackgroundMessage } from "../../public/firebase-messaging-sw";
 import socket from "../app/socket";
 import VerifyPage from "../components/VerifyPage";
+import { updateUserPoints } from "../app/redux/slice/userSlice";
 type RouteGuardProps = {
   children: ReactNode;
 };
@@ -63,6 +64,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   //     setToggleOpenCallingPopup(true);
   //   }
   // };
+  // console.log(currentTeacher.point);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -189,6 +191,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     socket.on("typingMessageGet", (data) => {
       // console.log(data);
+      dispatch(updateUserPoints(data?.msg_length * currentTeacher?.priceChat));
 
       dispatch(
         updateContactsByMsg({

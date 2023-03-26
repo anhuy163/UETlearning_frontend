@@ -1,6 +1,6 @@
 import PopupAddEvent from "@/src/components/PopupAddEvent";
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useQueryGetEventById from "@/src/app/hooks/useQueryGetEventById";
 import useMutationDeleteEventById from "@/src/app/hooks/useMutationDeleteEventById";
 import useMutationAddEvent from "@/src/app/hooks/useMutationAddEvent";
@@ -21,6 +21,11 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
   } = useQueryGetEventById(eventId);
   const { doMutation: deleteEvent, loading: deletingEvent } =
     useMutationDeleteEventById();
+  const [disableButton, setDisableButton] = useState(true);
+
+  const handleOnDisableButton = (tmp: boolean) => {
+    setDisableButton(tmp);
+  };
   // console.log(event);
 
   const handleOnDeleteEvent = () => {
@@ -60,6 +65,7 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
           ).format("YYYY-MM-DD HH:mm:ss"),
         ],
       });
+      setDisableButton(true);
       props.onCancel();
       return;
     }
@@ -100,6 +106,8 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
       defaultValues={eventId ? event : undefined}
       onDeleteEvent={handleOnDeleteEvent}
       onFinish={handleOnSubmitEvent}
+      disableButton={disableButton}
+      onDisableButton={handleOnDisableButton}
     />
   );
 }

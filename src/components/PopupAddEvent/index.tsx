@@ -19,6 +19,8 @@ type PopupEventComponentProps = {
   loading: boolean;
   onDeleteEvent: (id: any) => void;
   onFinish: (e: any) => void;
+  disableButton: boolean;
+  onDisableButton: (tmp: boolean) => void;
 };
 
 export default function PopupAddEvent({
@@ -35,20 +37,21 @@ export default function PopupAddEvent({
     },
   };
 
-  const [disableButton, setDisableButton] = useState(true);
-
   const handleFieldsChange = (changedFields: any, allFields: any) => {
     // console.log("Changed fields:", changedFields);
     // console.log("All fields:", allFields);
-    setDisableButton(false);
+    props.onDisableButton(false);
   };
   const handleOnCancelPopup = () => {
-    setDisableButton(true);
+    props.onDisableButton(true);
     props.onCancel();
   };
   const [form] = useForm();
   useEffect(() => {
+    // console.log(defaultValues);
+
     form.setFieldsValue({
+      scheduleId: props.event,
       title: defaultValues?.title,
       description: defaultValues?.data,
       duration: [
@@ -58,11 +61,10 @@ export default function PopupAddEvent({
     });
   }, [defaultValues]);
 
-  useEffect(() => {}, []);
-  // const handleOnCloseModal = () => {
-  //   form.resetFields();
-  //   props.onCancel();
-  // };
+  const handleOnCloseModal = () => {
+    props.onDisableButton(true);
+    props.onCancel();
+  };
 
   // const handleOnSubmit = (e: any) => {
   //   props.onFinish(e);
@@ -92,7 +94,7 @@ export default function PopupAddEvent({
       closable={false}
       footer={null}
       destroyOnClose={true}
-      onCancel={props.onCancel}>
+      onCancel={handleOnCloseModal}>
       <FormWrapper loading={loading}>
         <p className='flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2'>
           <FormOutlined />
@@ -105,7 +107,7 @@ export default function PopupAddEvent({
           form={form}
           className={styles.container}
           onFinish={props.onFinish}>
-          <Form.Item initialValue={props.event} name={"scheduleId"} hidden>
+          <Form.Item name={"scheduleId"} hidden>
             <Input />
           </Form.Item>
           <Form.Item label='Tên' name={"title"} rules={rules.title}>
@@ -154,7 +156,7 @@ export default function PopupAddEvent({
                 "mr-2 bg-cyan-900 text-white border-none opacity-80 hover:opacity-100 "
               )}
               htmlType='submit'
-              disabled={disableButton}>
+              disabled={props.disableButton}>
               Xác nhận
             </Button>
             <Button onClick={handleOnCancelPopup}>Hủy</Button>

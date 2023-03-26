@@ -14,7 +14,7 @@ export const userSlice = createSlice({
       return action.payload;
     },
     updateUserPoints: (state, { payload }) => {
-      state.point -= payload;
+      state.point += payload;
     },
   },
 });

@@ -24,6 +24,7 @@ type PostProps = {
   createdTime: any;
   comments: any[];
   authorAva: string;
+  solved: boolean;
   img?: string;
 };
 
@@ -68,32 +69,34 @@ export default function Post(props: PostProps) {
             })}
           </div>
         </div>
-        <div
-          className={clsx(
-            styles.comment,
-            "rounded-b-md border-t-2 border-slate-200 px-3 py-2 flex items-center justify-center"
-          )}>
-          <Input.TextArea
-            value={props.commentInput}
-            onChange={props.onInputChange}
-            placeholder='Nhập bình luận ...'
-            autoSize={{ minRows: 1, maxRows: 6 }}
-          />
-          <Upload
-            showUploadList={false}
-            onChange={props.onChange}
-            accept='image/jpg, image/png, image/jpeg'>
-            <Button className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
-              <FileImageOutlined />
+        {!props.solved && (
+          <div
+            className={clsx(
+              styles.comment,
+              "rounded-b-md border-t-2 border-slate-200 px-3 py-2 flex items-center justify-center"
+            )}>
+            <Input.TextArea
+              value={props.commentInput}
+              onChange={props.onInputChange}
+              placeholder='Nhập bình luận ...'
+              autoSize={{ minRows: 1, maxRows: 6 }}
+            />
+            <Upload
+              showUploadList={false}
+              onChange={props.onChange}
+              accept='image/jpg, image/png, image/jpeg'>
+              <Button className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+                <FileImageOutlined />
+              </Button>
+            </Upload>
+            <Button
+              onClick={props.onSubmit}
+              disabled={props.disableButton}
+              className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+              <SendOutlined />
             </Button>
-          </Upload>
-          <Button
-            onClick={props.onSubmit}
-            disabled={props.disableButton}
-            className='ml-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
-            <SendOutlined />
-          </Button>
-        </div>
+          </div>
+        )}
         {props.base64Url && (
           <div className='px-3'>
             <div className='mb-1'>
@@ -111,11 +114,12 @@ export default function Post(props: PostProps) {
             />
           </div>
         )}
-        <div className='px-3 pt-2 max-h-[300px] overflow-auto '>
+        <div className='px-3 pt-2 max-h-[500px] overflow-auto '>
           {props.comments?.map((comment) => {
             return (
               <Comment
                 key={comment?.id}
+                best={comment?.bestAnswer}
                 content={comment?.content}
                 avatarSize={AVATAR_SIZE.SMALL}
                 commentAuthor={comment?.teacherDTO?.realName}
