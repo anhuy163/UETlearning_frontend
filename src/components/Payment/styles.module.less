@@ -1,0 +1,82 @@
+.infoWrapper {
+  padding: 0 20%;
+  width: 100%;
+  .img {
+    width: 200px;
+    margin: auto;
+    margin-bottom: 1rem;
+  }
+  .avatar {
+    width: 200px;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+    .uploadAvatarBtn {
+      position: relative;
+      left: -45px;
+    }
+  }
+  .buttonArea {
+    :global {
+      .ant-btn {
+        border: none;
+        // background-color: rgba(22, 53, 53, 0.8);
+        color: white;
+        font-size: 16px;
+        height: 36px;
+        font-weight: 500;
+      }
+    }
+  }
+  .formWrapper {
+    :global {
+      .ant-form-item-label {
+        background-color: #cad5f3be;
+        margin-right: 10px;
+        padding: 0 10px;
+        text-align: center;
+        max-height: 32px;
+        min-width: 180px;
+        & > label {
+          color: black;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(
+          .ant-form-item-required-mark-optional
+        ):before {
+        content: "";
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(
+          .ant-form-item-required-mark-optional
+        ):after {
+        display: inline-block;
+        margin-right: 1px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: "*";
+      }
+    }
+    .password {
+      display: flex;
+      // align-items: center;
+      max-height: 32px;
+      margin-bottom: 24px;
+      .changePwBtn {
+        border-radius: 50%;
+        background-color: rgba(105, 190, 201, 0.6);
+        border: none;
+        color: white;
+        &:hover {
+          background-color: rgba(105, 190, 201, 1);
+        }
+      }
+    }
+  }
+}

@@ -18,6 +18,7 @@ import { onMessage } from "firebase/messaging";
 import usePageVisibility from "../app/hooks/usePageVisibility";
 import useMutationUpdateTeacherStatus from "../app/hooks/useMutationUpdateTeacherStatus";
 import { updateContactsByMsg } from "../app/redux/slice/contactsSlice";
+import useLazyQueryGetProfile from "../app/hooks/useLazyGetTeacherProfile";
 import {} from "firebase/app";
 // import { handleBackgroundMessage } from "../../public/firebase-messaging-sw";
 import socket from "../app/socket";
@@ -28,6 +29,7 @@ type RouteGuardProps = {
 };
 
 export default function RouteGuard({ children }: RouteGuardProps) {
+  const { fetchData, loading: fetchingData } = useLazyQueryGetProfile();
   const isVisible = usePageVisibility();
   const { checkTokenIsExpired, logout } = useAuth();
   const { doMutation: updateStatus, loading: updatingStatus } =
@@ -66,6 +68,17 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   // };
   // console.log(currentTeacher.point);
 
+  // useEffect(() => {
+  //   if (localStorage.getItem("currentUser")) {
+  //     dispatch(setUser(JSON.parse(localStorage.getItem("currentUser")!)));
+  //     updateStatus({ teacherStatus: 0 });
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    fetchData(true);
+  }, [router.pathname]);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const now = new Date();
@@ -79,28 +92,21 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       if (timeSinceLogin > TOKEN_EXPIRATION_CHECK_PERIOD_MS) {
         checkTokenIsExpired()
           ?.then((res: any) => {
-            // console.log(res);
             if (res.data.code === 1) return logout();
             localStorage.setItem("token", res.data.object.token);
             localStorage.setItem("loginTime", new Date().getTime().toString());
+            fetchData(true);
             setGetTokenLoading(false);
           })
           .catch((err) => {
             console.log(err);
             logout();
-            // setGetTokenLoading(false);
           });
-        // .finally(() => setGetTokenLoading(false));
+
         return;
       }
       setGetTokenLoading(false);
     } else setGetTokenLoading(false);
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem("currentUser")) {
-      dispatch(setUser(JSON.parse(localStorage.getItem("currentUser")!)));
-    }
   }, []);
 
   useEffect(() => {
@@ -224,17 +230,45 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     };
   }, []);
 
-  // if (
-  //   !(directing || getTokenLoading || getContactLoading || updatingStatus) &&
-  //   currentTeacher &&
-  //   currentTeacher.verify === null
-  // ) {
-  //   return <VerifyPage />;
-  // }
+  //CHANGE STATUS ON CLOSING APP
+  // useEffect(() => {
+  //   const handleOnClosingApp = async (event: any) => {
+  //     // console.log(123);
+  //     event.preventDefault();
+  //     await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     event.returnValue = "";
+  //     // localStorage.removeItem("currentUser");
+  //     console.log("beforeunload event triggered");
+  //     updateStatus({ teacherStatus: 2 });
+  //   };
+  //   window.addEventListener("unload", handleOnClosingApp);
+
+  //   return () => {
+  //     window.removeEventListener("unload", handleOnClosingApp);
+  //   };
+  // }, []);
+
+  if (
+    !(
+      directing ||
+      getTokenLoading ||
+      getContactLoading ||
+      updatingStatus ||
+      fetchingData
+    ) &&
+    currentTeacher &&
+    currentTeacher.verify === null
+  ) {
+    return <VerifyPage />;
+  }
 
   return (
     <>
-      {directing || getTokenLoading || getContactLoading || updatingStatus ? (
+      {directing ||
+      getTokenLoading ||
+      getContactLoading ||
+      updatingStatus ||
+      fetchingData ? (
         <LoadingScreen />
       ) : (
         <div>

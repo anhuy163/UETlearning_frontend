@@ -8,6 +8,7 @@ export const MESSAGE_PATH = "/message";
 export const STATISTICS_PATH = "/statistics";
 export const QANDA_PATH = "/q-and-a";
 export const NOTIFICATION_PATH = "/notifications";
+export const PAYMENT_PATH = "/payment";
 export const SERVER_URL =
   "http://learning-application.online/ums/session/teacher";
 export const SERVER_BASE_URL = "http://learning-application.online";
@@ -25,6 +26,7 @@ export const BREADCRUMB_NAME_MAPPING: BreadcrumbMap = {
   [QANDA_PATH]: "Hỏi đáp",
   [NOTIFICATION_PATH]: "Thông báo",
   [HOME_PATH]: "Trang chủ",
+  [PAYMENT_PATH]: "Thanh toán",
 };
 
 /* AVATAR  */
@@ -123,6 +125,73 @@ export const TEXT = {
   EDIT_EVENT_TITLE: "Chỉnh sửa sự kiện",
   VERIFY_MESSAGE:
     "Tài khoản của bạn đang được xác thực, vui lòng chờ thông báo đến hòm thư điện tử của bạn",
+};
+
+export const MIN_SUM_OF_POINTS = 10000;
+
+/* BANK */
+export const BANK_OPTIONS = [
+  { value: "BIDV", label: "BIDV - Ngân hàng đầu tư và phát triển" },
+  { value: "VCB", label: "VCB - Ngân hàng TMCP Ngoại thương VN" },
+  { value: "TCB", label: "TCB - Ngân hàng TMCP Kỹ thương VN" },
+  {
+    value: "AGR",
+    label: "Agribank - Ngân hàng Nông nghiệp và Phát triển Nông thôn VN",
+  },
+  { value: "MB", label: "MBBank - Ngân hàng quân đội" },
+];
+
+/* VI LOCALE */
+
+export const VI_LOCALE = {
+  months:
+    "Tháng 1_Tháng 2_Tháng 3_Tháng 4_Tháng 5_Tháng 6_Tháng 7_Tháng 8_Tháng 9_Tháng 10_Tháng 11_Tháng 12".split(
+      "_"
+    ),
+  monthsShort:
+    "Th 1_Th 2_Th 3_Th 4_Th 5_Th 6_Th 7_Th 8_Th 9_Th 10_Th 11_Th 12".split("_"),
+  weekdays: "Chủ nhật_Thứ hai_Thứ ba_Thứ tư_Thứ năm_Thứ sáu_Thứ bảy".split("_"),
+  weekdaysShort: "CN_T2_T3_T4_T5_T6_T7".split("_"),
+  weekdaysMin: "CN_T2_T3_T4_T5_T6_T7".split("_"),
+  longDateFormat: {
+    LT: "HH:mm",
+    LTS: "HH:mm:ss",
+    L: "DD/MM/YYYY",
+    LL: "D MMMM [năm] YYYY",
+    LLL: "D MMMM [năm] YYYY HH:mm",
+    LLLL: "dddd, D MMMM [năm] YYYY HH:mm",
+  },
+  calendar: {
+    sameDay: "[Hôm nay lúc] LT",
+    nextDay: "[Ngày mai lúc] LT",
+    nextWeek: "dddd [tuần tới lúc] LT",
+    lastDay: "[Hôm qua lúc] LT",
+    lastWeek: "dddd [tuần rồi lúc] LT",
+    sameElse: "L",
+  },
+  relativeTime: {
+    future: "%s sau",
+    past: "%s trước",
+    s: "vài giây",
+    ss: "%d giây",
+    m: "1 phút",
+    mm: "%d phút",
+    h: "1 giờ",
+    hh: "%d giờ",
+    d: "1 ngày",
+    dd: "%d ngày",
+    w: "1 tuần",
+    ww: "%d tuần",
+    M: "1 tháng",
+    MM: "%d tháng",
+    y: "1 năm",
+    yy: "%d năm",
+  },
+  ordinal: (n: any) => `${n}`,
+  week: {
+    dow: 1, // Monday is the first day of the week.
+    doy: 4, // The week that contains Jan 4th is the first week of the year.
+  },
 };
 
 export const HIDDEN_PASSWORD = "*******";

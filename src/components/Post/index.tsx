@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Image, Input, Skeleton, Upload } from "antd";
 import { FileImageOutlined, SendOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
-import { AVATAR_SIZE, testAvatarSrc } from "@/src/app/constants";
+import { AVATAR_SIZE, testAvatarSrc, VI_LOCALE } from "@/src/app/constants";
 import moment from "moment";
 import clsx from "clsx";
 import styles from "./styles.module.less";
@@ -25,9 +25,11 @@ type PostProps = {
   comments: any[];
   authorAva: string;
   solved: boolean;
+  attachment: any;
   img?: string;
 };
 
+moment.locale("vi", VI_LOCALE);
 export default function Post(props: PostProps) {
   return (
     <>
@@ -56,6 +58,11 @@ export default function Post(props: PostProps) {
         </div>
         <div className='px-3 py-2 flex-1 overflow-auto w-[100%] whitespace-normal break-all '>
           <p className='font-medium text-base text-cyan-900'>{props.content}</p>
+          {props.attachment && (
+            <a href={props.attachment[0]} target='blank'>
+              Tệp đính kèm
+            </a>
+          )}
           <div className={clsx(styles.imagesContainer, "w-[100]% py-3")}>
             {props.postImgs?.map((img: string) => {
               return (

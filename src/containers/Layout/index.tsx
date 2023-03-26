@@ -11,6 +11,7 @@ import {
   PieChartOutlined,
   UploadOutlined,
   ArrowUpOutlined,
+  DollarCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Badge, Drawer, Tooltip } from "antd";
 import Head from "next/head";
@@ -27,6 +28,7 @@ import {
   STATISTICS_PATH,
   LOGIN_PATH,
   NOTIFICATION_PATH,
+  PAYMENT_PATH,
 } from "@/src/app/constants";
 import NotificationPopupContainer from "../NotificationPopupContainer";
 import useAuth from "@/src/app/hooks/useAuth";
@@ -137,6 +139,12 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                         key={QANDA_PATH}
                         onClick={() => handleOnDirect(QANDA_PATH)}>
                         Hỏi & đáp
+                      </Menu.Item>
+                      <Menu.Item
+                        icon={<DollarCircleOutlined />}
+                        key={PAYMENT_PATH}
+                        onClick={() => handleOnDirect(PAYMENT_PATH)}>
+                        Thanh toán
                       </Menu.Item>
                     </Menu>
                   </div>

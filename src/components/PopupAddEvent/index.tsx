@@ -72,6 +72,10 @@ export default function PopupAddEvent({
   // };
 
   // console.log(form.getFieldValue("duration"));
+  const handleOnFinish = (e: any) => {
+    form.resetFields();
+    props.onFinish(e);
+  };
 
   const rules = {
     title: [
@@ -106,7 +110,7 @@ export default function PopupAddEvent({
           onFieldsChange={handleFieldsChange}
           form={form}
           className={styles.container}
-          onFinish={props.onFinish}>
+          onFinish={handleOnFinish}>
           <Form.Item name={"scheduleId"} hidden>
             <Input />
           </Form.Item>

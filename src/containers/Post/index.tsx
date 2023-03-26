@@ -84,7 +84,7 @@ export default function PostContainer() {
       setBase64Url("");
     });
   };
-  console.log(post);
+  // console.log(post);
 
   return (
     <FormWrapper loading={gettingPost || loading || uploadingImage}>
@@ -104,6 +104,7 @@ export default function PostContainer() {
         commentInput={commentInput}
         comments={post?.teacherAnswerResponses}
         solved={post?.questionDetail?.hasBestAnswer}
+        attachment={post?.questionDetail?.filePaths}
       />
     </FormWrapper>
   );
