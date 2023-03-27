@@ -196,8 +196,12 @@ export default function RouteGuard({ children }: RouteGuardProps) {
 
   useEffect(() => {
     socket.on("typingMessageGet", (data) => {
-      // console.log(data);
-      dispatch(updateUserPoints(data?.msg_length * currentTeacher?.priceChat));
+      dispatch(
+        updateUserPoints(
+          data?.msg_length *
+            JSON.parse(localStorage.getItem("currentUser")!)?.priceChat
+        )
+      );
 
       dispatch(
         updateContactsByMsg({

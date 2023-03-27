@@ -2,6 +2,7 @@ import { Layout, Menu, Switch, Tooltip } from "antd";
 import { getMenuItem } from "@/src/app/helpers/createElement";
 import {
   MessageOutlined,
+  QuestionCircleOutlined,
   UserOutlined,
   WechatOutlined,
 } from "@ant-design/icons";
@@ -27,7 +28,7 @@ import {
 } from "@/src/app/redux/slice/contactsSlice";
 import axios from "axios";
 import useMutationUpdateTeacherStatus from "@/src/app/hooks/useMutationUpdateTeacherStatus";
-
+import PopupPoint from "../PopupPoint";
 const { Sider } = Layout;
 
 export function MySideBar() {
@@ -38,6 +39,15 @@ export function MySideBar() {
   const { doMutation: onChangeStatus, loading: statusChanging } =
     useMutationUpdateTeacherStatus();
   // console.log(contacts);
+
+  const [togglePopupPoint, setTogglePopupPoint] = useState(false);
+
+  const onOpenPopupPoint = () => {
+    setTogglePopupPoint(true);
+  };
+  const onCancelPopupPoint = () => {
+    setTogglePopupPoint(false);
+  };
 
   const handleOnStatusChange = (value: any) => {
     if (user.status === 2) {
@@ -100,9 +110,15 @@ export function MySideBar() {
         />
         <div className='pl-3'>
           <div className='font-mono text-white text-xl '>{user.realName} </div>
-          <div className='font-mono text-slate-300 text-xs'>
-            {user.point} Points
+
+          <div className='font-mono text-slate-300 text-lg flex items-center justify-between mt-1'>
+            <span className='text-sm'>{user.point} points</span>
+            <QuestionCircleOutlined
+              onClick={onOpenPopupPoint}
+              className='ml-2 hover:text-cyan-300 cursor-pointer'
+            />
           </div>
+
           <div className={styles.activeContainer}>
             <Switch
               onChange={handleOnStatusChange}
@@ -141,6 +157,7 @@ export function MySideBar() {
             })}
         </div>
       </div>
+      <PopupPoint open={togglePopupPoint} onCancel={onCancelPopupPoint} />
     </Sider>
   );
 }

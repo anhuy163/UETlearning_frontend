@@ -194,6 +194,14 @@ export const VI_LOCALE = {
   },
 };
 
+/* POINT POPUP */
+export const POINT_EXPLAIN = {
+  TITLE:
+    "Points hay còn gọi là điểm tích lũy là phần thưởng mà các giáo viên giảng dạy qua ứng dụng UET LEARNING sẽ nhận được khi đạt được một số yêu cầu của ứng dụng cụ thể như:",
+  FUNCTION:
+    "Sau khi tích lũy được một lượng điểm, bạn có thể quy đổi thành số tiền (với tỷ lệ 100 points = 1000 VND) thông qua mục Thanh toán",
+};
+
 export const HIDDEN_PASSWORD = "*******";
 export const dummnyData = [
   {

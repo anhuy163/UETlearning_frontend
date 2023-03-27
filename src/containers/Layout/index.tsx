@@ -113,7 +113,7 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                     alt='logo'
                   />
                 </div>
-                <div className=' flex items-center justify-between pr-8 w-[30%]'>
+                <div className=' flex items-center justify-between pr-8 w-[40%]'>
                   <div className='w-[80%]'>
                     <Menu
                       defaultSelectedKeys={[
@@ -149,13 +149,13 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                     </Menu>
                   </div>
                   <div className='text-2xl w-24 flex justify-between items-center'>
-                    <div>
+                    {/* <div>
                       <Badge count={99} overflowCount={9}>
                         <button onClick={onToggleNotiPopup}>
                           {<BellOutlined />}
                         </button>
                       </Badge>
-                    </div>
+                    </div> */}
                     <Tooltip title='Đăng xuất' placement='bottom'>
                       <button onClick={logout}>
                         <LogoutOutlined />
