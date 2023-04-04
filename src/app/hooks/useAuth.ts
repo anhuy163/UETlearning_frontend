@@ -53,6 +53,8 @@ const useAuth = () => {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("token");
     localStorage.removeItem("loginTime");
+    localStorage.removeItem("teacherId");
+    localStorage.removeItem("userVerifyStatus");
     window.location.replace(LOGIN_PATH);
   };
 

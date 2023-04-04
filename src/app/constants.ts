@@ -9,6 +9,7 @@ export const STATISTICS_PATH = "/statistics";
 export const QANDA_PATH = "/q-and-a";
 export const NOTIFICATION_PATH = "/notifications";
 export const PAYMENT_PATH = "/payment";
+export const FORGOT_PASSWORD_PATH = "/forgot-password";
 export const SERVER_URL =
   "http://learning-application.online/ums/session/teacher";
 export const SERVER_BASE_URL = "http://learning-application.online";
@@ -98,6 +99,7 @@ export const ERROR_MESSAGE = {
   DELETE_EVENT: "Xóa sự kiện thất bại",
   CHANGE_PASSWORD_CF: "Mật khẩu mới nhập lại không khớp",
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
+  FORGOT_PASSWORD: "Email đăng ký tài khoản không hợp lệ",
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -109,6 +111,8 @@ export const SUCCESSFUL_MESSAGE = {
   EVENT_CREATE: "Cập nhật sự kiện thành công",
   EVENT_UPDATE: "Cập nhật sự kiện thành công",
   CHANGE_PASSWORD: "Cập nhật mật khẩu thành công",
+  FORGOT_PASSWORD:
+    "Mật khẩu mới đã được gửi về hòm thư của bạn, vui lòng kiểm tra",
 };
 
 /* TOKEN EXPIRATION CHECK PERIOD */
@@ -201,6 +205,18 @@ export const POINT_EXPLAIN = {
   FUNCTION:
     "Sau khi tích lũy được một lượng điểm, bạn có thể quy đổi thành số tiền (với tỷ lệ 100 points = 1000 VND) thông qua mục Thanh toán",
 };
+
+/* STATISTICS TYPE */
+export const STATISTICS_TYPE = [
+  {
+    value: "1",
+    label: "Tuần hiện tại",
+  },
+  {
+    value: "2",
+    label: "Năm hiện tại",
+  },
+];
 
 export const HIDDEN_PASSWORD = "*******";
 export const dummnyData = [

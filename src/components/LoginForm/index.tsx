@@ -11,6 +11,9 @@ import styles from "./styles.module.less";
 import { useRouter } from "next/router";
 import { LoginBody } from "@/src/app/hooks/useAuth";
 import { useEffect } from "react";
+import { FORGOT_PASSWORD_PATH, REGISTER_PATH } from "@/src/app/constants";
+import logo_src from "../../app/assets/app_logo.png";
+import Image from "next/image";
 
 type LoginFormProps = {
   onFinish: (value: LoginBody) => void;
@@ -32,16 +35,19 @@ export default function LoginForm({ onFinish }: LoginFormProps) {
 
   return (
     <FormWrapper className={styles.formWrapper}>
-      <h2 className='text-center font-mono text-2xl text-cyan-800 font-bold mb-3'>
-        UET LEARNING
-      </h2>
+      <div className='m-auto w-[50%] mb-2'>
+        <Image alt='image' src={logo_src} />
+      </div>
       <Form onFinish={onFinish}>
         <Form.Item
           colon={false}
           name='email'
           rules={[
-            { type: "email", message: "Email không hợp lệ" },
-            { required: true, message: "Vui lòng điền tài khoản" },
+            // { type: "email", message: "Email không hợp lệ" },
+            {
+              required: true,
+              message: "Vui lòng điền tài khoản hoặc email đăng ký",
+            },
           ]}>
           <Input addonBefore={<UserOutlined />} allowClear />
         </Form.Item>
@@ -58,10 +64,12 @@ export default function LoginForm({ onFinish }: LoginFormProps) {
             Đăng nhập
           </Button>
         </div>
-
+        <h3 className='text-center font-mono text-sm text-cyan-600 font-semibold mt-3 underline'>
+          <Link href={FORGOT_PASSWORD_PATH}>Quên mật khẩu</Link>
+        </h3>
         <h4 className='text-center font-mono text-sg text-cyan-800 font-semibold mt-3'>
           Chưa có tài khoản?{" "}
-          <Link href={"/register"}>
+          <Link href={REGISTER_PATH}>
             <span className='text-cyan-600 underline'>Đăng ký ngay</span>
           </Link>
         </h4>

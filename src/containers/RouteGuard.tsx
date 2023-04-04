@@ -2,6 +2,7 @@ import React, { ReactNode, use, useEffect, useState } from "react";
 import LoadingScreen from "../components/LoadingScreen";
 import { useRouter } from "next/router";
 import {
+  FORGOT_PASSWORD_PATH,
   HOME_PATH,
   LOGIN_PATH,
   REGISTER_PATH,
@@ -110,7 +111,11 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   }, []);
 
   useEffect(() => {
-    if (router.pathname === LOGIN_PATH || router.pathname === REGISTER_PATH) {
+    if (
+      router.pathname === LOGIN_PATH ||
+      router.pathname === REGISTER_PATH ||
+      router.pathname === FORGOT_PASSWORD_PATH
+    ) {
       setGetTokenLoading(false);
     }
   }, []);
@@ -119,7 +124,8 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     if (
       !localStorage.getItem("currentUser") &&
       router.pathname !== LOGIN_PATH &&
-      router.pathname !== REGISTER_PATH
+      router.pathname !== REGISTER_PATH &&
+      router.pathname !== FORGOT_PASSWORD_PATH
     )
       return window.location.replace(LOGIN_PATH);
   }, [router.pathname]);

@@ -16,6 +16,8 @@ import { LOGIN_PATH, SUBJECTS, GRADE } from "@/src/app/constants";
 import moment from "moment";
 import clsx from "clsx";
 import { useState } from "react";
+import logo_src from "../../app/assets/app_logo.png";
+import Image from "next/image";
 
 type RegisterFormProps = {
   onFinish: (value: any) => void;
@@ -101,9 +103,9 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
 
   return (
     <FormWrapper className={styles.formWrapper} loading={loading}>
-      <h2 className='text-center font-mono text-2xl text-cyan-800 font-bold mb-3'>
-        UET LEARNING
-      </h2>
+      <div className='m-auto w-[50%] mb-2'>
+        <Image alt='image' src={logo_src} />
+      </div>
 
       <Form className={styles.container} onFinish={onFinish}>
         <Form.Item
