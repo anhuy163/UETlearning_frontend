@@ -13,11 +13,8 @@ export default function StatisticsPage() {
   const [type, setType] = useState("1");
   const { data, loading } = useQueryGetTeacherStatistics(type);
   const handleOnTypeChange = (value: any) => {
-    // console.log(value.target.value);
     setType(value?.target.value);
   };
-  // console.log(data);
-
   return (
     <LayoutContainer title='Thống kê'>
       <div className='text-center'>
