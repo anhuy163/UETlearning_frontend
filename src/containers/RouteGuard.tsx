@@ -47,7 +47,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   const onDirecting = () => {
     setDirecting(false);
   };
-  //HANDLE IDLE STATUS
+  //HANDLE IDLE STATUS//
   const onIdle = () => {
     updateStatus({ teacherStatus: 2 });
   };
