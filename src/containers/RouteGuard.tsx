@@ -25,6 +25,7 @@ import {} from "firebase/app";
 import socket from "../app/socket";
 import VerifyPage from "../components/VerifyPage";
 import { updateUserPoints } from "../app/redux/slice/userSlice";
+import { useIdleTimer } from "react-idle-timer";
 type RouteGuardProps = {
   children: ReactNode;
 };
@@ -46,6 +47,21 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   const onDirecting = () => {
     setDirecting(false);
   };
+  //HANDLE IDLE STATUS
+  const onIdle = () => {
+    updateStatus({ teacherStatus: 2 });
+  };
+  const onActive = () => {
+    updateStatus({ teacherStatus: 0 });
+  };
+  const { getRemainingTime } = useIdleTimer({
+    onIdle,
+    onActive,
+    // onAction,
+    timeout: 300_000,
+    throttle: 500,
+  });
+
   const handleOnCancelPopup = () => {
     // localStorage.removeItem("channelToken");
     // localStorage.removeItem("channelName");
@@ -263,7 +279,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       directing ||
       getTokenLoading ||
       getContactLoading ||
-      updatingStatus ||
+      // updatingStatus ||
       fetchingData
     ) &&
     currentTeacher &&
@@ -277,7 +293,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       {directing ||
       getTokenLoading ||
       getContactLoading ||
-      updatingStatus ||
+      // updatingStatus ||
       fetchingData ? (
         <LoadingScreen />
       ) : (
