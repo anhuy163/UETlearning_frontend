@@ -29,21 +29,21 @@ export default function PopupStudentNote({
   return (
     <FormWrapper>
       <Modal {...props} closable={false} destroyOnClose={true} footer={null}>
-        <p className='flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2'>
+        <p className="flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2">
           <FormOutlined />
-          <span className='ml-2'>Ghi chú</span>
+          <span className="ml-2">Báo cáo học sinh</span>
         </p>
         <Form
           className={styles.container}
           onFinish={onSubmit}
           initialValues={dummyUser}>
-          <Form.Item label='Họ & Tên'>
+          {/* <Form.Item label='Họ & Tên'>
             <p className='text-xl text-cyan-900 ml-2'>An Huy</p>
-          </Form.Item>
-          <Form.Item label='Học lực' name={"note"} rules={rules.note}>
+          </Form.Item> */}
+          <Form.Item label="Nội dung" name={"note"} rules={rules.note}>
             <Input.TextArea autoSize={{ minRows: 3, maxRows: 8 }} />
           </Form.Item>
-          <div className='flex items-center justify-center '>
+          <div className="flex items-center justify-center ">
             {/* <Form.Item> */}
             <Button onClick={props.onCancel}>Hủy</Button>
             <Button
@@ -51,7 +51,7 @@ export default function PopupStudentNote({
                 styles.submitBtn,
                 "ml-2 bg-cyan-900 text-white border-none opacity-80 hover:opacity-100 "
               )}
-              htmlType='submit'>
+              htmlType="submit">
               Xác nhận
             </Button>
             {/* </Form.Item> */}

@@ -102,24 +102,24 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
         <Layout>
           <Layout>
             <Header>
-              <div className='flex items-center justify-between min-w-full'>
-                <div className='flex items-center justify-center text-2xl font-bold text-slate-900 w-48 '>
+              <div className="flex items-center justify-between min-w-full">
+                <div className="flex items-center justify-center text-2xl font-bold text-slate-900 w-48 ">
                   <Image
                     onClick={() => {
                       router.pathname !== HOME_PATH && router.push(HOME_PATH);
                     }}
-                    className='h-[50px] object-contain hover:cursor-pointer'
+                    className="h-[50px] object-contain hover:cursor-pointer"
                     src={logo_src}
-                    alt='logo'
+                    alt="logo"
                   />
                 </div>
-                <div className=' flex items-center justify-between pr-8 w-[40%]'>
-                  <div className='w-[80%]'>
+                <div className=" flex items-center justify-between pr-8 w-[50%]">
+                  <div className="w-[100%]">
                     <Menu
                       defaultSelectedKeys={[
                         `/${router.pathname.split("/")[1]}`,
                       ]}
-                      mode='horizontal'
+                      mode="horizontal"
                       // items={menuItems}
                     >
                       <Menu.Item
@@ -148,15 +148,15 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                       </Menu.Item>
                     </Menu>
                   </div>
-                  <div className='text-2xl w-24 flex justify-between items-center'>
-                    {/* <div>
-                      <Badge count={99} overflowCount={9}>
+                  <div className="text-2xl w-24 flex justify-between items-center">
+                    <div>
+                      <Badge>
                         <button onClick={onToggleNotiPopup}>
                           {<BellOutlined />}
                         </button>
                       </Badge>
-                    </div> */}
-                    <Tooltip title='Đăng xuất' placement='bottom'>
+                    </div>
+                    <Tooltip title="Đăng xuất" placement="bottom">
                       <button onClick={logout}>
                         <LogoutOutlined />
                       </button>
@@ -178,11 +178,11 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
               </div>
 
               {visibleButton && (
-                <div className='fixed bottom-5 right-3'>
-                  <Tooltip placement='left' title='Đầu trang'>
+                <div className="fixed bottom-5 right-3">
+                  <Tooltip placement="left" title="Đầu trang">
                     <Button
                       onClick={scrollToTop}
-                      className=' h-[40px]  bg-slate-800 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+                      className=" h-[40px]  bg-slate-800 text-white border-none opacity-80 hover:opacity-100 flex items-center">
                       <ArrowUpOutlined />
                     </Button>
                   </Tooltip>

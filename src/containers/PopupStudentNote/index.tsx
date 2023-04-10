@@ -1,4 +1,5 @@
 import PopupStudentNote from "@/src/components/PopupStudentNote";
+import { useRouter } from "next/router";
 
 export type PopupStudentNoteProps = {
   open: boolean;
@@ -13,8 +14,12 @@ export default function PopupStudentNoteContainer({
   onCancel,
   onOpen,
 }: PopupStudentNoteProps) {
+  const router = useRouter();
   const handleOnSubmit = (e: any) => {
-    console.log(e);
+    console.log({
+      id: router.query.id,
+      note: e.note,
+    });
   };
   return (
     <PopupStudentNote

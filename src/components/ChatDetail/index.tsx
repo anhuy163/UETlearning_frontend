@@ -5,6 +5,7 @@ import {
   SmileOutlined,
   PlusCircleOutlined,
   FileImageOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
@@ -149,23 +150,23 @@ export default function ChatDetail({
           styles.chatDetailHeader,
           "px-3 py-2 bg-slate-900 rounded-t-md flex items-center justify-between"
         )}>
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <UserAvatar
             name={studentName}
             size={AVATAR_SIZE.AVERAGE}
             imgSrc={studentAva}
           />
-          <p className='font-mono text-2xl font-bold ml-3 text-cyan-600'>
+          <p className="font-mono text-2xl font-bold ml-3 text-cyan-600">
             {studentName}
           </p>
         </div>
-        <p className='text-white text-2xl flex items-center'>
+        <p className="text-white text-2xl flex items-center">
           <Tooltip
-            title='Thông tin & Ghi chú'
-            placement='left'
+            title="Báo cáo học sinh này"
+            placement="left"
             color={COLORS.CYAN600}
             key={COLORS.CYAN600}>
-            <InfoCircleOutlined onClick={onOpenPopupNote} />
+            <WarningOutlined onClick={onOpenPopupNote} />
           </Tooltip>
         </p>
       </div>
@@ -191,7 +192,7 @@ export default function ChatDetail({
           );
         })}
       </div>
-      <div className='absolute left-1 bottom-16 z-10'>
+      <div className="absolute left-1 bottom-16 z-10">
         {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
       </div>
       <div
@@ -199,24 +200,24 @@ export default function ChatDetail({
           styles.chatDetailFooter,
           "min-h-[80px] min-w-full  py-2 px-4  rounded-b-md border-t-[1px] border-blue-100 "
         )}>
-        <div className='flex items-center w-full pb-2  min-h-fit '>
-          <div className='flex items-center overflow-scroll w-[calc(100%_-_52px)] pb-2'>
+        <div className="flex items-center w-full pb-2  min-h-fit ">
+          <div className="flex items-center overflow-scroll w-[calc(100%_-_52px)] pb-2">
             {templateMsgs?.map((item: ChatMessageType, index: any) => {
               return (
                 <Button
                   onClick={() => onSendTemplateMessage(item)}
-                  className='mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center rounded-[25px]'
+                  className="mr-2 bg-cyan-600 text-white border-none opacity-80 hover:opacity-100 flex items-center rounded-[25px]"
                   key={index}>
                   {item.content}
                 </Button>
               );
             })}
           </div>
-          <div className='pb-3'>
-            <Tooltip placement='top' title='Thêm mẫu tin nhắn'>
+          <div className="pb-3">
+            <Tooltip placement="top" title="Thêm mẫu tin nhắn">
               <Button
                 onClick={onOpenPopupAddTemplate}
-                className='ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+                className="ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center">
                 <PlusCircleOutlined />
               </Button>
             </Tooltip>
@@ -230,23 +231,23 @@ export default function ChatDetail({
           <div className={clsx(styles.emoji)}>
             <Button
               onClick={handleShowEmojiPicker}
-              className='mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+              className="mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center">
               <SmileOutlined />
             </Button>
           </div>
           <Button
             onClick={handleSendImageBtn}
-            className='mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+            className="mr-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center">
             <FileImageOutlined />
           </Button>
 
           <input
             ref={imageInputRef}
             style={{ display: "none" }}
-            title=''
-            type='file'
+            title=""
+            type="file"
             onChange={handleOnSendImg}
-            accept='image/jpg, image/png, image/jpeg'
+            accept="image/jpg, image/png, image/jpeg"
           />
 
           {/* <Upload
@@ -262,13 +263,13 @@ export default function ChatDetail({
           <Input.TextArea
             value={msg}
             onChange={onInputChange}
-            placeholder='Nhập tin nhắn ...'
+            placeholder="Nhập tin nhắn ..."
             autoSize={{ minRows: 1, maxRows: 4 }}
           />
 
           <Button
             onClick={onSendMessage}
-            className='ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center'>
+            className="ml-2 bg-slate-900 text-white border-none opacity-80 hover:opacity-100 flex items-center">
             <SendOutlined />
           </Button>
         </div>

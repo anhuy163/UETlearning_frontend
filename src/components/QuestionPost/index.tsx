@@ -12,6 +12,9 @@ import styles from "./styles.module.less";
 import Comment from "../Comment";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { VI_LOCALE } from "@/src/app/constants";
+
+moment.locale("vi", VI_LOCALE);
 
 export type QuestionPopProps = {
   id: string;
@@ -31,23 +34,23 @@ export default function QuestionPost(props: QuestionPopProps) {
           styles.container,
           "w-[60%] rounded-md bg-white m-auto flex flex-col mb-3"
         )}>
-        <div className='px-3 py-2 rounded-t-md flex items-center border-slate-200 border-b-[1px]'>
+        <div className="px-3 py-2 rounded-t-md flex items-center border-slate-200 border-b-[1px]">
           <UserAvatar
-            name='Bakugo Katsuki'
+            name="Bakugo Katsuki"
             size={AVATAR_SIZE.AVERAGE}
             imgSrc={props.studentAva}
           />
-          <div className='ml-3'>
-            <p className='font-mono text-2xl font-semibold text-slate-800 '>
+          <div className="ml-3">
+            <p className="font-mono text-2xl font-semibold text-slate-800 ">
               {props.name}
             </p>
-            <div className='text-slate-600'>
+            <div className="text-slate-600">
               {moment(new Date(props.createdTime), "YYYYMMDD").fromNow()}
             </div>
           </div>
         </div>
-        <div className='px-3 py-4 flex-1 overflow-auto w-[100%] whitespace-normal break-all border-b-[1px] border-slate-200'>
-          <p className='font-medium text-xl text-cyan-900'>{props.content}</p>
+        <div className="px-3 py-4 flex-1 overflow-auto w-[100%] whitespace-normal break-all border-b-[1px] border-slate-200">
+          <p className="font-medium text-xl text-cyan-900">{props.content}</p>
           {/* <div className={clsx(styles.imagesContainer, "w-[100]% py-3")}>
             <Image
               src={
@@ -58,13 +61,13 @@ export default function QuestionPost(props: QuestionPopProps) {
           </div> */}
         </div>
 
-        <div className='px-3 pt-2 max-h-[300px] overflow-auto '>
-          <div className='w-full flex items-center justify-between mb-2 '>
-            <div className='text-base font-semibold text-cyan-700 flex items-center'>
+        <div className="px-3 pt-2 max-h-[300px] overflow-auto ">
+          <div className="w-full flex items-center justify-between mb-2 ">
+            <div className="text-base font-semibold text-cyan-700 flex items-center">
               Có {props.answers} câu trả lời
               {/* <CheckCircleOutlined className='mr-1' /> {TEXT.BEST_ANSWER} */}
             </div>
-            <div className='text-base font-semibold text-cyan-600 cursor-pointer'>
+            <div className="text-base font-semibold text-cyan-600 cursor-pointer">
               <Link href={`${QANDA_PATH}/${props.id}`}>
                 {TEXT.DIRECT_TO_POST}
               </Link>

@@ -129,6 +129,8 @@ export const TEXT = {
   EDIT_EVENT_TITLE: "Chỉnh sửa sự kiện",
   VERIFY_MESSAGE:
     "Tài khoản của bạn đang được xác thực, vui lòng chờ thông báo đến hòm thư điện tử của bạn",
+  ANSWER_NOTI: " đã chọn câu trả lời của bạn là hay nhất",
+  CALL_NOTI: "Bạn sẽ có buổi giảng dạy sau 1 tiếng nữa với",
 };
 
 export const MIN_SUM_OF_POINTS = 10000;
