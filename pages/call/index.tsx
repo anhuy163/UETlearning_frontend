@@ -29,9 +29,9 @@ export default function CallPage() {
   }, [hasCam]);
 
   return localStorage.getItem("channelName") ? (
-    <div className='w-full h-[100vh]'>
+    <div className="w-full h-[100vh]">
       {hasCam ? (
-        <VideoCall channelName={channelName} />
+        <VideoCall channelName={localStorage.getItem("channelName")} />
       ) : (
         <AudioCall channelName={localStorage.getItem("channelName")} />
       )}

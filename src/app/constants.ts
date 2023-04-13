@@ -99,7 +99,7 @@ export const ERROR_MESSAGE = {
   DELETE_EVENT: "Xóa sự kiện thất bại",
   CHANGE_PASSWORD_CF: "Mật khẩu mới nhập lại không khớp",
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
-  FORGOT_PASSWORD: "Email đăng ký tài khoản không hợp lệ",
+  FORGOT_PASSWORD: "Email đăng ký tài khoản hoặc tên tài khoản không hợp lệ",
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -113,6 +113,9 @@ export const SUCCESSFUL_MESSAGE = {
   CHANGE_PASSWORD: "Cập nhật mật khẩu thành công",
   FORGOT_PASSWORD:
     "Mật khẩu mới đã được gửi về hòm thư của bạn, vui lòng kiểm tra",
+  REPORT: "Gửi báo cáo học sinh thành công",
+  PAYMENT:
+    "Gửi yêu cầu thanh toán thành công, email thông báo sẽ đến hòm thư của bạn trong vòng 3 ngày",
 };
 
 /* TOKEN EXPIRATION CHECK PERIOD */
