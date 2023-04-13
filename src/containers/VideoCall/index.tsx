@@ -63,7 +63,12 @@ export default function VideoCall({ channelName }: any) {
         });
       });
 
-      await client.join(appId, channelName, token, null);
+      await client.join(
+        appId,
+        channelName,
+        localStorage.getItem("channelToken"),
+        null
+      );
       if (tracks) await client.publish([tracks[0], tracks[1]]);
     };
 

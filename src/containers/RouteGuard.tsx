@@ -167,7 +167,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       JSON.parse(localStorage.getItem("currentUser")!)?.id
     );
     socket.on("seenMessageGet", (data) => {
-      console.log(data);
+      // console.log(data);
 
       if (data.type === "2") {
         setToggleOpenCallingPopup(true);
