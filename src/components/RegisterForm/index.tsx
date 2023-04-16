@@ -101,24 +101,28 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
     ],
   };
 
+  const handleBeforeUpload = () => {
+    return false;
+  };
+
   return (
     <FormWrapper className={styles.formWrapper} loading={loading}>
-      <div className='m-auto w-[50%] mb-2'>
-        <Image alt='image' src={logo_src} />
+      <div className="m-auto w-[50%] mb-2">
+        <Image alt="image" src={logo_src} />
       </div>
 
       <Form className={styles.container} onFinish={onFinish}>
         <Form.Item
-          label='Tài khoản'
+          label="Tài khoản"
           colon={false}
-          name='username'
+          name="username"
           rules={rules.username}>
           <Input allowClear />
         </Form.Item>
         <Form.Item
-          label='Email'
+          label="Email"
           colon={false}
-          name='emailAccount'
+          name="emailAccount"
           // rules={rules.username}
           rules={[
             { type: "email", message: "Email không hợp lệ" },
@@ -127,16 +131,16 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
           <Input allowClear />
         </Form.Item>
         <Form.Item
-          label='Mật khẩu'
+          label="Mật khẩu"
           colon={false}
-          name='password'
+          name="password"
           rules={rules.password}>
           <Input.Password allowClear />
         </Form.Item>
         <Form.Item
-          label='Nhập lại mật khẩu'
+          label="Nhập lại mật khẩu"
           colon={false}
-          name='confirmPassword'
+          name="confirmPassword"
           rules={rules.confirmPassword}>
           <Input.Password
             // addonBefore={<LockOutlined />}
@@ -145,26 +149,26 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
         <Form.Item
           className={styles.lastName}
           rules={rules.realName}
-          name='realName'
+          name="realName"
           colon={false}
-          label='Tên đầy đủ'>
-          <Input placeholder='Tên' allowClear></Input>
+          label="Tên đầy đủ">
+          <Input placeholder="Tên" allowClear></Input>
         </Form.Item>
         <Form.Item
           className={styles.lastName}
           rules={rules.phoneNumber}
-          name='phoneNumber'
+          name="phoneNumber"
           colon={false}
-          label='Số điện thoại'>
+          label="Số điện thoại">
           <Input allowClear></Input>
         </Form.Item>
-        <div className='flex items-center justify-between'>
+        <div className="flex items-center justify-between">
           <Form.Item
             className={styles.lastName}
             rules={rules.gender}
-            name='gender'
+            name="gender"
             colon={false}
-            label='Giới tính'>
+            label="Giới tính">
             <Radio.Group>
               <Radio value={1}>Nam</Radio>
               <Radio value={2}>Nữ</Radio>
@@ -173,63 +177,69 @@ export default function RegisterForm({ onFinish, loading }: RegisterFormProps) {
           <Form.Item
             className={styles.lastName}
             rules={rules.dateOfBirth}
-            name='dateOfBirth'
+            name="dateOfBirth"
             colon={false}
-            label='Ngày sinh'>
+            label="Ngày sinh">
             <DatePicker disabledDate={disabledDate} />
           </Form.Item>
         </div>
-        <div className='flex justify-between'>
+        <div className="flex justify-between">
           <Form.Item
             className={clsx(styles.lastName, "w-[50%]")}
             rules={rules.subject}
-            name='subjects'
+            name="subjects"
             colon={false}
-            label='Môn học'>
+            label="Môn học">
             <Select options={SUBJECTS} />
           </Form.Item>
           <Form.Item
             className={clsx(styles.lastName, "w-[50%] ml-[20px]")}
             rules={rules.grade}
-            name='grade'
+            name="grade"
             colon={false}
-            label='Khối giảng dạy'>
+            label="Khối giảng dạy">
             <Select options={GRADE} />
           </Form.Item>
         </div>
 
         <Form.Item
-          name='frontIdFile'
-          label='Mặt trước CCCD'
+          name="frontIdFile"
+          label="Mặt trước CCCD"
           colon={false}
           rules={rules.frontIdFile}>
-          <Upload accept='.jpg, .jpeg, .png' maxCount={1}>
-            <Button className='sm:w-[480px]'>Tải ảnh lên</Button>
+          <Upload
+            accept=".jpg, .jpeg, .png"
+            maxCount={1}
+            beforeUpload={handleBeforeUpload}>
+            <Button className="sm:w-[480px]">Tải ảnh lên</Button>
           </Upload>
-          {/* <input type='file'></input> */}
+          {/* <input type="file" accept="image/png, image/jpeg, image/jpeg"></input> */}
         </Form.Item>
         <Form.Item
-          name='backIdFile'
-          label='Mặt sau CCCD'
+          name="backIdFile"
+          label="Mặt sau CCCD"
           colon={false}
           rules={rules.backIdFile}>
-          <Upload accept='.jpg, .jpeg, .png' maxCount={1}>
-            <Button className='sm:w-[480px]'>Tải ảnh lên</Button>
+          <Upload
+            accept=".jpg, .jpeg, .png"
+            maxCount={1}
+            beforeUpload={handleBeforeUpload}>
+            <Button className="sm:w-[480px]">Tải ảnh lên</Button>
           </Upload>
-          {/* <input type='file'></input> */}
+          {/* <input accept="image/png, image/jpeg, image/jpeg" type="file"></input> */}
         </Form.Item>
 
         <Space className={styles.registerBtn}>
           <Form.Item>
-            <Button className={styles.button} htmlType='submit' type='primary'>
+            <Button className={styles.button} htmlType="submit" type="primary">
               Đăng ký
             </Button>
           </Form.Item>
         </Space>
-        <h4 className='text-center font-mono text-sg text-cyan-800 font-semibold mt-3'>
+        <h4 className="text-center font-mono text-sg text-cyan-800 font-semibold mt-3">
           Bạn đã có tài khoản?{" "}
           <Link href={LOGIN_PATH}>
-            <span className='text-cyan-600 underline'>Đăng nhập</span>
+            <span className="text-cyan-600 underline">Đăng nhập</span>
           </Link>
         </h4>
       </Form>

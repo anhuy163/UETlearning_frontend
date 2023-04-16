@@ -51,7 +51,7 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
         scheduleId: event.scheduleId,
         title: event.title,
         data: event.description || "",
-
+        email: event.email || "",
         time: [
           moment(
             event?.duration[0]?._d
@@ -80,6 +80,7 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
     onAddEvent({
       title: event.title,
       data: event.description || "",
+      email: event.email || "",
       time: [
         moment(
           event?.duration[0]?._d

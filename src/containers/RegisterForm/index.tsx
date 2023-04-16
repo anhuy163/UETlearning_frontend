@@ -27,8 +27,9 @@ export default function RegisterFormContainer() {
       console.log(error);
     }
   };
+
   const handleOnRegister = async (value: any) => {
-    // console.log(value);
+    console.log(value);
 
     const {
       dateOfBirth,
@@ -45,10 +46,8 @@ export default function RegisterFormContainer() {
     if (password !== confirmPassword) {
       return showErrorMessage(ERROR_MESSAGE.CONFRIM_PASSWORD);
     }
-    const frontIdFileSrc = await getImageName(frontIdFile?.file?.originFileObj);
-    const backIdFileSrc = await getImageName(backIdFile?.file?.originFileObj);
-    // console.log(frontIdFileSrc);
-    // console.log(frontIdFileSrc);
+    const frontIdFileSrc = await getImageName(frontIdFile?.file);
+    const backIdFileSrc = await getImageName(backIdFile?.file);
 
     register({
       ...others,

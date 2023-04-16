@@ -12,6 +12,7 @@ import Image from "next/image";
 
 type PaymentProps = {
   onFinish: (e: any) => void;
+  loading: boolean;
 };
 
 export default function Payment(props: PaymentProps) {
@@ -44,57 +45,57 @@ export default function Payment(props: PaymentProps) {
   };
   return (
     <div className={clsx(styles.infoWrapper)}>
-      <Image alt='123' src={withdraw_img} className={styles.img} />
-      <FormWrapper className={styles.formWrapper}>
+      <Image alt="123" src={withdraw_img} className={styles.img} />
+      <FormWrapper className={styles.formWrapper} loading={props.loading}>
         <Form form={form} onFinish={props.onFinish}>
           <Form.Item
-            label='Email nhận thư'
+            label="Email nhận thư"
             colon={false}
             rules={rules.email as any}
-            name='email'>
+            name="email">
             <Input />
           </Form.Item>
           <Form.Item
-            label='Ngân hàng'
+            label="Ngân hàng"
             colon={false}
-            name='bank'
+            name="bank"
             rules={rules.bank}>
             <Select options={BANK_OPTIONS} />
           </Form.Item>
           <Form.Item
-            label='Họ và tên'
+            label="Họ và tên"
             colon={false}
             rules={rules.realName}
-            name='realname'>
+            name="realname">
             <Input />
           </Form.Item>
           <Form.Item
-            label='STK ngân hàng'
+            label="STK ngân hàng"
             colon={false}
             rules={rules.bankAccount}
-            name='bankAccount'>
+            name="bankAccount">
             <Input />
           </Form.Item>
           <Form.Item
-            label='Số điểm muốn rút'
+            label="Số điểm muốn rút"
             colon={false}
-            name='points'
+            name="points"
             rules={rules.points}>
             <Input
-              type='number'
+              type="number"
               min={MIN_SUM_OF_POINTS}
               max={user?.point >= MIN_SUM_OF_POINTS ? user?.point : 11000}
               disabled={user?.point < MIN_SUM_OF_POINTS}
               onChange={onPointChange}
             />
           </Form.Item>
-          <div className='text-sm font-semibold text-cyan-600 flex flex-row-reverse items-center'>
+          <div className="text-sm font-semibold text-cyan-600 flex flex-row-reverse items-center">
             Số điểm tối thiểu của bạn phải là {MIN_SUM_OF_POINTS}{" "}
-            <span className='text-red-600 text-xl'>*</span>
+            <span className="text-red-600 text-xl">*</span>
           </div>
-          <div className='text-2xl font-semibold text-center mt-4'>
+          <div className="text-2xl font-semibold text-center mt-4">
             Số tiền được quy đổi:{" "}
-            <span className='text-red-500'>{moneySum}</span> VND
+            <span className="text-red-500">{moneySum}</span> VND
           </div>
           <Form.Item>
             <div
@@ -104,13 +105,13 @@ export default function Payment(props: PaymentProps) {
               )}>
               <Button
                 //   onClick={handleOnCancelUpdate}
-                className='bg-slate-800 opacity-80 hover:opacity-100 mr-2'>
+                className="bg-slate-800 opacity-80 hover:opacity-100 mr-2">
                 Hủy
               </Button>
               <Button
                 disabled={user?.point < MIN_SUM_OF_POINTS}
-                className='bg-cyan-800 opacity-80 hover:opacity-100 mr-2'
-                htmlType='submit'>
+                className="bg-cyan-800 opacity-80 hover:opacity-100 mr-2"
+                htmlType="submit">
                 Xác nhận
               </Button>
             </div>
