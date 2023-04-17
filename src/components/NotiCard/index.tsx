@@ -13,7 +13,7 @@ type NotiCardProps = {
   avatar: string;
   name: string;
   title: string;
-  createdAt: string;
+  createdAt: any;
   link?: string;
 };
 
@@ -54,7 +54,7 @@ export default function NotiCard({
           </h2>
         )}
         <p className={clsx(styles.content, "text-base  text-slate-300")}>
-          {moment(createdAt, "YYYYMMDD").fromNow()}
+          {moment(createdAt).fromNow()}
         </p>
       </div>
     </div>

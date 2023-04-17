@@ -152,6 +152,8 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     const onMessaging = () => {
       return onMessage(messaging, (payload) => {
+        console.log(payload);
+
         if (payload?.data?.type === "2") {
           // console.log("Message received", payload);
           localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);

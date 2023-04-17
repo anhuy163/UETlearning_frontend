@@ -23,15 +23,15 @@ export default function NotificationPopup({ notis }: NotificationPopupProps) {
         {notis?.map((noti: any, index: number) => (
           <NotiCard
             key={index}
-            avatar={noti.avatar}
-            name={noti.student}
+            avatar={noti?.humanDTO?.avaPath}
+            name={noti?.humanDTO?.realName}
             title={
-              noti.type === "answer"
-                ? `${noti.student} ${TEXT.ANSWER_NOTI}`
-                : `${TEXT.CALL_NOTI} ${noti.student}`
+              noti.typeNotification === 8
+                ? `${noti?.humanDTO?.realName} ${TEXT.ANSWER_NOTI}`
+                : `${TEXT.CALL_NOTI} ${noti?.humanDTO?.realName}`
             }
-            createdAt={noti.createdAt}
-            link={noti?.link}
+            createdAt={new Date(noti.sendTime)}
+            link={noti?.questionId}
           />
         ))}
       </div>

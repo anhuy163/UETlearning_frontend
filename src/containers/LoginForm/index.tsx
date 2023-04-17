@@ -7,7 +7,7 @@ import { HOME_PATH, ERROR_MESSAGE } from "@/src/app/constants";
 export default function LoginFormContainer() {
   const { loginLoading, login } = useAuth();
   const handleOnLogin = (value: LoginBody) => {
-    console.log(value);
+    // console.log(value);
 
     login({ ...value, tokenDevice: localStorage.getItem("deviceToken") })
       .then((res: any) => {
