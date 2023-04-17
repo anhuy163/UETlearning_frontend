@@ -10,12 +10,22 @@ export default function PaymentContainer() {
   const { doMutation: handlePayment, loading: sendingPayment } =
     useMutationPayment();
   const handleOnSubmit = (e: any) => {
-    console.log(e);
-    // handlePayment({}).then((res: any) => {
-    //   console.log(res?.data?.data);
-    //   showSuccessfulMessage(SUCCESSFUL_MESSAGE.PAYMENT);
-    //   router.push(HOME_PATH);
-    // });
+    const { bank, bankAccount, realName, email, points } = e;
+    // console.log(e);
+    handlePayment({
+      bank,
+      bankId: bankAccount,
+      point: points,
+      email,
+      fullName: realName,
+    }).then((res: any) => {
+      // console.log(res);
+      showSuccessfulMessage(SUCCESSFUL_MESSAGE.PAYMENT);
+
+      setTimeout(() => {
+        router.push(HOME_PATH);
+      }, 500);
+    });
   };
   return <Payment onFinish={handleOnSubmit} loading={sendingPayment} />;
 }

@@ -41,7 +41,7 @@ export default function Payment(props: PaymentProps) {
   };
 
   const onPointChange = (e: any) => {
-    setMoneySum(e.target.value / 10);
+    setMoneySum(e.target.value * 10);
   };
   return (
     <div className={clsx(styles.infoWrapper)}>
@@ -62,18 +62,19 @@ export default function Payment(props: PaymentProps) {
             rules={rules.bank}>
             <Select options={BANK_OPTIONS} />
           </Form.Item>
-          <Form.Item
-            label="Họ và tên"
-            colon={false}
-            rules={rules.realName}
-            name="realname">
-            <Input />
-          </Form.Item>
+
           <Form.Item
             label="STK ngân hàng"
             colon={false}
             rules={rules.bankAccount}
             name="bankAccount">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Tên chủ STK"
+            colon={false}
+            rules={rules.realName}
+            name="realname">
             <Input />
           </Form.Item>
           <Form.Item

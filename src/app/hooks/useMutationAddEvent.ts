@@ -15,8 +15,7 @@ const useMutationAddEvent = () => {
     mutationFn: (body: any) => mutationFn(body),
     onSuccess: () => {
       queryClient.invalidateQueries("useQuerygetEvents"),
-        queryClient.invalidateQueries(`useQueryGetEventById`),
-        showSuccessfulMessage(SUCCESSFUL_MESSAGE.EVENT_CREATE);
+        queryClient.invalidateQueries(`useQueryGetEventById`);
     },
   });
 
@@ -24,7 +23,7 @@ const useMutationAddEvent = () => {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await mutateAsync(body);
-        resolve((res as any)?.data.object);
+        resolve((res as any)?.data);
       } catch (error) {
         reject(error);
       }

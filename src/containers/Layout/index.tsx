@@ -12,6 +12,7 @@ import {
   UploadOutlined,
   ArrowUpOutlined,
   DollarCircleOutlined,
+  BellFilled,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, Badge, Drawer, Tooltip } from "antd";
 import Head from "next/head";
@@ -56,6 +57,8 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
       return !prevState;
     });
   };
+  // console.log(togglePopupNoti);
+
   const router = useRouter();
 
   const handleOnDirect = (link = "") => {
@@ -149,13 +152,19 @@ export default function LayoutContainer({ children, title }: LayoutProps) {
                     </Menu>
                   </div>
                   <div className="text-2xl w-24 flex justify-between items-center">
-                    <div>
-                      <Badge>
-                        <button onClick={onToggleNotiPopup}>
-                          {<BellOutlined />}
-                        </button>
-                      </Badge>
-                    </div>
+                    <Tooltip placement="bottom" title="Thông báo">
+                      <div>
+                        <Badge>
+                          <button onClick={onToggleNotiPopup}>
+                            {togglePopupNoti ? (
+                              <BellFilled />
+                            ) : (
+                              <BellOutlined />
+                            )}
+                          </button>
+                        </Badge>
+                      </div>
+                    </Tooltip>
                     <Tooltip title="Đăng xuất" placement="bottom">
                       <button onClick={logout}>
                         <LogoutOutlined />

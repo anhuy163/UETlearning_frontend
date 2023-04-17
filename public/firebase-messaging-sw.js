@@ -21,9 +21,9 @@ messaging.onBackgroundMessage((payload) => {
   //   payload
   // );
   // Customize notification here
-  const notificationTitle = "Background Message Title";
+  const notificationTitle = "Bạn có 1 thông báo mới";
   const notificationOptions = {
-    body: "Background Message body.",
+    body: "Thông báo mới",
     icon: "/logo.png",
   };
 

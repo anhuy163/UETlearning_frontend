@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import useQueryGetEventById from "@/src/app/hooks/useQueryGetEventById";
 import useMutationDeleteEventById from "@/src/app/hooks/useMutationDeleteEventById";
 import useMutationAddEvent from "@/src/app/hooks/useMutationAddEvent";
+import { showErrorMessage } from "@/src/app/helpers/messageHelper";
+import { ERROR_MESSAGE } from "@/src/app/constants";
 export type PopupAddEventProps = {
   open: boolean;
   onCancel: () => void;
@@ -51,7 +53,7 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
         scheduleId: event.scheduleId,
         title: event.title,
         data: event.description || "",
-        email: event.email || "",
+        email: event.studentEmail || "",
         time: [
           moment(
             event?.duration[0]?._d
@@ -64,9 +66,17 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
               : event?.duration[1]?.$d
           ).format("YYYY-MM-DD HH:mm:ss"),
         ],
+      }).then((res: any) => {
+        console.log(res);
+
+        if (res?.code === 8) {
+          showErrorMessage(ERROR_MESSAGE.UPDATE_EVENT);
+          return;
+        }
+        setDisableButton(true);
+        props.onCancel();
       });
-      setDisableButton(true);
-      props.onCancel();
+
       return;
     }
     // console.log({
@@ -80,7 +90,7 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
     onAddEvent({
       title: event.title,
       data: event.description || "",
-      email: event.email || "",
+      email: event.studentEmail || "",
       time: [
         moment(
           event?.duration[0]?._d
@@ -93,11 +103,16 @@ export default function PopupAddEventContainer(props: PopupAddEventProps) {
             : event?.duration[1]?.$d
         ).format("YYYY-MM-DD HH:mm:ss"),
       ],
+    }).then((res: any) => {
+      if (res?.code === 8) {
+        showErrorMessage(ERROR_MESSAGE.UPDATE_EVENT);
+        return;
+      }
+      setDisableButton(true);
+      props.onCancel();
     });
-    props.onCancel();
+    // props.onCancel();
   };
-
-  // console.log(eventId);
 
   return (
     <PopupAddEvent

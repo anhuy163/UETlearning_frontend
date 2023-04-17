@@ -15,6 +15,11 @@ export default function NotificationPopup({ notis }: NotificationPopupProps) {
         {/* <Link href={NOTIFICATION_PATH}>Xem tất cả</Link> */}
       </div>
       <div className="mt-2">
+        {notis?.length === 0 && (
+          <div className="text-white text-base text-center">
+            Không có thông báo nào
+          </div>
+        )}
         {notis?.map((noti: any, index: number) => (
           <NotiCard
             key={index}

@@ -4,7 +4,9 @@ import { useMutation } from "react-query";
 
 const useMutationPayment = () => {
   const mutationFn = (body: any) => {
-    return axios.post(`${SERVER_BASE_URL}`, body);
+    return axios.post(`${SERVER_BASE_URL}/payment/pointToMoney/action`, body, {
+      headers: { Authorization: localStorage.getItem("token") },
+    });
   };
 
   const { isLoading: loading, mutateAsync } = useMutation({

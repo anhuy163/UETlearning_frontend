@@ -100,6 +100,7 @@ export const ERROR_MESSAGE = {
   CHANGE_PASSWORD_CF: "Mật khẩu mới nhập lại không khớp",
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
   FORGOT_PASSWORD: "Email đăng ký tài khoản hoặc tên tài khoản không hợp lệ",
+  UPDATE_EVENT: "Email không tồn tại trong hệ thống",
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -208,7 +209,7 @@ export const POINT_EXPLAIN = {
   TITLE:
     "Points hay còn gọi là điểm tích lũy là phần thưởng mà các giáo viên giảng dạy qua ứng dụng UET LEARNING sẽ nhận được khi đạt được một số yêu cầu của ứng dụng cụ thể như:",
   FUNCTION:
-    "Sau khi tích lũy được một lượng điểm, bạn có thể quy đổi thành số tiền (với tỷ lệ 100 points = 1000 VND) thông qua mục Thanh toán",
+    "Sau khi tích lũy được một lượng điểm, bạn có thể quy đổi thành số tiền (với tỷ lệ 1 point = 10 VND) thông qua mục Thanh toán",
 };
 
 /* STATISTICS TYPE */

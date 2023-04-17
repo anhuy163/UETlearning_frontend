@@ -1,5 +1,6 @@
 import { testAvatarSrc } from "@/src/app/constants";
 import NotificationPopup from "@/src/components/NotificationPopup";
+import useQueryGetNotifications from "@/src/app/hooks/useQueryGetNotifications";
 
 export default function NotificationPopupContainer() {
   const dummyNotis = [
@@ -32,5 +33,12 @@ export default function NotificationPopupContainer() {
       createdAt: "20230216",
     },
   ];
-  return <NotificationPopup notis={dummyNotis} />;
+  const {
+    data: notis,
+    loading: gettingNoti,
+    error,
+  } = useQueryGetNotifications();
+  // console.log(notis?.notificationDBS);
+
+  return <NotificationPopup notis={notis?.notificationDBS} />;
 }

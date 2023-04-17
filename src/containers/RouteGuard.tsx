@@ -26,12 +26,15 @@ import socket from "../app/socket";
 import VerifyPage from "../components/VerifyPage";
 import { updateUserPoints } from "../app/redux/slice/userSlice";
 import { useIdleTimer } from "react-idle-timer";
+import { showNotificationMessage } from "../app/helpers/messageHelper";
+import useQueryGetNotifications from "../app/hooks/useQueryGetNotifications";
 type RouteGuardProps = {
   children: ReactNode;
 };
 
 export default function RouteGuard({ children }: RouteGuardProps) {
   const { fetchData, loading: fetchingData } = useLazyQueryGetProfile();
+  // const { refetch: refetchNotifications } = useQueryGetNotifications();
   const isVisible = usePageVisibility();
   const { checkTokenIsExpired, logout } = useAuth();
   const { doMutation: updateStatus, loading: updatingStatus } =
@@ -150,11 +153,14 @@ export default function RouteGuard({ children }: RouteGuardProps) {
     const onMessaging = () => {
       return onMessage(messaging, (payload) => {
         if (payload?.data?.type === "2") {
-          console.log("Message received", payload);
+          // console.log("Message received", payload);
           localStorage.setItem("channelToken", payload?.data?.TOKEN_CHANEL!);
           localStorage.setItem("channelName", payload?.data?.Chanel_Name!);
           localStorage.setItem("currentStudentCall", payload.data?.Id!);
           setCallingStudent(payload.data?.Id);
+        } else if (payload?.data?.type === "8" || payload?.data?.type === "9") {
+          showNotificationMessage("Bạn có 1 thông báo mới");
+          // refetchNotifications();
         }
       });
     };

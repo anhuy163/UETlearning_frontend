@@ -15,10 +15,12 @@ import Image from "next/image";
 
 type ForgotPasswordFormProps = {
   onFinish: (value: any) => void;
+  loading: boolean;
 };
 
 export default function ForgotPasswordForm({
   onFinish,
+  loading,
 }: ForgotPasswordFormProps) {
   const router = useRouter();
   const form = useForm();
@@ -40,22 +42,22 @@ export default function ForgotPasswordForm({
   };
 
   return (
-    <FormWrapper className={styles.formWrapper}>
-      <div className='m-auto w-[50%] mb-2'>
-        <Image alt='image' src={logo_src} />
+    <FormWrapper className={styles.formWrapper} loading={loading}>
+      <div className="m-auto w-[50%] mb-2">
+        <Image alt="image" src={logo_src} />
       </div>
       <Form onFinish={onFinish}>
-        <Form.Item
+        {/* <Form.Item
           colon={false}
           name={"username"}
           label='Tài khoản'
           rules={rules.username}>
           <Input />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
-          label='Email đăng ký'
+          label="Email đăng ký"
           colon={false}
-          name='email'
+          name="email"
           rules={[
             { type: "email", message: "Email không hợp lệ" },
             { required: true, message: "Vui lòng điền tài khoản" },
@@ -63,13 +65,13 @@ export default function ForgotPasswordForm({
           <Input allowClear />
         </Form.Item>
 
-        <div className='w-full flex items-center justify-center'>
-          <Button className={styles.button} htmlType='submit' type='primary'>
+        <div className="w-full flex items-center justify-center">
+          <Button className={styles.button} htmlType="submit" type="primary">
             Xác nhận
           </Button>
         </div>
 
-        <h4 className='text-center font-mono text-base text-cyan-800 font-semibold mt-3 underline'>
+        <h4 className="text-center font-mono text-base text-cyan-800 font-semibold mt-3 underline">
           <Link href={LOGIN_PATH}>Quay lại trang đăng nhập</Link>
         </h4>
       </Form>

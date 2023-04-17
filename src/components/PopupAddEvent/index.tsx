@@ -55,7 +55,7 @@ export default function PopupAddEvent({
       scheduleId: props.event,
       title: defaultValues?.title,
       description: defaultValues?.data,
-      email: defaultValues?.email,
+      studentEmail: defaultValues?.studentEmail,
       duration: [
         defaultValues ? moment(defaultValues?.scheduleTime) : null,
         defaultValues ? moment(defaultValues?.endTime) : null,
@@ -76,7 +76,7 @@ export default function PopupAddEvent({
 
   // console.log(form.getFieldValue("duration"));
   const handleOnFinish = (e: any) => {
-    form.resetFields();
+    // form.resetFields();
     props.onFinish(e);
   };
 
@@ -86,7 +86,7 @@ export default function PopupAddEvent({
       { max: 20, message: "Vui lòng không vượt quá 20 ký tự" },
     ],
     description: [{ max: 50, message: "Vui lòng không vượt quá 50 ký tự" }],
-    email: [
+    studentEmail: [
       { max: 50, message: "Vui lòng không vượt quá 50 ký tự" },
       { type: "email", message: "Email không hợp lệ" },
     ],
@@ -135,10 +135,14 @@ export default function PopupAddEvent({
           <Form.Item
             colon={false}
             label="Email học sinh"
-            name={"email"}
+            name={"studentEmail"}
             rules={[
               { max: 50, message: "Vui lòng không vượt quá 50 ký tự" },
               { type: "email", message: "Email không hợp lệ" },
+              {
+                required: true,
+                message: "Vui lòng điền email học sinh đăng ký",
+              },
             ]}>
             <Input />
           </Form.Item>

@@ -7,3 +7,7 @@ export function showErrorMessage(msg: string) {
 export function showSuccessfulMessage(msg: string) {
   message.success(msg);
 }
+
+export function showNotificationMessage(msg: string) {
+  message.info(msg);
+}
