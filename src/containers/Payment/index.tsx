@@ -10,14 +10,14 @@ export default function PaymentContainer() {
   const { doMutation: handlePayment, loading: sendingPayment } =
     useMutationPayment();
   const handleOnSubmit = (e: any) => {
-    const { bank, bankAccount, realName, email, points } = e;
+    const { bank, bankAccount, realname, email, points } = e;
     // console.log(e);
     handlePayment({
       bank,
       bankId: bankAccount,
       point: points,
       email,
-      fullName: realName,
+      fullName: realname,
     }).then((res: any) => {
       // console.log(res);
       showSuccessfulMessage(SUCCESSFUL_MESSAGE.PAYMENT);
