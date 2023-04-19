@@ -10,24 +10,26 @@ import FormWrapper from "@/src/containers/FormWrapper/FormWrapper";
 
 export default function PopupStudentNote({
   onSubmit,
+  loading,
   ...props
 }: PopupStudentNoteProps) {
   const [form] = useForm();
 
   const rules = {
+    title:[{required:true, message:'Vui lòng không bỏ trống'},
+      { whitespace: true },
+      { max: 30, message: "Không vượt quá 30 ký tự" },],
     note: [
+    {required:true, message:'Vui lòng không bỏ trống'},
       { whitespace: true },
       { max: 100, message: "Không vượt quá 100 ký tự" },
     ],
   };
 
-  const dummyUser = {
-    name: "Hồ An Huy",
-    note: "Inteligent student",
-  };
+  
 
   return (
-    <FormWrapper>
+    <FormWrapper loading={loading}>
       <Modal {...props} closable={false} destroyOnClose={true} footer={null}>
         <p className="flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2">
           <FormOutlined />
@@ -36,10 +38,10 @@ export default function PopupStudentNote({
         <Form
           className={styles.container}
           onFinish={onSubmit}
-          initialValues={dummyUser}>
-          {/* <Form.Item label='Họ & Tên'>
-            <p className='text-xl text-cyan-900 ml-2'>An Huy</p>
-          </Form.Item> */}
+          >
+          <Form.Item label='Chủ đề' name={"title"} rules={rules.title}>
+            <Input/>
+          </Form.Item>
           <Form.Item label="Nội dung" name={"note"} rules={rules.note}>
             <Input.TextArea autoSize={{ minRows: 3, maxRows: 8 }} />
           </Form.Item>

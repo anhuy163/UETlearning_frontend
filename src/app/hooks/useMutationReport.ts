@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 
 const useMutationReport = () => {
   const mutationFn = (body: any) => {
-    return axios.post(`${SERVER_BASE_URL}`, body);
+    return axios.post(`${SERVER_BASE_URL}/ums/report`, body, {headers: {Authorization: localStorage.getItem('token')}});
   };
 
   const { isLoading: loading, mutateAsync } = useMutation({
@@ -15,7 +15,7 @@ const useMutationReport = () => {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await mutateAsync(body);
-        resolve((res as any)?.data?.object);
+        resolve((res as any)?.data);
       } catch (error) {
         reject(error);
       }

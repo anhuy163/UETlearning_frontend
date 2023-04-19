@@ -101,6 +101,7 @@ export const ERROR_MESSAGE = {
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
   FORGOT_PASSWORD: "Email đăng ký tài khoản hoặc tên tài khoản không hợp lệ",
   UPDATE_EVENT: "Email không tồn tại trong hệ thống",
+  REPORT:'Gửi báo cáo thất bại, vui lòng kiểm tra lại Internet'
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -117,6 +118,7 @@ export const SUCCESSFUL_MESSAGE = {
   REPORT: "Gửi báo cáo học sinh thành công",
   PAYMENT:
     "Gửi yêu cầu thanh toán thành công, email thông báo sẽ đến hòm thư của bạn trong vòng 3 ngày",
+  
 };
 
 /* TOKEN EXPIRATION CHECK PERIOD */
