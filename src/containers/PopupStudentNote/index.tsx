@@ -8,7 +8,7 @@ export type PopupStudentNoteProps = {
   open: boolean;
   onCancel: () => void;
   onOpen: () => void;
-  loading: boolean;
+  loading?: boolean;
   content?: string;
   onSubmit?: (e: any) => void;
 };
