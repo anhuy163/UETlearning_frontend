@@ -21,10 +21,6 @@ export default function PopupStudentNoteContainer({
   const {loading, doMutation} = useMutationReport()
   const router = useRouter();
   const handleOnSubmit = (e: any) => {
-    console.log({
-      id: router.query.id,
-      note: e.note,
-    });
     doMutation({
       toId: router.query.id,
       title: e.title,
@@ -32,8 +28,8 @@ export default function PopupStudentNoteContainer({
     }).then((res: any) => {
       console.log(res)
       if (res.code === 0) {
+        onCancel();
         showSuccessfulMessage(SUCCESSFUL_MESSAGE.REPORT)
-      setTimeout(() => onCancel(), 200)
       }
       else showErrorMessage(ERROR_MESSAGE.REPORT)
     })

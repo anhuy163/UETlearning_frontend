@@ -29,8 +29,8 @@ export default function PopupStudentNote({
   
 
   return (
-    <FormWrapper loading={loading}>
-      <Modal {...props} closable={false} destroyOnClose={true} footer={null}>
+    
+      <Modal {...props} closable={false} destroyOnClose={true} footer={null} onCancel={props.onCancel}><FormWrapper loading={loading}>
         <p className="flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2">
           <FormOutlined />
           <span className="ml-2">Báo cáo học sinh</span>
@@ -58,8 +58,8 @@ export default function PopupStudentNote({
             </Button>
             {/* </Form.Item> */}
           </div>
-        </Form>
+        </Form></FormWrapper>
       </Modal>
-    </FormWrapper>
+    
   );
 }

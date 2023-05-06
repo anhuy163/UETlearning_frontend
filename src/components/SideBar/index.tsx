@@ -148,8 +148,8 @@ export function MySideBar() {
               return (
                 <ChatCard
                   key={item.id}
-                  name={item.student.realName}
-                  chatId={item.student.id}
+                  name={item.student?.realName}
+                  chatId={item.student?.id}
                   lastMessage={item.lastMessage ? item.lastMessage : "Hình ảnh"}
                   read={item.readTeacherSize}
                 />

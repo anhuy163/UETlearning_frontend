@@ -101,7 +101,8 @@ export const ERROR_MESSAGE = {
   CHANGE_PASSWORD: "Mật khẩu hiện tại không hợp lệ",
   FORGOT_PASSWORD: "Email đăng ký tài khoản hoặc tên tài khoản không hợp lệ",
   UPDATE_EVENT: "Email không tồn tại trong hệ thống",
-  REPORT:'Gửi báo cáo thất bại, vui lòng kiểm tra lại Internet'
+  REPORT: 'Gửi báo cáo thất bại, vui lòng kiểm tra lại Internet',
+  DEACTIVE_ACCOUNT:'Tài khoản này đã bị vô hiệu hóa, kiểm tra hòm thư để biết thêm thông tin'
 };
 
 /* SUCCESSFUL MESSAGES */
@@ -137,6 +138,7 @@ export const TEXT = {
     "Tài khoản của bạn đang được xác thực, vui lòng chờ thông báo đến hòm thư điện tử của bạn",
   ANSWER_NOTI: " đã chọn câu trả lời của bạn là hay nhất",
   CALL_NOTI: "Bạn sẽ có buổi giảng dạy sau 1 tiếng nữa với",
+  DEACTIVE_ACCOUNT:'Tài khoản của bạn đã bị vô hiệu hóa, vui lòng kiểm tra hòm thư để biết thêm thông tin'
 };
 
 export const MIN_SUM_OF_POINTS = 10000;

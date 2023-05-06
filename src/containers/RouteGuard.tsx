@@ -28,6 +28,7 @@ import { updateUserPoints } from "../app/redux/slice/userSlice";
 import { useIdleTimer } from "react-idle-timer";
 import { showNotificationMessage } from "../app/helpers/messageHelper";
 import useQueryGetNotifications from "../app/hooks/useQueryGetNotifications";
+import DeactivePage from "../components/DeactivePage";
 type RouteGuardProps = {
   children: ReactNode;
 };
@@ -80,6 +81,7 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   };
 
   const dispatch = useAppDispatch();
+
 
   // const handleOnReceiveBackgroundMessage = (payload: any) => {
   //   if (payload.type === "2") {
@@ -281,6 +283,9 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   //     window.removeEventListener("unload", handleOnClosingApp);
   //   };
   // }, []);
+  // console.log('====================================');
+  // console.log(currentTeacher);
+  // console.log('====================================');
 
   if (
     !(
@@ -295,6 +300,20 @@ export default function RouteGuard({ children }: RouteGuardProps) {
   ) {
     return <VerifyPage />;
   }
+  
+  
+
+  // else if (!(
+  //     directing ||
+  //     getTokenLoading ||
+  //     getContactLoading ||
+  //     // updatingStatus ||
+  //     fetchingData
+  //   ) &&
+  //   currentTeacher &&
+  //   currentTeacher.verify !== null && currentTeacher.active === false) {
+  //   return <DeactivePage/>
+  // }
 
   return (
     <>

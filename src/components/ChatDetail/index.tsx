@@ -85,8 +85,8 @@ export default function ChatDetail({
     setMsg(e.target.value);
   };
 
-  const [togglePopupNote, setTogglePopupNote] = useState(false);
 
+  const [togglePopupNote, setTogglePopupNote] = useState(false);
   const onOpenPopupNote = () => {
     setTogglePopupNote(true);
   };

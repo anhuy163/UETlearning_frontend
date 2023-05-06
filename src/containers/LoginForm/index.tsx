@@ -11,9 +11,11 @@ export default function LoginFormContainer() {
 
     login({ ...value, tokenDevice: localStorage.getItem("deviceToken") })
       .then((res: any) => {
-        if ((res as any).data.code !== 0)
-          return showErrorMessage(ERROR_MESSAGE.LOGIN);
-
+        if ((res as any).data.code !== 0) {
+          if ((res as any).data.code === 5 || (res as any).data.code === 6) return showErrorMessage(ERROR_MESSAGE.LOGIN)
+          return showErrorMessage(ERROR_MESSAGE.DEACTIVE_ACCOUNT)
+        }
+        
         localStorage.setItem("userVerifyStatus", res?.data?.object?.verify);
         localStorage.setItem("currentUser", JSON.stringify(res?.data.object));
         localStorage.setItem("token", res.data.object.token);
