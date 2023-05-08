@@ -108,9 +108,9 @@ export default function PopupAddEvent({
       onCancel={handleOnCloseModal}
       width={720}>
       <FormWrapper loading={loading}>
-        <p className="flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2">
+        <p className='flex items-center justify-center text-slate-800 font-mono font-semibold text-2xl mb-2'>
           <FormOutlined />
-          <span className="ml-2">
+          <span className='ml-2'>
             {defaultValues ? TEXT.EDIT_EVENT_TITLE : TEXT.ADD_EVENT_TITLE}
           </span>
         </p>
@@ -122,19 +122,19 @@ export default function PopupAddEvent({
           <Form.Item name={"scheduleId"} hidden>
             <Input />
           </Form.Item>
-          <Form.Item label="Tên" name={"title"} rules={rules.title}>
+          <Form.Item label='Tên' name={"title"} rules={rules.title}>
             <Input />
           </Form.Item>
           <Form.Item
             colon={false}
-            label="Ghi chú"
+            label='Ghi chú'
             name={"description"}
             rules={rules.description}>
             <Input.TextArea />
           </Form.Item>
           <Form.Item
             colon={false}
-            label="Email học sinh"
+            label='Email học sinh'
             name={"studentEmail"}
             rules={[
               { max: 50, message: "Vui lòng không vượt quá 50 ký tự" },
@@ -146,17 +146,17 @@ export default function PopupAddEvent({
             ]}>
             <Input />
           </Form.Item>
-          <Form.Item label="Thời gian" name={"duration"} rules={rules.duration}>
+          <Form.Item label='Thời gian' name={"duration"} rules={rules.duration}>
             <DatePicker.RangePicker
               locale={locale as any}
               //   disabledTime={disabledTime}
-              disabledDate={disabledDate}
+              // disabledDate={disabledDate}
               showTime
               placeholder={["Bắt đầu", "Kết thúc"]}
             />
           </Form.Item>
 
-          <div className="flex items-center justify-center ">
+          <div className='flex items-center justify-center '>
             {defaultValues && (
               <Popconfirm
                 title={"Xóa sự kiện"}
@@ -182,7 +182,7 @@ export default function PopupAddEvent({
                 styles.submitBtn,
                 "mr-2 bg-cyan-900 text-white border-none opacity-80 hover:opacity-100 "
               )}
-              htmlType="submit"
+              htmlType='submit'
               disabled={props.disableButton}>
               Xác nhận
             </Button>
