@@ -82,7 +82,6 @@ export default function RouteGuard({ children }: RouteGuardProps) {
 
   const dispatch = useAppDispatch();
 
-
   // const handleOnReceiveBackgroundMessage = (payload: any) => {
   //   if (payload.type === "2") {
   //     setToggleOpenCallingPopup(true);
@@ -296,12 +295,10 @@ export default function RouteGuard({ children }: RouteGuardProps) {
       fetchingData
     ) &&
     currentTeacher &&
-    currentTeacher.verify === null
+    currentTeacher.verify === false
   ) {
     return <VerifyPage />;
   }
-  
-  
 
   // else if (!(
   //     directing ||
